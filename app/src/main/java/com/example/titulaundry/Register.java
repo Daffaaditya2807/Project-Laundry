@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class Register extends AppCompatActivity {
     TextView takonAkun;
+    Button btnRegist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -3,11 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/drawable/account.xml" value="0.1195" />
+        <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/drawable/arrow_kanan.xml" value="0.1305" />
+        <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/drawable/cb_colour.xml" value="0.1195" />
+        <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/drawable/down_arrow.xml" value="0.1305" />
         <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/drawable/edt_rounded.xml" value="0.1205" />
-        <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/drawable/home.xml" value="0.1195" />
+        <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.1195" />
+        <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/drawable/menu.xml" value="0.1195" />
+        <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/layout/activity_register.xml" value="0.20521590423257802" />
+        <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/layout/activity_main_menu.xml" value="0.18875305623471883" />
+        <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/layout/activity_register.xml" value="0.264" />
         <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/layout/activity_splash.xml" value="0.20521590423257802" />
+        <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/layout/fragment_account_fragment.xml" value="0.20521590423257802" />
+        <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/layout/fragment_home_fragment.xml" value="0.2" />
+        <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/layout/fragment_order_fragment.xml" value="0.20521590423257802" />
+        <entry key="..\:/FILE NGOMDING/Android Studio File/Titu-ProjectGeden/app/src/main/res/layout/fragment_service_fragment.xml" value="0.20521590423257802" />
       </map>
     </option>
   </component>
