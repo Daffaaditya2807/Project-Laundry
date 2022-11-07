@@ -30,10 +30,6 @@
         android:textColor="#828282"
         />
 
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputEmail"
         android:layout_width="match_parent"
@@ -45,30 +41,7 @@
         app:boxBackgroundColor="#FFF"
         >
         <EditText
-            android:layout_width="52dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:inputType="textEmailAddress"
-            android:background="@drawable/edt_rounded"
-            android:drawablePadding="12dp"
-            android:hint="_"
-            android:textColorHint="#E0E0E0"
-            android:textAlignment="center"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/code1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:hintEnabled="false"
-        app:boxStrokeWidth="0dp"
-        app:boxStrokeWidthFocused="0dp"
-        app:boxStrokeColor="#FFF"
-        app:boxBackgroundColor="#FFF"
-        >
-        <EditText
-            android:layout_width="52dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:inputType="textEmailAddress"
