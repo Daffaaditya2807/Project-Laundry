@@ -1,6 +1,7 @@
 package com.example.titulaundry.Dashboard;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -16,7 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 public class MainMenu extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
-
+    CardView v;
     private home_fragment home_fragment;
     private Service_fragment service_fragment;
 

@@ -52,5 +52,4 @@ android:layout_marginHorizontal="20dp"
         </com.google.android.material.tabs.TabItem>
     </com.google.android.material.tabs.TabLayout>
 
-</LinearLayout
->
+</LinearLayout>

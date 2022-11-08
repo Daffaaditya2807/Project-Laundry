@@ -128,6 +128,8 @@
                     app:cardElevation="5dp"
                     android:layout_margin="10dp"
                     android:layout_gravity="center"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"
                     >
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -213,6 +215,8 @@
                     app:cardElevation="5dp"
                     android:layout_margin="10dp"
                     android:layout_gravity="center"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"
                     >
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -315,6 +319,7 @@
     android:columnCount="2">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cuciKering"
         android:layout_width="154dp"
         android:layout_height="200dp"
         android:layout_row="0"
@@ -322,6 +327,8 @@
         android:layout_margin="8dp"
         app:cardCornerRadius="10dp"
         android:elevation="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -402,6 +409,8 @@
         android:layout_margin="8dp"
         app:cardCornerRadius="10dp"
         android:elevation="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -482,6 +491,8 @@
         android:layout_margin="8dp"
         app:cardCornerRadius="10dp"
         android:elevation="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -562,6 +573,8 @@
         android:layout_margin="8dp"
         app:cardCornerRadius="10dp"
         android:elevation="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
