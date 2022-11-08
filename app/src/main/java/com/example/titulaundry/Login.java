@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.example.titulaundry.Dashboard.MainMenu;
 
 public class Login extends AppCompatActivity {
-    TextView takonAkun , ToRegist;
+    TextView takonAkun , ToLupaPw;
     Button toLoginDashBoard;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,18 @@ public class Login extends AppCompatActivity {
         String text = "<font color=#333333>Belum Punya Akun?</font> <font color=#2f80ed> Sign Up</font>";
         takonAkun.setText(Html.fromHtml(text));
         signUp();
-        LoginToDashboard();
+        LoginToConfirm();
+        lupaPassword();
+    }
+    public void lupaPassword(){
+        ToLupaPw = (TextView) findViewById(R.id.lupaPassword);
+        ToLupaPw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),LupaPassword.class);
+                startActivity(i);
+            }
+        });
     }
     public void notif(Activity activity){
         //change color notif bar
@@ -50,12 +61,12 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    public void LoginToDashboard(){
+    public void LoginToConfirm(){
         toLoginDashBoard = (Button) findViewById(R.id.signIn);
         toLoginDashBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                Intent intent = new Intent(getApplicationContext(), Konfirmasi.class);
                 startActivity(intent);
             }
         });

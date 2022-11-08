@@ -5,36 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageButton;
 
-public class Register extends AppCompatActivity {
-    TextView takonAkun,bckToLogin;
-    Button btnRegist;
-
+public class LupaPassword extends AppCompatActivity {
+    ImageButton btnKembali;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        notif(Register.this);
-        kembaliKeLogin();
-        setTectxtColour();
-
-
+        setContentView(R.layout.activity_lupa_password);
+        kembali();
+        notif(LupaPassword.this);
     }
 
-    public void setTectxtColour(){
-        takonAkun = (TextView) findViewById(R.id.takonAkun);
-        String text = "<font color=#333333>Sudah Punya Akun?</font> <font color=#2f80ed> Sign In</font>";
-        takonAkun.setText(Html.fromHtml(text));
-    }
-    public void kembaliKeLogin(){
-        bckToLogin = (TextView) findViewById(R.id.takonAkun);
-        bckToLogin.setOnClickListener(new View.OnClickListener() {
+    public void kembali(){
+        btnKembali = (ImageButton) findViewById(R.id.kembali);
+        btnKembali.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),Login.class);
