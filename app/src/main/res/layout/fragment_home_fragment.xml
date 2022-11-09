@@ -8,7 +8,9 @@
     tools:context=".Dashboard.home_fragment">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,6 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
+                android:scrollbars="none"
                 android:padding="10dp"
                 app:layout_constraintTop_toBottomOf="@+id/details">
                 <LinearLayout
@@ -70,35 +73,31 @@
                         android:layout_width="320dp"
                         android:layout_height="160dp"
                         android:layout_marginHorizontal="10dp"
-                        app:cardBackgroundColor="@color/niceBlue"
+                        app:cardBackgroundColor="@color/white"
                         android:layout_margin="10dp"
                         app:cardCornerRadius="12dp"
                         app:cardElevation="5dp"
                         >
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text=" T E M P E K "
-                            android:textSize="50dp"
-                            android:textColor="@color/white"
-                            android:gravity="center" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/meki1"
+                            />
                     </androidx.cardview.widget.CardView>
                     <androidx.cardview.widget.CardView
                         android:layout_width="320dp"
                         android:layout_height="160dp"
                         android:layout_marginHorizontal="10dp"
-                        app:cardBackgroundColor="@color/niceBlue"
+                        app:cardBackgroundColor="@color/white"
                         android:layout_margin="10dp"
                         app:cardCornerRadius="12dp"
                         app:cardElevation="5dp"
                         >
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text=" K O N T O L "
-                            android:textSize="50dp"
-                            android:textColor="@color/white"
-                            android:gravity="center" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/meki2"
+                            />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
             </HorizontalScrollView>
@@ -237,7 +236,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:text="Cuci Setrika 3Kg"
+                            android:text="Cuci Setrika 2Kg"
                             android:textColor="@color/black"
                             android:textSize="15dp"
                             android:textStyle="bold"
@@ -285,7 +284,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="RP. 16.000"
+                            android:text="RP. 8.000"
                             android:textSize="13dp"
                             android:textStyle="bold"
                             android:textColor="@color/niceBlue"
@@ -309,6 +308,7 @@
                 android:layout_marginTop="25dp"
                 />
 <GridLayout
+    android:id="@+id/gridd"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:layout_constraintTop_toBottomOf="@+id/layanan"
@@ -320,11 +320,11 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cuciKering"
-        android:layout_width="154dp"
-        android:layout_height="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_row="0"
         android:layout_column="0"
-        android:layout_margin="8dp"
+        android:layout_margin="3dp"
         app:cardCornerRadius="10dp"
         android:elevation="8dp"
         android:foreground="?android:attr/selectableItemBackground"
@@ -332,7 +332,9 @@
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            >
             <ImageView
                 android:id="@+id/imgInCard1"
                 android:layout_width="134dp"
@@ -380,7 +382,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="> 1 hari"
+                android:text="1 hari"
                 android:textSize="11dp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="5dp"
@@ -390,7 +392,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RP. 16.000"
+                android:text="RP. 5.500"
                 android:textSize="13dp"
                 android:textStyle="bold"
                 android:layout_marginTop="5dp"
@@ -402,11 +404,11 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
-        android:layout_width="154dp"
-        android:layout_height="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_row="0"
         android:layout_column="1"
-        android:layout_margin="8dp"
+        android:layout_margin="3dp"
         app:cardCornerRadius="10dp"
         android:elevation="8dp"
         android:foreground="?android:attr/selectableItemBackground"
@@ -414,7 +416,9 @@
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            >
             <ImageView
                 android:id="@+id/imgInCard3"
                 android:layout_width="134dp"
@@ -462,7 +466,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="> 1 hari"
+                android:text="1 hari"
                 android:textSize="11dp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="5dp"
@@ -472,7 +476,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RP. 16.000"
+                android:text="RP. 6.500"
                 android:textSize="13dp"
                 android:textStyle="bold"
                 android:layout_marginTop="5dp"
@@ -484,11 +488,11 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
-        android:layout_width="154dp"
-        android:layout_height="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_row="1"
         android:layout_column="0"
-        android:layout_margin="8dp"
+        android:layout_margin="3dp"
         app:cardCornerRadius="10dp"
         android:elevation="8dp"
         android:foreground="?android:attr/selectableItemBackground"
@@ -496,7 +500,9 @@
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            >
             <ImageView
                 android:id="@+id/imgInCard2"
                 android:layout_width="134dp"
@@ -512,7 +518,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
-                android:text="Cuci Setrika"
+                android:text="Setrika"
                 android:textStyle="bold"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/black"
@@ -544,7 +550,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="> 1 hari"
+                android:text="1 hari"
                 android:textSize="11dp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="5dp"
@@ -554,7 +560,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RP. 16.000"
+                android:text="RP. 5.500"
                 android:textSize="13dp"
                 android:textStyle="bold"
                 android:layout_marginTop="5dp"
@@ -566,11 +572,11 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
-        android:layout_width="154dp"
-        android:layout_height="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_row="1"
         android:layout_column="1"
-        android:layout_margin="8dp"
+        android:layout_margin="3dp"
         app:cardCornerRadius="10dp"
         android:elevation="8dp"
         android:foreground="?android:attr/selectableItemBackground"
@@ -578,7 +584,9 @@
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            >
             <ImageView
                 android:id="@+id/imgInCard4"
                 android:layout_width="134dp"
@@ -626,7 +634,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="> 1 hari"
+                android:text="1 hari"
                 android:textSize="11dp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="5dp"
@@ -636,7 +644,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RP. 16.000"
+                android:text="RP. 8.000"
                 android:textSize="13dp"
                 android:textStyle="bold"
                 android:layout_marginTop="5dp"
@@ -648,7 +656,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </GridLayout>
-
+<View
+    android:layout_width="match_parent"
+    android:layout_height="20dp"
+    app:layout_constraintTop_toBottomOf="@+id/gridd"
+    app:layout_constraintBottom_toBottomOf="parent"
+    />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

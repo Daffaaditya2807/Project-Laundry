@@ -14,6 +14,9 @@
         android:theme="@style/Theme.TituLaundry"
         tools:targetApi="31">
         <activity
+            android:name=".atur_pesanan.set_waktu_alamat"
+            android:exported="false" />
+        <activity
             android:name=".atur_pesanan.pesanan"
             android:exported="false" />
         <activity
