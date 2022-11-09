@@ -10,11 +10,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.example.titulaundry.R;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainMenu extends AppCompatActivity {
+
     private TabLayout tabLayout;
     private ViewPager viewPager;
     CardView v;
