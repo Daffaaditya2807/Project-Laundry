@@ -70,6 +70,7 @@
             app:boxBackgroundColor="#FFF"
             >
             <EditText
+                android:id="@+id/txTlp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -94,6 +95,7 @@
             app:boxBackgroundColor="#FFF"
             >
             <EditText
+                android:id="@+id/txEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -119,6 +121,7 @@
             app:boxBackgroundColor="#FFF"
             >
             <EditText
+                android:id="@+id/txPw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -144,6 +147,7 @@
             app:boxBackgroundColor="#FFF"
             >
             <EditText
+                android:id="@+id/matchPw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -190,8 +194,7 @@
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signUP"
-            app:layout_constraintVertical_bias="1.0"
-            tools:layout_editor_absoluteX="-11dp" />
+            app:layout_constraintVertical_bias="1.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

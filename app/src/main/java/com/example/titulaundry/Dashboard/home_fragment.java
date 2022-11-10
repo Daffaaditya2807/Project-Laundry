@@ -45,13 +45,14 @@ public class home_fragment extends Fragment {
         int hour = now.get(Calendar.HOUR_OF_DAY);
         System.out.println(hour);
 
-        if (hour <= 6 || hour <= 12) {
+        if (hour <= 6 || hour <= 11) {
             waktu = " pagi ";
         } else if (hour <= 17) {
             waktu = " Siang  ";
         } else if (hour <= 24) {
             waktu = " Malam " ;
         }
+
         greeting = (TextView) getView().findViewById(R.id.greeting);
         dbHelper = new database(getActivity());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
