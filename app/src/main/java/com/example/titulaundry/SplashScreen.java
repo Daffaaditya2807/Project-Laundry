@@ -30,7 +30,7 @@ public class SplashScreen extends AppCompatActivity {
 
             }
 
-        }, 3*1000); // wait for 5 seconds
+        }, 2*1000); // wait for 5 seconds
 
 
     }

@@ -26,8 +26,8 @@ public class database extends SQLiteOpenHelper {
         String sql = "CREATE TABLE user(id integer primary key , nama text null, telp text null , email text null , password text null);";
         Log.d("Data","onCreate : "+sql);
         sqLiteDatabase.execSQL(sql);
-//        sql = "INSERT INTO user(id,nama,telp,email,password) VALUES('1','Puan Maharani','085851065295','puan@gmail.com','dprbangkit')";
-//        sqLiteDatabase.execSQL(sql);
+        sql = "INSERT INTO user(id,nama,telp,email,password) VALUES('1','Puan Maharani','085851065295','puan@gmail.com','dprbangkit')";
+        sqLiteDatabase.execSQL(sql);
     }
 
     @Override
