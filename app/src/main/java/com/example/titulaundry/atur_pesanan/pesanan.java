@@ -13,15 +13,20 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.titulaundry.Dashboard.MainMenu;
 import com.example.titulaundry.Dashboard.home_fragment;
 import com.example.titulaundry.Dashboard.order_fragment;
 import com.example.titulaundry.R;
 
+import org.w3c.dom.Text;
+
 public class pesanan extends AppCompatActivity {
     ImageButton toDashboard;
-    CardView setAlamat;
+    CardView setAlamat,setBeratCuci;
+    TextView header , headerBawah,hargaCucian,lamaWaktu;
+    public String layanan , desc , waktu , harga;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,8 @@ public class pesanan extends AppCompatActivity {
         notif(pesanan.this);
         toKembali();
         setAlamat();
+        setPesanan();
+        setBeratCucuian();
     }
     public void notif(Activity activity){
         //change color notif bar
@@ -40,6 +47,33 @@ public class pesanan extends AppCompatActivity {
         //set icons notifbar
         View decor = activity.getWindow().getDecorView();
         decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    }
+    public void setBeratCucuian(){
+        setBeratCuci = (CardView) findViewById(R.id.menu2);
+        setBeratCuci.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),BeratCucian.class);
+                startActivity(i);
+            }
+        });
+
+    }
+    public void setPesanan(){
+        header = (TextView) findViewById(R.id.header);
+        headerBawah = (TextView) findViewById(R.id.headerbawah);
+        lamaWaktu = (TextView) findViewById(R.id.keterangan);
+        hargaCucian = (TextView) findViewById(R.id.totalBerat);
+
+        layanan = getIntent().getStringExtra("layanan");
+        waktu = getIntent().getStringExtra("waktu");
+        harga = getIntent().getStringExtra("harga");
+
+        header.setText(layanan);
+        headerBawah.setText(layanan);
+        lamaWaktu.setText(waktu + " waktu pengerjaan");
+        hargaCucian.setText("Rp."+harga);
+
     }
     public void setAlamat(){
         setAlamat = (CardView) findViewById(R.id.menu1);

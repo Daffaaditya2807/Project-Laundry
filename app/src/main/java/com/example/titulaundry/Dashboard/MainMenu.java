@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.titulaundry.R;
@@ -20,6 +21,7 @@ public class MainMenu extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     CardView v;
+    RadioButton btn1;
     private home_fragment home_fragment;
     private Service_fragment service_fragment;
 
@@ -47,6 +49,7 @@ public class MainMenu extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
 
         tabLayout.setupWithViewPager(viewPager);
+
 
         fragmentSwitch swtch = new fragmentSwitch(getSupportFragmentManager(), 0);
         swtch.addFragment(new home_fragment(),"Home");

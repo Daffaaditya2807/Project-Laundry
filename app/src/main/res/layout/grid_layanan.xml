@@ -18,7 +18,7 @@
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="3dp"
             >
             <ImageView
@@ -62,8 +62,9 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tulis1"
+                app:layout_constraintBottom_toBottomOf="parent"
                 />
             <TextView
                 android:id="@+id/waktuLamaLayanan"
@@ -73,8 +74,9 @@
                 android:textSize="11dp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 app:layout_constraintLeft_toRightOf="@+id/inpoJamCard"
-                app:layout_constraintTop_toBottomOf="@+id/tulis1"
+                app:layout_constraintBottom_toBottomOf="parent"
                 />
             <TextView
                 android:id="@+id/hargaLayanan"
@@ -84,10 +86,11 @@
                 android:textSize="13dp"
                 android:textStyle="bold"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginHorizontal="5dp"
                 android:textColor="@color/niceBlue"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tulis1"
+                app:layout_constraintBottom_toBottomOf="parent"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

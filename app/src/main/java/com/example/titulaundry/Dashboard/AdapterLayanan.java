@@ -61,10 +61,14 @@ public class AdapterLayanan extends RecyclerView.Adapter<AdapterLayanan.ViewHold
         jnsLyn.setText(dataItem.get(position).getJenisLayanan());
         dscLyn.setText(dataItem.get(position).getDeskripsiLayanan());
         wktLyn.setText(dataItem.get(position).getWaktuLayanan());
-        hrgLyn.setText(dataItem.get(position).getHargaLayanan());
+        hrgLyn.setText("Rp."+dataItem.get(position).getHargaLayanan());
         holder.cardLayanan.setOnClickListener(v -> {
             Toast.makeText(context,"meki"+dataItem.get(position).getJenisLayanan(),Toast.LENGTH_LONG).show();
             Intent i = new Intent(context, pesanan.class);
+            i.putExtra("layanan",dataItem.get(position).getJenisLayanan());
+            i.putExtra("deskripsi",dataItem.get(position).getDeskripsiLayanan());
+            i.putExtra("waktu",dataItem.get(position).getWaktuLayanan());
+            i.putExtra("harga",dataItem.get(position).getHargaLayanan());
             context.startActivity(i);
         });
 
