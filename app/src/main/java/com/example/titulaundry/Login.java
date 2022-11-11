@@ -41,8 +41,9 @@ public class Login extends AppCompatActivity {
         String text = "<font color=#333333>Belum Punya Akun?</font> <font color=#2f80ed> Sign Up</font>";
         takonAkun.setText(Html.fromHtml(text));
         signUp();
-        LoginToConfirm();
+//        LoginToConfirm();
         lupaPassword();
+        kerenCuy();
     }
     public void lupaPassword(){
         ToLupaPw = (TextView) findViewById(R.id.lupaPassword);
@@ -74,7 +75,12 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-
+public void kerenCuy(){
+    Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+//    intent.putExtra("email",userCheck);
+    startActivity(intent);
+    finish();
+}
     public void LoginToConfirm(){
         getEmail = (EditText) findViewById(R.id.getEmail);
         getPassword = (EditText) findViewById(R.id.getPassword);

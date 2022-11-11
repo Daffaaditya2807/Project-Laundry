@@ -9,14 +9,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        >
+        android:scrollbars="none">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:padding="6dp"
-            >
+            android:padding="6dp">
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/profile_image"
@@ -25,7 +23,6 @@
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:src="@drawable/puan"
-
                 app:civ_border_color="#FF000000"/>
             <TextView
                 android:id="@+id/greeting"
@@ -307,361 +304,21 @@
                 android:textColor="@color/black"
                 android:layout_marginTop="25dp"
                 />
-<GridLayout
-    android:id="@+id/gridd"
-    android:layout_width="wrap_content"
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recycleLayanan"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_constraintTop_toBottomOf="@+id/layanan"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     android:paddingBottom="15dp"
-    android:rowCount="2"
-    android:columnCount="2">
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cuciKering"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_row="0"
-        android:layout_column="0"
-        android:layout_margin="3dp"
-        app:cardCornerRadius="10dp"
-        android:elevation="8dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        >
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            >
-            <ImageView
-                android:id="@+id/imgInCard1"
-                android:layout_width="134dp"
-                android:layout_height="92dp"
-                android:src="@drawable/cuci_kering"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="15dp"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-            <TextView
-                android:id="@+id/inpo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="Cuci Kering"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/black"
-                android:layout_marginStart="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/imgInCard1"
-                app:layout_constraintStart_toStartOf="parent"
-                />
-            <TextView
-                android:id="@+id/tulis1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cuci hingga kering \ntanpa setrika"
-                app:layout_constraintTop_toBottomOf="@+id/inpo"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="3dp"
-                app:layout_constraintStart_toStartOf="parent"
-                />
-            <ImageView
-                android:id="@+id/inpoJamCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/jam"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tulis1"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1 hari"
-                android:textSize="11dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="5dp"
-                app:layout_constraintLeft_toRightOf="@+id/inpoJamCard"
-                app:layout_constraintTop_toBottomOf="@+id/tulis1"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RP. 5.500"
-                android:textSize="13dp"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="5dp"
-                android:textColor="@color/niceBlue"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tulis1"
-                />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_row="0"
-        android:layout_column="1"
-        android:layout_margin="3dp"
-        app:cardCornerRadius="10dp"
-        android:elevation="8dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        >
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            >
-            <ImageView
-                android:id="@+id/imgInCard3"
-                android:layout_width="134dp"
-                android:layout_height="92dp"
-                android:src="@drawable/cuci_kering"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="15dp"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-            <TextView
-                android:id="@+id/inpo3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="Cuci Setrika"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/black"
-                android:layout_marginStart="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/imgInCard3"
-                app:layout_constraintStart_toStartOf="parent"
-                />
-            <TextView
-                android:id="@+id/tulis3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cuci hingga kering \ntanpa setrika"
-                app:layout_constraintTop_toBottomOf="@+id/inpo3"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="3dp"
-                app:layout_constraintStart_toStartOf="parent"
-                />
-            <ImageView
-                android:id="@+id/inpoJamCard3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/jam"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tulis3"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1 hari"
-                android:textSize="11dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="5dp"
-                app:layout_constraintLeft_toRightOf="@+id/inpoJamCard3"
-                app:layout_constraintTop_toBottomOf="@+id/tulis3"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RP. 6.500"
-                android:textSize="13dp"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="5dp"
-                android:textColor="@color/niceBlue"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tulis3"
-                />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_row="1"
-        android:layout_column="0"
-        android:layout_margin="3dp"
-        app:cardCornerRadius="10dp"
-        android:elevation="8dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        >
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            >
-            <ImageView
-                android:id="@+id/imgInCard2"
-                android:layout_width="134dp"
-                android:layout_height="92dp"
-                android:src="@drawable/cuci_kering"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="15dp"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-            <TextView
-                android:id="@+id/inpo2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="Setrika"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/black"
-                android:layout_marginStart="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/imgInCard2"
-                app:layout_constraintStart_toStartOf="parent"
-                />
-            <TextView
-                android:id="@+id/tulis2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cuci hingga kering \ntanpa setrika"
-                app:layout_constraintTop_toBottomOf="@+id/inpo2"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="3dp"
-                app:layout_constraintStart_toStartOf="parent"
-                />
-            <ImageView
-                android:id="@+id/inpoJamCard2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/jam"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tulis2"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1 hari"
-                android:textSize="11dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="5dp"
-                app:layout_constraintLeft_toRightOf="@+id/inpoJamCard2"
-                app:layout_constraintTop_toBottomOf="@+id/tulis2"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RP. 5.500"
-                android:textSize="13dp"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="5dp"
-                android:textColor="@color/niceBlue"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tulis2"
-                />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_row="1"
-        android:layout_column="1"
-        android:layout_margin="3dp"
-        app:cardCornerRadius="10dp"
-        android:elevation="8dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        >
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            >
-            <ImageView
-                android:id="@+id/imgInCard4"
-                android:layout_width="134dp"
-                android:layout_height="92dp"
-                android:src="@drawable/cuci_kering"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="15dp"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-            <TextView
-                android:id="@+id/inpo4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="Cuci Setrika"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/black"
-                android:layout_marginStart="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/imgInCard4"
-                app:layout_constraintStart_toStartOf="parent"
-                />
-            <TextView
-                android:id="@+id/tulis4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cuci hingga kering \ntanpa setrika"
-                app:layout_constraintTop_toBottomOf="@+id/inpo4"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="3dp"
-                app:layout_constraintStart_toStartOf="parent"
-                />
-            <ImageView
-                android:id="@+id/inpoJamCard4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/jam"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tulis4"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1 hari"
-                android:textSize="11dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="5dp"
-                app:layout_constraintLeft_toRightOf="@+id/inpoJamCard4"
-                app:layout_constraintTop_toBottomOf="@+id/tulis4"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RP. 8.000"
-                android:textSize="13dp"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="5dp"
-                android:textColor="@color/niceBlue"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tulis4"
-                />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-</GridLayout>
-<View
-    android:layout_width="match_parent"
-    android:layout_height="20dp"
-    app:layout_constraintTop_toBottomOf="@+id/gridd"
-    app:layout_constraintBottom_toBottomOf="parent"
     />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/recycleLayanan"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
