@@ -72,7 +72,7 @@ public class pesanan extends AppCompatActivity {
         header.setText(layanan);
         headerBawah.setText(layanan);
         lamaWaktu.setText(waktu + " waktu pengerjaan");
-        hargaCucian.setText("Rp."+harga);
+        hargaCucian.setText(harga);
 
     }
     public void setAlamat(){

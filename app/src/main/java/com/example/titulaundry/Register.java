@@ -3,7 +3,6 @@ package com.example.titulaundry;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -16,20 +15,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.titulaundry.db_help.database;
+import com.example.titulaundry.db_help.Database_Tb_user;
 
 public class Register extends AppCompatActivity {
     TextView takonAkun,bckToLogin;
     EditText txNama , txTlp,txEmail,txPw,matchPw;
     Button btnRegist;
     CheckBox syrt;
-    database dbcenter;
+    Database_Tb_user dbcenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         notif(Register.this);
-        dbcenter = new database(this);
+        dbcenter = new Database_Tb_user(this);
         setTectxtColour();
         RegistAccount();
         kembaliKeLogin();

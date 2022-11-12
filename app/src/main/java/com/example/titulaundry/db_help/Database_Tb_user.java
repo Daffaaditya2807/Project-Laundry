@@ -11,11 +11,14 @@ import androidx.annotation.Nullable;
 
 import com.example.titulaundry.Dashboard.home_fragment;
 
-public class database extends SQLiteOpenHelper {
+import java.io.File;
+
+public class Database_Tb_user extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "laundry.db";
     private static final int DATABASE_VERSION = 1;
     private SQLiteDatabase db;
-    public database(Context context) {
+
+    public Database_Tb_user(Context context) {
         super(context,DATABASE_NAME, null ,DATABASE_VERSION);
     }
 
@@ -23,11 +26,20 @@ public class database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        //table users
         String sql = "CREATE TABLE user(id integer primary key , nama text null, telp text null , email text null , password text null);";
         Log.d("Data","onCreate : "+sql);
         sqLiteDatabase.execSQL(sql);
         sql = "INSERT INTO user(id,nama,telp,email,password) VALUES('1','Puan Maharani','085851065295','puan@gmail.com','dprbangkit')";
         sqLiteDatabase.execSQL(sql);
+
+
+        //table jasa
+        String sql1 = "CREATE TABLE jasa(id_layanan text PRIMARY KEY, jenis_jasa text null,deskripsi text null,durasi text null , harga text null);";
+        sqLiteDatabase.execSQL(sql1);
+        Log.d("Data","onCreate : "+sql1);
+        sql1 = "INSERT INTO jasa(id_layanan,jenis_jasa,deskripsi,durasi,harga) VALUES('js123','Cuci Kering','Cuci hingga kering tanpa setrika','1 hari','5000');";
+        sqLiteDatabase.execSQL(sql1);
     }
 
     @Override
@@ -62,6 +74,12 @@ public class database extends SQLiteOpenHelper {
             return true;
         }
 
+    }
+    //Gak bisa
+    public Cursor getDataLayanan(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM jasa ",null);
+        return cursor;
     }
 
 

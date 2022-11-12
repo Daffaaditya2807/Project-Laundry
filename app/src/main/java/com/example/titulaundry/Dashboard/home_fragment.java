@@ -14,10 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.titulaundry.R;
 import com.example.titulaundry.atur_pesanan.pesanan;
-import com.example.titulaundry.db_help.database;
+import com.example.titulaundry.db_help.Database_Tb_user;
+import com.example.titulaundry.db_help.Database_Tb_jasa;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,14 +28,23 @@ import java.util.Calendar;
 public class home_fragment extends Fragment {
     CardView toDaftar;
     public TextView greeting;
-    public database dbHelper;
+    public Database_Tb_user dbHelper;
     Cursor cursor;
     String waktu;
 
     RecyclerView recyclerView;
+
+    //use sample
     AdapterLayanan adapterLayanan;
     RecyclerView.LayoutManager layoutManager;
     ArrayList<model_item_layanan> data;
+
+    //use DB
+    AdapterLayananDB adapterLayananDB;
+    Database_Tb_jasa DB;
+    ArrayList<String> jenis , deskripsi , waktuLayanan , harga;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,13 +53,42 @@ public class home_fragment extends Fragment {
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
 
         setGreeting();
-        RecycleLayanan();
-//        buatPesanan();
+        RecycleDB();
+//      RecycleLayanan();
 
 
+    }
+
+    public void RecycleDB(){
+        DB = new Database_Tb_jasa(getContext());
+        jenis = new ArrayList<>();
+        deskripsi = new ArrayList<>();
+        waktuLayanan = new ArrayList<>();
+        harga = new ArrayList<>();
+        recyclerView = getView().findViewById(R.id.recycleLayanan);
+        adapterLayananDB = new AdapterLayananDB(getContext(),jenis,deskripsi,waktuLayanan,harga);
+
+        layoutManager = new GridLayoutManager(getContext(),2);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapterLayananDB);
+        displayData();
+
+    }
+
+    private void displayData() {
+        Cursor cursor = DB.getDataLayanan();
+        if (cursor.getCount()==0){
+            Toast.makeText(getContext(),"Hai dek",Toast.LENGTH_LONG).show();
+        } else {
+            while (cursor.moveToNext()){
+                jenis.add(cursor.getString(1));
+                deskripsi.add(cursor.getString(2));
+                waktuLayanan.add(cursor.getString(3));
+                harga.add("Rp. "+cursor.getString(4));
+            }
+        }
     }
 
     public void RecycleLayanan(){
@@ -86,7 +126,7 @@ public class home_fragment extends Fragment {
         }
 
         greeting = (TextView) getView().findViewById(R.id.greeting);
-        dbHelper = new database(getActivity());
+        dbHelper = new Database_Tb_user(getActivity());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         cursor = db.rawQuery("SELECT nama FROM user WHERE email = '"+getActivity().getIntent().getStringExtra("email")+"'",null);
         cursor.moveToFirst();
@@ -94,17 +134,6 @@ public class home_fragment extends Fragment {
             cursor.moveToPosition(0);
             greeting.setText("Selamat"+waktu+""+cursor.getString(0).toString());
         }
-//        greeting.setText("Halo dek" + tes);
     }
 
-    public void buatPesanan(){
-        toDaftar = (CardView) getView().findViewById(R.id.cuciKering);
-        toDaftar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getActivity(), pesanan.class);
-                startActivity(i);
-            }
-        });
-    }
 }

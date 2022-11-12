@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -17,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.titulaundry.Dashboard.MainMenu;
-import com.example.titulaundry.db_help.database;
+import com.example.titulaundry.db_help.Database_Tb_user;
 
 public class Login extends AppCompatActivity {
     TextView takonAkun , ToLupaPw;
@@ -25,7 +24,7 @@ public class Login extends AppCompatActivity {
     Button toLoginDashBoard;
     String[] user;
     protected Cursor cursor;
-    database dbcenter;
+    Database_Tb_user dbcenter;
     public static Login lg;
 
     @Override
@@ -33,7 +32,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         lg = this;
-        dbcenter = new database(this);
+        dbcenter = new Database_Tb_user(this);
 
         notif(Login.this);
 
@@ -85,23 +84,20 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 String userCheck = getEmail.getText().toString();
                 String passCheck = getPassword.getText().toString();
-                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
-//                intent.putExtra("email",userCheck);
-                startActivity(intent);
-//                if (userCheck.equals("") || passCheck.equals("")){
-//                    Toast.makeText(Login.this,"Mohon Isi Semua Data",Toast.LENGTH_LONG).show();
-//                } else {
-//                    Boolean checkLogin = dbcenter.checkUserNamePassword(userCheck,passCheck);
-//                    if (checkLogin == true){
-//                        Toast.makeText(Login.this,"Sukses Login",Toast.LENGTH_LONG).show();
-//                        Intent intent = new Intent(getApplicationContext(), MainMenu.class);
-//                        intent.putExtra("email",userCheck);
-//                        startActivity(intent);
-//                        finish();
-//                    } else {
-//                        Toast.makeText(Login.this,"Username / Password salah",Toast.LENGTH_LONG).show();
-//                    }
-//                }
+                if (userCheck.equals("") || passCheck.equals("")){
+                    Toast.makeText(Login.this,"Mohon Isi Semua Data",Toast.LENGTH_LONG).show();
+                } else {
+                    Boolean checkLogin = dbcenter.checkUserNamePassword(userCheck,passCheck);
+                    if (checkLogin == true){
+                        Toast.makeText(Login.this,"Sukses Login",Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                        intent.putExtra("email",userCheck);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(Login.this,"Username / Password salah",Toast.LENGTH_LONG).show();
+                    }
+                }
 
 
             }
