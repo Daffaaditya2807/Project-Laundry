@@ -54,6 +54,7 @@ public class pesanan extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),BeratCucian.class);
+                i.putExtra("hargaLaundry",String.valueOf(harga));
                 startActivity(i);
             }
         });

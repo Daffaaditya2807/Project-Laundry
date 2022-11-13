@@ -7,16 +7,23 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.titulaundry.R;
 
@@ -27,6 +34,7 @@ import java.util.Locale;
 
 public class set_waktu_alamat extends AppCompatActivity {
     RadioButton rBtn1 , rBtn2;
+    ImageButton bckToPesanan;
     DatePickerDialog picker;
     ConstraintLayout viewMenu;
     TextView tgl1 , tgl2,jam1 ,jam2;
@@ -38,8 +46,20 @@ public class set_waktu_alamat extends AppCompatActivity {
         setContentView(R.layout.activity_set_waktu_alamat);
         notif(set_waktu_alamat.this);
         PilihTanggal();
+        setBckToPesanan();
         checkedButton();
         PickerTime();
+    }
+    public void setBckToPesanan(){
+        bckToPesanan = (ImageButton) findViewById(R.id.kembali);
+        bckToPesanan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent i = new Intent(getApplicationContext(),pesanan.class);
+//                startActivity(i);
+                set_waktu_alamat.super.onBackPressed();
+            }
+        });
     }
     public void notif(Activity activity){
         //change color notif bar
@@ -105,6 +125,8 @@ public class set_waktu_alamat extends AppCompatActivity {
                     rBtn2.setChecked(false);
                     rBtn1.setChecked(true);
                     viewMenu.setVisibility(view.VISIBLE);
+                    jam1.setText("07 : 00 WIB");
+                    jam2.setText("07 : 00 WIB");
                 }
             }
         });
@@ -114,8 +136,25 @@ public class set_waktu_alamat extends AppCompatActivity {
             public void onClick(View view) {
                 rBtn1.setChecked(false);
                 rBtn2.setChecked(true);
+                viewMenu.setVisibility(view.VISIBLE);
+                jam2.setText("07 : 00 WIB");
+                jam1.setText("07 : 00 WIB");
             }
         });
+    }
+
+    public void setInterval(TimePickerDialog timePicker){
+        try {
+            NumberPicker minutePicker = timePicker.findViewById(Resources.getSystem().getIdentifier("minute","id","android"));
+            String[] display = new String[]{"0","30"};
+
+            minutePicker.setMinValue(0);
+            minutePicker.setMaxValue(display.length-1);
+            minutePicker.setDisplayedValues(display);
+
+        }catch (Exception e){
+            Log.d("Error : ",e.getMessage());
+        }
     }
 
     public void PickerTime() {
@@ -130,11 +169,27 @@ public class set_waktu_alamat extends AppCompatActivity {
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
                         hour = i;
                         minute = i1;
-                        jam1.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));
+                        System.out.println(String.valueOf(hour));
+                        if (rBtn1.isChecked()){
+                            if (hour>21 || hour<=7){
+                                Toast.makeText(set_waktu_alamat.this,"Gaboleh",Toast.LENGTH_LONG).show();
+                            } else {
+                                jam1.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));
+                            }
+                        } else if (rBtn2.isChecked()){
+                            if (hour>15 || hour<7){
+                                Toast.makeText(set_waktu_alamat.this,"Gaboleh",Toast.LENGTH_LONG).show();
+                            } else {
+                                jam1.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));
+                            }
+                        } else {
+                            Toast.makeText(set_waktu_alamat.this,"Mohon checklist dulu",Toast.LENGTH_LONG).show();
+                        }
                     }
                 };
                 int style = AlertDialog.THEME_HOLO_LIGHT;
                 TimePickerDialog timePickerDialog = new TimePickerDialog(set_waktu_alamat.this,style,onTimeSetListener,hour,minute,true);
+                setInterval(timePickerDialog);
                 timePickerDialog.show();
             }
         });
@@ -146,7 +201,21 @@ public class set_waktu_alamat extends AppCompatActivity {
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
                         hour = i;
                         minute = i1;
-                        jam1.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));
+                        if (rBtn1.isChecked()){
+                            if (hour>21 || hour<7){
+                                Toast.makeText(set_waktu_alamat.this,"Gaboleh",Toast.LENGTH_LONG).show();
+                            } else {
+                                jam2.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));
+                            }
+                        } else if (rBtn2.isChecked()){
+                            if (hour>15 || hour<7){
+                                Toast.makeText(set_waktu_alamat.this,"Gaboleh",Toast.LENGTH_LONG).show();
+                            } else {
+                                jam2.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));
+                            }
+                        } else {
+                            Toast.makeText(set_waktu_alamat.this,"Mohon checklist dulu",Toast.LENGTH_LONG).show();
+                        }
                     }
                 };
                 int style = AlertDialog.THEME_HOLO_LIGHT;

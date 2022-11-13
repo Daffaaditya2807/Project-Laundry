@@ -4,15 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.titulaundry.R;
 
 public class BeratCucian extends AppCompatActivity {
+    ImageButton bckToPesanan;
     int numberOrder = 1;
     int totalHarga = 0;
     CardView plsButton , minButton;
@@ -23,7 +26,7 @@ public class BeratCucian extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_berat_cucian);
         itemCountOrder();
-//        HitungHarga();
+        setBckToPesanan();
         notif(BeratCucian.this);
     }
     public void notif(Activity activity){
@@ -36,12 +39,19 @@ public class BeratCucian extends AppCompatActivity {
         View decor = activity.getWindow().getDecorView();
         decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
-    public void HitungHarga(){
-
-
-
+    public void setBckToPesanan(){
+        bckToPesanan = (ImageButton) findViewById(R.id.kembali);
+        bckToPesanan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent i = new Intent(getApplicationContext(),pesanan.class);
+//                startActivity(i);
+                BeratCucian.super.onBackPressed();
+            }
+        });
     }
     public void itemCountOrder(){
+
         brtCucian = (TextView) findViewById(R.id.totalBeratCucian);
         brtCucian.setText(String.valueOf(numberOrder));
 
@@ -49,7 +59,13 @@ public class BeratCucian extends AppCompatActivity {
         orderCount.setText(String.valueOf(numberOrder));
 
         hrgCucian = (TextView) findViewById(R.id.totalHargaCucian);
-        hrgCucian.setText("Rp. 4.000 X " + String.valueOf(numberOrder)+ " Kg");
+        String hargaBarang = getIntent().getStringExtra("hargaLaundry");
+        hargaBarang = hargaBarang.replaceAll("[^\\d.]", "");
+        hargaBarang = hargaBarang.replace(".","");
+        System.out.println("tes sapa == "+hargaBarang);
+
+        int totalHargabrg = Integer.parseInt(hargaBarang);
+        hrgCucian.setText("Rp. "+hargaBarang+" X " + String.valueOf(numberOrder)+ " Kg");
 
         hargaFix = (TextView) findViewById(R.id.hargaFix);
         hargaFix.setText("Rp. "+ String.valueOf(totalHarga));
@@ -63,8 +79,8 @@ public class BeratCucian extends AppCompatActivity {
                 numberOrder = numberOrder+1;
                 orderCount.setText(String.valueOf(numberOrder));
                 brtCucian.setText(String.valueOf(numberOrder)+ " Kg");
-                hrgCucian.setText("Rp. 4.000 X " + String.valueOf(numberOrder)+ " Kg");
-                totalHarga = 4000 * numberOrder;
+                hrgCucian.setText("Rp. "+String.valueOf(totalHargabrg)+" X " + String.valueOf(numberOrder)+ " Kg");
+                totalHarga = totalHargabrg * numberOrder;
                 hargaFix.setText("Rp. "+ String.valueOf(totalHarga));
             }
         });
@@ -77,8 +93,8 @@ public class BeratCucian extends AppCompatActivity {
                 }
                 orderCount.setText(String.valueOf(numberOrder));
                 brtCucian.setText(String.valueOf(numberOrder)+ " Kg");
-                hrgCucian.setText("Rp. 4.000 X " + String.valueOf(numberOrder)+ " Kg");
-                totalHarga = 4000 * numberOrder;
+                hrgCucian.setText("Rp. "+String.valueOf(totalHargabrg)+" X " + String.valueOf(numberOrder)+ " Kg");
+                totalHarga = totalHargabrg * numberOrder;
                 hargaFix.setText("Rp. "+ String.valueOf(totalHarga));
             }
         });
