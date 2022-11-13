@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -14,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.titulaundry.R;
 
@@ -26,7 +29,8 @@ public class set_waktu_alamat extends AppCompatActivity {
     RadioButton rBtn1 , rBtn2;
     DatePickerDialog picker;
     ConstraintLayout viewMenu;
-    TextView tgl1 , tgl2;
+    TextView tgl1 , tgl2,jam1 ,jam2;
+    int hour , minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class set_waktu_alamat extends AppCompatActivity {
         notif(set_waktu_alamat.this);
         PilihTanggal();
         checkedButton();
+        PickerTime();
     }
     public void notif(Activity activity){
         //change color notif bar
@@ -109,6 +114,44 @@ public class set_waktu_alamat extends AppCompatActivity {
             public void onClick(View view) {
                 rBtn1.setChecked(false);
                 rBtn2.setChecked(true);
+            }
+        });
+    }
+
+    public void PickerTime() {
+        jam1 = (TextView) findViewById(R.id.jam1);
+        jam2 = (TextView) findViewById(R.id.jam2);
+
+        jam1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        hour = i;
+                        minute = i1;
+                        jam1.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));
+                    }
+                };
+                int style = AlertDialog.THEME_HOLO_LIGHT;
+                TimePickerDialog timePickerDialog = new TimePickerDialog(set_waktu_alamat.this,style,onTimeSetListener,hour,minute,true);
+                timePickerDialog.show();
+            }
+        });
+        jam2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        hour = i;
+                        minute = i1;
+                        jam1.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));
+                    }
+                };
+                int style = AlertDialog.THEME_HOLO_LIGHT;
+                TimePickerDialog timePickerDialog = new TimePickerDialog(set_waktu_alamat.this,style,onTimeSetListener,hour,minute,true);
+                timePickerDialog.show();
             }
         });
     }

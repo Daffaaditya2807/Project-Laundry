@@ -209,6 +209,7 @@
                             android:textSize="16dp"
                             android:textAlignment="center" />
                         <TextView
+                            android:id="@+id/jam1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="08 : 00 WIB "
@@ -217,6 +218,7 @@
                             android:textSize="16dp"
                             android:textStyle="bold"
                             android:textAlignment="center" />
+
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -272,6 +274,7 @@
                             android:textSize="16dp"
                             android:textAlignment="center" />
                         <TextView
+                            android:id="@+id/jam2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="08 : 00 WIB "
