@@ -75,12 +75,6 @@ public class Database_Tb_user extends SQLiteOpenHelper {
         }
 
     }
-    //Gak bisa
-    public Cursor getDataLayanan(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM jasa ",null);
-        return cursor;
-    }
 
 
 }

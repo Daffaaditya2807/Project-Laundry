@@ -84,20 +84,25 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 String userCheck = getEmail.getText().toString();
                 String passCheck = getPassword.getText().toString();
-                if (userCheck.equals("") || passCheck.equals("")){
-                    Toast.makeText(Login.this,"Mohon Isi Semua Data",Toast.LENGTH_LONG).show();
-                } else {
-                    Boolean checkLogin = dbcenter.checkUserNamePassword(userCheck,passCheck);
-                    if (checkLogin == true){
-                        Toast.makeText(Login.this,"Sukses Login",Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), MainMenu.class);
-                        intent.putExtra("email",userCheck);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(Login.this,"Username / Password salah",Toast.LENGTH_LONG).show();
-                    }
-                }
+                //nanti hapus
+                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                startActivity(intent);
+                //end
+
+//                if (userCheck.equals("") || passCheck.equals("")){
+//                    Toast.makeText(Login.this,"Mohon Isi Semua Data",Toast.LENGTH_LONG).show();
+//                } else {
+//                    Boolean checkLogin = dbcenter.checkUserNamePassword(userCheck,passCheck);
+//                    if (checkLogin == true){
+//                        Toast.makeText(Login.this,"Sukses Login",Toast.LENGTH_LONG).show();
+//                        Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+//                        intent.putExtra("email",userCheck);
+//                        startActivity(intent);
+//                        finish();
+//                    } else {
+//                        Toast.makeText(Login.this,"Username / Password salah",Toast.LENGTH_LONG).show();
+//                    }
+//                }
 
 
             }

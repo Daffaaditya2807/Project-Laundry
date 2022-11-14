@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ public class BeratCucian extends AppCompatActivity {
     int totalHarga = 0;
     CardView plsButton , minButton;
     TextView orderCount,brtCucian,hrgCucian,hargaFix;
+    Button brtPsn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ public class BeratCucian extends AppCompatActivity {
         setContentView(R.layout.activity_berat_cucian);
         itemCountOrder();
         setBckToPesanan();
+        bawahDataBerat();
         notif(BeratCucian.this);
     }
     public void notif(Activity activity){
@@ -47,6 +50,52 @@ public class BeratCucian extends AppCompatActivity {
 //                Intent i = new Intent(getApplicationContext(),pesanan.class);
 //                startActivity(i);
                 BeratCucian.super.onBackPressed();
+            }
+        });
+    }
+    public void bawahDataBerat(){
+        brtPsn = (Button) findViewById(R.id.buatPesanan);
+        brtPsn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String layanan;
+                String waktu;
+                String harga;
+                String tanggal;
+                String alamat;
+                String hariKembali;
+                String waktuJemput;
+                String waktuKembali;
+
+                //inisiasi dari class berat cucian
+                layanan = getIntent().getStringExtra("layanan");
+                waktu = getIntent().getStringExtra("waktu");
+                harga = getIntent().getStringExtra("harga");
+
+                //inisiasi dari class pesanan
+                tanggal = getIntent().getStringExtra("hariJemput");
+                alamat = getIntent().getStringExtra("alamatUser");
+                hariKembali = getIntent().getStringExtra("hariKembali");
+                waktuJemput = getIntent().getStringExtra("waktuJemput");
+                waktuKembali = getIntent().getStringExtra("waktuKembali");
+
+                String count = String.valueOf(numberOrder);
+                Intent i = new Intent(getApplicationContext(),pesanan.class);
+                System.out.println("tanggal = "+tanggal);
+                //data dari class berat
+                i.putExtra("berat",count);
+                i.putExtra("layanan",layanan);
+                i.putExtra("waktu",waktu);
+                i.putExtra("harga",harga);
+
+                //data dari class pesanan
+                i.putExtra("hariJemput",tanggal);
+                i.putExtra("alamatUser",alamat);
+                i.putExtra("hariKembali",hariKembali);
+                i.putExtra("waktuJemput",waktuJemput);
+                i.putExtra("waktuKembali",waktuKembali);
+
+                startActivity(i);
             }
         });
     }

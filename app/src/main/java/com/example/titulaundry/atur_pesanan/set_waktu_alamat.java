@@ -38,8 +38,10 @@ public class set_waktu_alamat extends AppCompatActivity {
     Button makePesanan;
     DatePickerDialog picker;
     ConstraintLayout viewMenu;
-    TextView tgl1 , tgl2,jam1 ,jam2;
+    TextView tgl1 , tgl2,jam1 ,jam2,alamatDetail;
     int hour , minute;
+
+    String waktuJemput , waktuPengembalian,hariJemput,hariKembali;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class set_waktu_alamat extends AppCompatActivity {
         setBckToPesanan();
         checkedButton();
         PickerTime();
+        bawahDataToPesanan();
     }
     public void setBckToPesanan(){
         bckToPesanan = (ImageButton) findViewById(R.id.kembali);
@@ -74,6 +77,7 @@ public class set_waktu_alamat extends AppCompatActivity {
     }
 
     public String getMonth(int month) {
+
         return new DateFormatSymbols().getMonths()[month-1];
     }
 
@@ -94,6 +98,7 @@ public class set_waktu_alamat extends AppCompatActivity {
 
 
                         tgl1.setText(String.valueOf(day) + " " + getMonth((month+1)) + " " + String.valueOf(year));
+                        hariJemput = String.valueOf(day+"-"+(month+1)+"-"+year);
                     }
                 },year,month,day);
                 picker.show();
@@ -108,6 +113,7 @@ public class set_waktu_alamat extends AppCompatActivity {
 
 
                         tgl2.setText(String.valueOf(day) + " " + getMonth((month+1)) + " " + String.valueOf(year));
+                        hariKembali = String.valueOf(day+"-"+(month+1)+"-"+year);
                     }
                 },year,month,day);
                 picker.show();
@@ -129,8 +135,8 @@ public class set_waktu_alamat extends AppCompatActivity {
                     rBtn1.setChecked(true);
                     makePesanan.setVisibility(view.VISIBLE);
                     viewMenu.setVisibility(view.VISIBLE);
-                    jam1.setText("07 : 00 WIB");
-                    jam2.setText("07 : 00 WIB");
+                    jam1.setText("07:00 WIB");
+                    jam2.setText("07:00 WIB");
                 }
             }
         });
@@ -142,8 +148,8 @@ public class set_waktu_alamat extends AppCompatActivity {
                 rBtn2.setChecked(true);
                 makePesanan.setVisibility(view.VISIBLE);
                 viewMenu.setVisibility(view.VISIBLE);
-                jam2.setText("07 : 00 WIB");
-                jam1.setText("07 : 00 WIB");
+                jam2.setText("07:00 WIB");
+                jam1.setText("07:00 WIB");
             }
         });
     }
@@ -165,7 +171,7 @@ public class set_waktu_alamat extends AppCompatActivity {
     public void PickerTime() {
         jam1 = (TextView) findViewById(R.id.jam1);
         jam2 = (TextView) findViewById(R.id.jam2);
-
+        //waktu jemput
         jam1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,12 +186,15 @@ public class set_waktu_alamat extends AppCompatActivity {
                                 Toast.makeText(set_waktu_alamat.this,"Gaboleh",Toast.LENGTH_LONG).show();
                             } else {
                                 jam1.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));
+                                waktuJemput = String.format(Locale.getDefault(),"%02d:%02d",hour,minute);
+
                             }
                         } else if (rBtn2.isChecked()){
                             if (hour>15 || hour<7){
                                 Toast.makeText(set_waktu_alamat.this,"Gaboleh",Toast.LENGTH_LONG).show();
                             } else {
                                 jam1.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));
+                                waktuJemput = String.format(Locale.getDefault(),"%02d:%02d",hour,minute);
                             }
                         } else {
                             Toast.makeText(set_waktu_alamat.this,"Mohon checklist dulu",Toast.LENGTH_LONG).show();
@@ -198,6 +207,7 @@ public class set_waktu_alamat extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
+        //waktu pengembalian
         jam2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -211,12 +221,14 @@ public class set_waktu_alamat extends AppCompatActivity {
                                 Toast.makeText(set_waktu_alamat.this,"Gaboleh",Toast.LENGTH_LONG).show();
                             } else {
                                 jam2.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));
+                                waktuPengembalian = String.format(Locale.getDefault(),"%02d:%02d",hour,minute);
                             }
                         } else if (rBtn2.isChecked()){
                             if (hour>15 || hour<7){
                                 Toast.makeText(set_waktu_alamat.this,"Gaboleh",Toast.LENGTH_LONG).show();
                             } else {
                                 jam2.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));
+                                waktuPengembalian = String.format(Locale.getDefault(),"%02d:%02d",hour,minute);
                             }
                         } else {
                             Toast.makeText(set_waktu_alamat.this,"Mohon checklist dulu",Toast.LENGTH_LONG).show();
@@ -226,6 +238,49 @@ public class set_waktu_alamat extends AppCompatActivity {
                 int style = AlertDialog.THEME_HOLO_LIGHT;
                 TimePickerDialog timePickerDialog = new TimePickerDialog(set_waktu_alamat.this,style,onTimeSetListener,hour,minute,true);
                 timePickerDialog.show();
+            }
+        });
+    }
+
+    public void bawahDataToPesanan(){
+        makePesanan = (Button) findViewById(R.id.buatPesanan);
+        makePesanan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //membawah data dari pesanan dan berat
+                String layanan;
+                String waktu;
+                String harga;
+                String berat;
+
+
+                layanan = getIntent().getStringExtra("layanan");
+                waktu = getIntent().getStringExtra("waktu");
+                harga = getIntent().getStringExtra("harga");
+                berat = getIntent().getStringExtra("berat");
+
+                System.out.println("jemput = "+hariJemput);
+                System.out.println("kembali = "+hariKembali);
+                System.out.println("waktu jemput = "+waktuJemput);
+                System.out.println("Waktu Kembali = "+waktuPengembalian);
+
+                Intent i = new Intent(getApplicationContext(),pesanan.class);
+
+                //Data asli dari class setWaktualamat
+                String alamat = "Bandung";
+                i.putExtra("hariJemput",hariJemput);
+                i.putExtra("hariKembali",hariKembali);
+                i.putExtra("waktuJemput",waktuJemput);
+                i.putExtra("waktuKembali",waktuPengembalian);
+                i.putExtra("alamatUser",alamat);
+
+
+                //data dari class sebelumnya
+                i.putExtra("layanan",layanan);
+                i.putExtra("waktu",waktu);
+                i.putExtra("harga",harga);
+                i.putExtra("berat",berat);
+                startActivity(i);
             }
         });
     }
