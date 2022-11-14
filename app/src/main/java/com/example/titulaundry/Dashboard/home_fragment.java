@@ -59,6 +59,7 @@ public class home_fragment extends Fragment {
 //      RecycleLayanan();
 
 
+
     }
 
     public void RecycleDB(){
@@ -69,7 +70,11 @@ public class home_fragment extends Fragment {
         harga = new ArrayList<>();
         recyclerView = getView().findViewById(R.id.recycleLayanan);
         adapterLayananDB = new AdapterLayananDB(getContext(),jenis,deskripsi,waktuLayanan,harga);
-
+        //insert layanan
+        DB.inserDataLayanan("js200","Cuci Uap","Mencuci baju dengan uap panas","2 hari" ,"3000");
+        DB.inserDataLayanan("js201","Cuci Tidak Basah","Mencuci baju dengan Tanpa air","1 hari" ,"7000");
+        DB.inserDataLayanan("js202","Cuci Mandiri","Mencuci baju Sendiri di Tokoh kami","1 hari" ,"12000");
+        //======================
         layoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapterLayananDB);

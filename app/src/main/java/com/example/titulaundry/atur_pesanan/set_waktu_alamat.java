@@ -35,6 +35,7 @@ import java.util.Locale;
 public class set_waktu_alamat extends AppCompatActivity {
     RadioButton rBtn1 , rBtn2;
     ImageButton bckToPesanan;
+    Button makePesanan;
     DatePickerDialog picker;
     ConstraintLayout viewMenu;
     TextView tgl1 , tgl2,jam1 ,jam2;
@@ -117,6 +118,8 @@ public class set_waktu_alamat extends AppCompatActivity {
     public void checkedButton(){
         rBtn1 = (RadioButton) findViewById(R.id.radioButton1);
         rBtn2 = (RadioButton) findViewById(R.id.radioButton2);
+        makePesanan = (Button)findViewById(R.id.buatPesanan);
+
         viewMenu = (ConstraintLayout) findViewById(R.id.kotakMenu);
         rBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +127,7 @@ public class set_waktu_alamat extends AppCompatActivity {
                 if (rBtn1.isChecked()){
                     rBtn2.setChecked(false);
                     rBtn1.setChecked(true);
+                    makePesanan.setVisibility(view.VISIBLE);
                     viewMenu.setVisibility(view.VISIBLE);
                     jam1.setText("07 : 00 WIB");
                     jam2.setText("07 : 00 WIB");
@@ -136,6 +140,7 @@ public class set_waktu_alamat extends AppCompatActivity {
             public void onClick(View view) {
                 rBtn1.setChecked(false);
                 rBtn2.setChecked(true);
+                makePesanan.setVisibility(view.VISIBLE);
                 viewMenu.setVisibility(view.VISIBLE);
                 jam2.setText("07 : 00 WIB");
                 jam1.setText("07 : 00 WIB");
