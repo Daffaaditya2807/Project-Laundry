@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.titulaundry.R;
 import com.example.titulaundry.atur_pesanan.pesanan;
+import com.example.titulaundry.db_help.Database_Tb_Pesanan;
 import com.example.titulaundry.db_help.Database_Tb_user;
 import com.example.titulaundry.db_help.Database_Tb_jasa;
 
@@ -44,7 +46,10 @@ public class home_fragment extends Fragment {
     Database_Tb_jasa DB;
     ArrayList<String> jenis , deskripsi , waktuLayanan , harga;
 
-
+    //use DB pesanan
+    AdapterPesananDB adapterPesananDB;
+    Database_Tb_Pesanan PS;
+    ArrayList<String> JenisPesanan , statusPesanan,WaktuPesanan,TotalPesanan;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,10 +61,39 @@ public class home_fragment extends Fragment {
 
         setGreeting();
         RecycleDB();
+        RecycleDBPesanan();
 //      RecycleLayanan();
 
 
 
+    }
+    public void RecycleDBPesanan(){
+        PS = new Database_Tb_Pesanan(getContext());
+        JenisPesanan = new ArrayList<>();
+        statusPesanan = new ArrayList<>();
+        WaktuPesanan = new ArrayList<>();
+        TotalPesanan = new ArrayList<>();
+        recyclerView = getView().findViewById(R.id.recyclePesanan);
+        adapterPesananDB = new AdapterPesananDB(getContext(),JenisPesanan,statusPesanan,WaktuPesanan,TotalPesanan);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapterPesananDB);;
+        displayDataPesanan();
+    }
+
+    private void displayDataPesanan() {
+        Cursor cursor = PS.getDataPesanan();
+        if (cursor.getCount()==0){
+            Toast.makeText(getContext(), "KOSONGG", Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()){
+                JenisPesanan.add(cursor.getString(1)+" "+cursor.getString(2)+" Kg");
+                statusPesanan.add(cursor.getString(3));
+                WaktuPesanan.add(cursor.getString(4));
+                TotalPesanan.add("Rp. "+cursor.getString(5));
+                System.out.println("Berat Cucian = "+cursor.getString(2));
+            }
+        }
     }
 
     public void RecycleDB(){
@@ -74,6 +108,7 @@ public class home_fragment extends Fragment {
 //        DB.inserDataLayanan("js200","Cuci Uap","Mencuci baju dengan uap panas","2 hari" ,"3000");
 //        DB.inserDataLayanan("js201","Cuci Tidak Basah","Mencuci baju dengan Tanpa air","1 hari" ,"7000");
 //        DB.inserDataLayanan("js202","Cuci Mandiri","Mencuci baju Sendiri di Tokoh kami","1 hari" ,"12000");
+        DB.inserDataLayanan("js204","Cuci Jual","Mencuci baju Kemudian dijual","7 hari" ,"2500");
         //======================
         layoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
@@ -92,6 +127,7 @@ public class home_fragment extends Fragment {
                 deskripsi.add(cursor.getString(2));
                 waktuLayanan.add(cursor.getString(3));
                 harga.add("Rp. "+cursor.getString(4));
+
             }
         }
     }
