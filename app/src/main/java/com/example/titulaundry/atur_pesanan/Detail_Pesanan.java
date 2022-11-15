@@ -24,8 +24,8 @@ import java.util.Date;
 
 public class Detail_Pesanan extends AppCompatActivity {
 
-    String layanan , hargaLayanan , beratCucian,hariJemput,hariKirim,waktuJemput,waktuKirim,alamatUser;
-    TextView jnslyn,txHariJemput,txHariKirim,txJamJemput,txJamKirim,beratXharga,totalHarga;
+    String layanan , hargaLayanan , beratCucian,hariJemput,hariKirim,waktuJemput,waktuKirim,alamatUserPick,alamatUserSend;
+    TextView jnslyn,txHariJemput,txHariKirim,beratXharga,totalHarga,alamatDetailPick,alamatDetailSend;
     String formatHariJemput,formatHariKirim;
     int GettotalHarga;
     Button backToHome;
@@ -42,10 +42,18 @@ public class Detail_Pesanan extends AppCompatActivity {
         getDataFromPesanan();
         HitungTotal();
         setFormatHari();
+        setAlamat();
         setDataFromPesanan();
         InsertPesanan();
 
 
+    }
+
+    public void setAlamat(){
+        alamatDetailPick = (TextView) findViewById(R.id.alamatDetail);
+        alamatDetailSend = (TextView) findViewById(R.id.alamatDetailKirim);
+        alamatDetailPick.setText(alamatUserPick);
+        alamatDetailSend.setText(alamatUserSend);
     }
 
     public void HitungTotal(){
@@ -105,7 +113,9 @@ public class Detail_Pesanan extends AppCompatActivity {
         hariKirim = getIntent().getStringExtra("hariKembali");
         waktuJemput = getIntent().getStringExtra("waktuJemput");
         waktuKirim = getIntent().getStringExtra("waktuKembali");
-        alamatUser = getIntent().getStringExtra("alamatUser");
+        alamatUserPick = getIntent().getStringExtra("alamatUserPick");
+        alamatUserSend = getIntent().getStringExtra("alamatUserSend");
+        System.out.println("KIRIM KE = "+alamatUserSend);
     }
 
     public void InsertPesanan(){

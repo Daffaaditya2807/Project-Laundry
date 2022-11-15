@@ -319,6 +319,8 @@
                 android:layout_marginRight="10dp"
                 />
             <TextView
+                android:id="@+id/getAlamatJemput"
+                android:onClick="funcEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Edit"
@@ -386,9 +388,11 @@
                 android:layout_marginRight="10dp"
                 />
             <TextView
+                android:id="@+id/getAlamatKirim"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Edit"
+                android:onClick="funcEditKirim"
                 android:textSize="15dp"
                 android:textColor="@color/niceBlue"
                 />

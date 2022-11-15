@@ -154,7 +154,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@drawable/rocket"
-                    android:layout_marginStart="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     />
@@ -162,7 +161,7 @@
                     android:id="@+id/inpowaktu"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:text="Pilih waktu jemput dan pengiriman"
                     app:layout_constraintLeft_toRightOf="@+id/rocket"
                     android:gravity="center_vertical"
@@ -205,7 +204,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@drawable/weight"
-                    android:layout_marginStart="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     />
@@ -213,7 +211,7 @@
                     android:id="@+id/beartCucian"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:text="Atur berat cucian"
                     app:layout_constraintLeft_toRightOf="@+id/weight"
                     android:gravity="center_vertical"

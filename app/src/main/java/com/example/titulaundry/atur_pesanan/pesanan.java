@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.titulaundry.Dashboard.MainMenu;
 import com.example.titulaundry.Dashboard.home_fragment;
@@ -71,7 +72,8 @@ public class pesanan extends AppCompatActivity {
 
                 //bawah data dari class waktuAlamat
                 i.putExtra("hariJemput",getIntent().getStringExtra("hariJemput"));
-                i.putExtra("alamatUser",getIntent().getStringExtra("alamatUser"));
+                i.putExtra("alamatUserPick",getIntent().getStringExtra("alamatUserPick"));
+                i.putExtra("alamatUserSend",getIntent().getStringExtra("alamatUserSend"));
                 i.putExtra("hariKembali",getIntent().getStringExtra("hariKembali"));
                 i.putExtra("waktuJemput",getIntent().getStringExtra("waktuJemput"));
                 i.putExtra("waktuKembali",getIntent().getStringExtra("waktuKembali"));
@@ -86,9 +88,9 @@ public class pesanan extends AppCompatActivity {
         String setBerat = getIntent().getStringExtra("berat");
 
         if (setBerat == null){
-            setBeratCucian.setText("Halo dek");
+            setBeratCucian.setText("Atur Berat Cucian");
         } else {
-            setBeratCucian.setText("Berat : "+setBerat);
+            setBeratCucian.setText("Berat : "+setBerat + " Kg");
         }
     }
 
@@ -141,6 +143,7 @@ public class pesanan extends AppCompatActivity {
                 i.putExtra("harga",harga);
                 //bawah data dari class beratcucian
                 i.putExtra("berat",getIntent().getStringExtra("berat"));
+
                 startActivity(i);
             }
         });
@@ -160,26 +163,42 @@ public class pesanan extends AppCompatActivity {
         gasPesanan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String dayPick =getIntent().getStringExtra("hariJemput");
+                String daySend = getIntent().getStringExtra("hariKembali");
+                String timePick = getIntent().getStringExtra("waktuJemput");
+                String timeSend = getIntent().getStringExtra("waktuKembali");
+                String addressPick = getIntent().getStringExtra("alamatUserPick");
+                String addressSend = getIntent().getStringExtra("alamatUserSend");
+                String weight = getIntent().getStringExtra("berat");
+
                 System.out.println("Jenis Pesanan = "+layanan + "" + getIntent().getStringExtra("berat")+" Kg");
                 System.out.println("Penjemputan = " + getIntent().getStringExtra("hariJemput"));
                 System.out.println("jam jemput = "+getIntent().getStringExtra("waktuJemput"));
                 System.out.println("Pengiriman = "+getIntent().getStringExtra("hariKembali"));
                 System.out.println("Jam pengiriman = "+getIntent().getStringExtra("waktuKembali"));
-                System.out.println("Alamat = "+getIntent().getStringExtra("alamatUser"));
+                System.out.println("Alamat = "+getIntent().getStringExtra("alamatUserPick"));
+                System.out.println("Alamat = "+getIntent().getStringExtra("alamatUserSend"));
                 System.out.println("harga Laundry = "+harga);
                 System.out.println("total Berat = "+getIntent().getStringExtra("berat"));
 
-                Intent i = new Intent(getApplicationContext(),Detail_Pesanan.class);
-                i.putExtra("layanan",layanan);
-                i.putExtra("berat",getIntent().getStringExtra("berat"));
-                i.putExtra("hariJemput",getIntent().getStringExtra("hariJemput"));
-                i.putExtra("waktuJemput",getIntent().getStringExtra("waktuJemput"));
-                i.putExtra("hariKembali",getIntent().getStringExtra("hariKembali"));
-                i.putExtra("waktuKembali",getIntent().getStringExtra("waktuKembali"));
-                i.putExtra("alamatUser",getIntent().getStringExtra("alamatUser"));
-                i.putExtra("harga",harga);
-                i.putExtra("berat",getIntent().getStringExtra("berat"));
-                startActivity(i);
+                if (dayPick == null || daySend == null || timePick == null || timeSend == null
+                        || addressPick == null || addressSend == null || weight ==null ){
+                    Toast.makeText(pesanan.this,"Isi Lengkap Terlebih dahulu",Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Intent i = new Intent(getApplicationContext(),Detail_Pesanan.class);
+                    i.putExtra("layanan",layanan);
+                    i.putExtra("berat",weight);
+                    i.putExtra("hariJemput",dayPick);
+                    i.putExtra("waktuJemput",timePick);
+                    i.putExtra("hariKembali",daySend);
+                    i.putExtra("waktuKembali",timeSend);
+                    i.putExtra("alamatUserPick",addressPick);
+                    i.putExtra("alamatUserSend",addressSend);
+                    i.putExtra("harga",harga);
+                    startActivity(i);
+                }
+
             }
         });
     }

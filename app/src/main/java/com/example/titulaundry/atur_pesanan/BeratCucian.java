@@ -62,7 +62,8 @@ public class BeratCucian extends AppCompatActivity {
                 String waktu;
                 String harga;
                 String tanggal;
-                String alamat;
+                String alamatPick;
+                String alamatSend;
                 String hariKembali;
                 String waktuJemput;
                 String waktuKembali;
@@ -74,7 +75,8 @@ public class BeratCucian extends AppCompatActivity {
 
                 //inisiasi dari class pesanan
                 tanggal = getIntent().getStringExtra("hariJemput");
-                alamat = getIntent().getStringExtra("alamatUser");
+                alamatPick = getIntent().getStringExtra("alamatUserPick");
+                alamatSend = getIntent().getStringExtra("alamatUserSend");
                 hariKembali = getIntent().getStringExtra("hariKembali");
                 waktuJemput = getIntent().getStringExtra("waktuJemput");
                 waktuKembali = getIntent().getStringExtra("waktuKembali");
@@ -90,7 +92,8 @@ public class BeratCucian extends AppCompatActivity {
 
                 //data dari class pesanan
                 i.putExtra("hariJemput",tanggal);
-                i.putExtra("alamatUser",alamat);
+                i.putExtra("alamatUserPick",alamatPick);
+                i.putExtra("alamatUserSend",alamatSend);
                 i.putExtra("hariKembali",hariKembali);
                 i.putExtra("waktuJemput",waktuJemput);
                 i.putExtra("waktuKembali",waktuKembali);

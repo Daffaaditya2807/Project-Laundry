@@ -3,6 +3,7 @@ package com.example.titulaundry;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -23,6 +24,7 @@ public class Register extends AppCompatActivity {
     Button btnRegist;
     CheckBox syrt;
     Database_Tb_user dbcenter;
+    AlertDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,8 @@ public class Register extends AppCompatActivity {
         kembaliKeLogin();
 
     }
+
+
 
     public void setTectxtColour(){
         takonAkun = (TextView) findViewById(R.id.takonAkun);
@@ -76,20 +80,24 @@ public class Register extends AppCompatActivity {
                 System.out.println(random_int);
                 String numberRandom = String.valueOf(random_int);
 
+                String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
 
                 if (!getPw.equals(matPw)){
                     Toast.makeText(Register.this,"Password Tidak Sama",Toast.LENGTH_LONG).show();
                 } else if  (getNama.equals("")||getTelp.equals("")||getEmail.equals("")||getPw.equals("")||matPw.equals("")||!syrt.isChecked()){
                     Toast.makeText(Register.this,"Harap Lengkapi",Toast.LENGTH_LONG).show();
-                } else {
-                    boolean insert = dbcenter.insertData(numberRandom,getNama, getTelp, getEmail, getPw);
-                    if (insert==true){
-                        Toast.makeText(Register.this,"Berhasil",Toast.LENGTH_LONG).show();
-                        Intent i = new Intent(getApplicationContext(),Konfirmasi.class);
-                        startActivity(i);
-                    } else{
-                        Toast.makeText(Register.this,"gagal",Toast.LENGTH_LONG).show();
-                    }
+                } else if (!getEmail.matches(emailPattern)||!getEmail.contains("@gmail.com")){
+                    Toast.makeText(Register.this,"Email tidak valid",Toast.LENGTH_LONG).show();
+                } else{
+                    Toast.makeText(Register.this,"Email valid",Toast.LENGTH_LONG).show();
+//                    boolean insert = dbcenter.insertData(numberRandom,getNama, getTelp, getEmail, getPw);
+//                    if (insert==true){
+//                        Toast.makeText(Register.this,"Berhasil",Toast.LENGTH_LONG).show();
+//                        Intent i = new Intent(getApplicationContext(),Konfirmasi.class);
+//                        startActivity(i);
+//                    } else{
+//                        Toast.makeText(Register.this,"gagal",Toast.LENGTH_LONG).show();
+//                    }
 
                 }
             }

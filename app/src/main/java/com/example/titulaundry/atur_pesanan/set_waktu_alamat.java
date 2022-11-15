@@ -17,7 +17,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
@@ -35,10 +37,11 @@ import java.util.Locale;
 public class set_waktu_alamat extends AppCompatActivity {
     RadioButton rBtn1 , rBtn2;
     ImageButton bckToPesanan;
-    Button makePesanan;
+    Button makePesanan,submit;
     DatePickerDialog picker;
     ConstraintLayout viewMenu;
-    TextView tgl1 , tgl2,jam1 ,jam2,alamatDetail;
+    TextView tgl1 , tgl2,jam1 ,jam2,alamatDetailJemput,alamatDetailKirim,BtnAlamatJemput,BtnAlamatKirim;
+    AlertDialog dialog;
     int hour , minute;
 
     String waktuJemput , waktuPengembalian,hariJemput,hariKembali;
@@ -49,10 +52,65 @@ public class set_waktu_alamat extends AppCompatActivity {
         setContentView(R.layout.activity_set_waktu_alamat);
         notif(set_waktu_alamat.this);
         PilihTanggal();
+        inisiasiAlamat();
         setBckToPesanan();
         checkedButton();
         PickerTime();
         bawahDataToPesanan();
+    }
+    public void inisiasiAlamat(){
+        alamatDetailJemput = (TextView) findViewById(R.id.alamatDetail);
+        alamatDetailKirim = (TextView) findViewById(R.id.alamatDetailKirim);
+    }
+    private void showALertKirim() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.alert_edit_alamat,null);
+        EditText alamat;
+        ImageView clsBtn;
+        clsBtn = (ImageView) view.findViewById(R.id.closeButton);
+        clsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        alamat = (EditText) view.findViewById(R.id.inputAlamat);
+        submit = (Button) view.findViewById(R.id.submitAlamat);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alamatDetailKirim.setText(alamat.getText().toString());
+                dialog.dismiss();
+            }
+        });
+        builder.setView(view);
+        dialog = builder.create();
+    }
+    public void showALertJemput(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.alert_edit_alamat,null);
+        EditText alamat;
+        ImageView clsBtn;
+        clsBtn = (ImageView) view.findViewById(R.id.closeButton);
+        clsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        alamat = (EditText) view.findViewById(R.id.inputAlamat);
+        submit = (Button) view.findViewById(R.id.submitAlamat);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alamatDetailJemput.setText(alamat.getText().toString());
+                dialog.dismiss();
+            }
+        });
+        builder.setView(view);
+        dialog = builder.create();
+
     }
     public void setBckToPesanan(){
         bckToPesanan = (ImageButton) findViewById(R.id.kembali);
@@ -86,6 +144,14 @@ public class set_waktu_alamat extends AppCompatActivity {
         tgl2 = (TextView) findViewById(R.id.TanggalJemput2);
 
         final Calendar cldr = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy");
+        SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("dd-M-yyyy");
+
+        tgl1.setText(simpleDateFormat.format(cldr.getTime()));
+        hariJemput = simpleDateFormat2.format(cldr.getTime());
+
+        tgl2.setText(simpleDateFormat.format(cldr.getTime()));
+        hariKembali= simpleDateFormat2.format(cldr.getTime());
         int day = cldr.get(Calendar.DAY_OF_MONTH);
         int month = cldr.get(Calendar.MONTH);
         int year = cldr.get(Calendar.YEAR);
@@ -263,8 +329,16 @@ public class set_waktu_alamat extends AppCompatActivity {
                 System.out.println("kembali = "+hariKembali);
                 System.out.println("waktu jemput = "+waktuJemput);
                 System.out.println("Waktu Kembali = "+waktuPengembalian);
+                System.out.println("Alamat Pick = "+alamatDetailJemput.getText().toString());
+                System.out.println("Alamat Send = "+alamatDetailKirim.getText().toString());
 
-                Intent i = new Intent(getApplicationContext(),pesanan.class);
+                if (waktuJemput == null ){
+                    Toast.makeText(set_waktu_alamat.this,"Harap pilih jam Penjemputan",Toast.LENGTH_SHORT).show();
+                } else if (waktuPengembalian == null){
+                    Toast.makeText(set_waktu_alamat.this,"Harap pilih jam pengiriman",Toast.LENGTH_SHORT).show();
+                }else {
+
+                    Intent i = new Intent(getApplicationContext(),pesanan.class);
 
                 //Data asli dari class setWaktualamat
                 String alamat = "Bandung";
@@ -272,7 +346,8 @@ public class set_waktu_alamat extends AppCompatActivity {
                 i.putExtra("hariKembali",hariKembali);
                 i.putExtra("waktuJemput",waktuJemput);
                 i.putExtra("waktuKembali",waktuPengembalian);
-                i.putExtra("alamatUser",alamat);
+                i.putExtra("alamatUserPick",alamatDetailJemput.getText().toString());
+                i.putExtra("alamatUserSend",alamatDetailKirim.getText().toString());
 
 
                 //data dari class sebelumnya
@@ -281,7 +356,33 @@ public class set_waktu_alamat extends AppCompatActivity {
                 i.putExtra("harga",harga);
                 i.putExtra("berat",berat);
                 startActivity(i);
+                }
+
             }
         });
     }
+
+    public void funcEdit(View view) {
+        BtnAlamatJemput = (TextView) findViewById(R.id.getAlamatJemput);
+        BtnAlamatJemput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showALertJemput();
+                dialog.show();
+            }
+        });
+    }
+
+    public void funcEditKirim(View view) {
+        BtnAlamatKirim = (TextView) findViewById(R.id.getAlamatKirim);
+        BtnAlamatKirim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showALertKirim();
+                dialog.show();
+            }
+        });
+    }
+
+
 }
