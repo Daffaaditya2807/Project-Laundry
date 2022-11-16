@@ -62,6 +62,40 @@ public class set_waktu_alamat extends AppCompatActivity {
         alamatDetailJemput = (TextView) findViewById(R.id.alamatDetail);
         alamatDetailKirim = (TextView) findViewById(R.id.alamatDetailKirim);
     }
+    public void IntentPesanan(){
+        String layanan;
+        String waktu;
+        String harga;
+        String berat;
+
+        layanan = getIntent().getStringExtra("layanan");
+        waktu = getIntent().getStringExtra("waktu");
+        harga = getIntent().getStringExtra("harga");
+        berat = getIntent().getStringExtra("berat");
+
+        Intent i = new Intent(getApplicationContext(),pesanan.class);
+
+        i.putExtra("hariJemput",hariJemput);
+        i.putExtra("hariKembali",hariKembali);
+        i.putExtra("waktuJemput",waktuJemput);
+        i.putExtra("waktuKembali",waktuPengembalian);
+        i.putExtra("alamatUserPick",alamatDetailJemput.getText().toString());
+        i.putExtra("alamatUserSend",alamatDetailKirim.getText().toString());
+
+        System.out.println("jemput = "+hariJemput);
+        System.out.println("kembali = "+hariKembali);
+        System.out.println("waktu jemput = "+waktuJemput);
+        System.out.println("Waktu Kembali = "+waktuPengembalian);
+        System.out.println("Alamat Pick = "+alamatDetailJemput.getText().toString());
+        System.out.println("Alamat Send = "+alamatDetailKirim.getText().toString());
+
+        //data dari class sebelumnya
+        i.putExtra("layanan",layanan);
+        i.putExtra("waktu",waktu);
+        i.putExtra("harga",harga);
+        i.putExtra("berat",berat);
+        startActivity(i);
+    }
     private void showALertKirim() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.alert_edit_alamat,null);
@@ -117,9 +151,8 @@ public class set_waktu_alamat extends AppCompatActivity {
         bckToPesanan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent i = new Intent(getApplicationContext(),pesanan.class);
-//                startActivity(i);
-                set_waktu_alamat.super.onBackPressed();
+
+                IntentPesanan();
             }
         });
     }
@@ -200,9 +233,9 @@ public class set_waktu_alamat extends AppCompatActivity {
                     rBtn2.setChecked(false);
                     rBtn1.setChecked(true);
                     makePesanan.setVisibility(view.VISIBLE);
-                    viewMenu.setVisibility(view.VISIBLE);
-                    jam1.setText("07:00 WIB");
-                    jam2.setText("07:00 WIB");
+                    viewMenu.setVisibility(view.INVISIBLE);
+//                    jam1.setText("07:00 WIB");
+//                    jam2.setText("07:00 WIB");
                 }
             }
         });
@@ -314,24 +347,6 @@ public class set_waktu_alamat extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //membawah data dari pesanan dan berat
-                String layanan;
-                String waktu;
-                String harga;
-                String berat;
-
-
-                layanan = getIntent().getStringExtra("layanan");
-                waktu = getIntent().getStringExtra("waktu");
-                harga = getIntent().getStringExtra("harga");
-                berat = getIntent().getStringExtra("berat");
-
-                System.out.println("jemput = "+hariJemput);
-                System.out.println("kembali = "+hariKembali);
-                System.out.println("waktu jemput = "+waktuJemput);
-                System.out.println("Waktu Kembali = "+waktuPengembalian);
-                System.out.println("Alamat Pick = "+alamatDetailJemput.getText().toString());
-                System.out.println("Alamat Send = "+alamatDetailKirim.getText().toString());
-
                 if (waktuJemput == null ){
                     Toast.makeText(set_waktu_alamat.this,"Harap pilih jam Penjemputan",Toast.LENGTH_SHORT).show();
                 } else if (waktuPengembalian == null){
@@ -341,21 +356,7 @@ public class set_waktu_alamat extends AppCompatActivity {
                     Intent i = new Intent(getApplicationContext(),pesanan.class);
 
                 //Data asli dari class setWaktualamat
-                String alamat = "Bandung";
-                i.putExtra("hariJemput",hariJemput);
-                i.putExtra("hariKembali",hariKembali);
-                i.putExtra("waktuJemput",waktuJemput);
-                i.putExtra("waktuKembali",waktuPengembalian);
-                i.putExtra("alamatUserPick",alamatDetailJemput.getText().toString());
-                i.putExtra("alamatUserSend",alamatDetailKirim.getText().toString());
-
-
-                //data dari class sebelumnya
-                i.putExtra("layanan",layanan);
-                i.putExtra("waktu",waktu);
-                i.putExtra("harga",harga);
-                i.putExtra("berat",berat);
-                startActivity(i);
+                IntentPesanan();
                 }
 
             }

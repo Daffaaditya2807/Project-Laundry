@@ -173,6 +173,7 @@ public class home_fragment extends Fragment {
             cursor.moveToPosition(0);
             greeting.setText("Selamat"+waktu+""+cursor.getString(0).toString());
         }
+
     }
 
 }

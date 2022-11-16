@@ -66,6 +66,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
+<!--        mulai dari sini gone-->
         <TextView
             android:id="@+id/penjemputan"
             android:layout_width="wrap_content"
@@ -347,6 +348,7 @@
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
+<!--        &#45;&#45;sampai sini &#45;&#45;-->
         <View
             android:id="@+id/linee3"
             android:layout_width="match_parent"

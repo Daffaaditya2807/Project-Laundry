@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Tulis Alamat"
                 android:layout_marginTop="25dp"
-                android:textSize="12dp"
+                android:textSize="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/line4"
@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="SETUJU"
+                android:text="SUBMIT"
                 app:layout_constraintTop_toBottomOf="@+id/inputAlamat"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>

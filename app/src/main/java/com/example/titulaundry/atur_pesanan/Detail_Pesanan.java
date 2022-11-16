@@ -3,6 +3,7 @@ package com.example.titulaundry.atur_pesanan;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -81,7 +82,7 @@ public class Detail_Pesanan extends AppCompatActivity {
 
         //harga x berat
         beratXharga = (TextView) findViewById(R.id.totalBeratCucian);
-        beratXharga.setText("Rp. "+hargaLayanan+"X"+beratCucian+" Kg");
+        beratXharga.setText(hargaLayanan+" X "+beratCucian+" Kg");
 
         //total
         totalHarga = (TextView) findViewById(R.id.hargaFix);

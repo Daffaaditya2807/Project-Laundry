@@ -47,6 +47,7 @@ public class pesanan extends AppCompatActivity {
         dataFromAlamat();
         dataFromBerat();
         getPesanan();
+        System.out.println("Ini turu adalah = "+getIntent().getStringExtra("turu"));
     }
     public void notif(Activity activity){
         //change color notif bar
@@ -143,7 +144,6 @@ public class pesanan extends AppCompatActivity {
                 i.putExtra("harga",harga);
                 //bawah data dari class beratcucian
                 i.putExtra("berat",getIntent().getStringExtra("berat"));
-
                 startActivity(i);
             }
         });

@@ -46,6 +46,7 @@ public class AdapterLayananDB extends RecyclerView.Adapter<AdapterLayananDB.myVi
         holder.descLayanan.setText(desc);
         holder.waktuLayanan.setText(wak);
         holder.hargaLayanan.setText(hrg);
+        String turu = hrg;
         holder.cardLayanan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +55,7 @@ public class AdapterLayananDB extends RecyclerView.Adapter<AdapterLayananDB.myVi
                 i.putExtra("deskripsi",desc);
                 i.putExtra("waktu",wak);
                 i.putExtra("harga",hrg);
+                i.putExtra("turu",hrg);
                 context.startActivity(i);
             }
         });
@@ -66,6 +68,7 @@ public class AdapterLayananDB extends RecyclerView.Adapter<AdapterLayananDB.myVi
 
     public class myViewHolder extends RecyclerView.ViewHolder {
         TextView jenis_layanan , descLayanan , waktuLayanan , hargaLayanan;
+        String turu;
         CardView cardLayanan;
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,7 +77,6 @@ public class AdapterLayananDB extends RecyclerView.Adapter<AdapterLayananDB.myVi
             waktuLayanan = itemView.findViewById(R.id.waktuLamaLayanan);
             hargaLayanan = itemView.findViewById(R.id.hargaLayanan);
             cardLayanan = itemView.findViewById(R.id.cuciKering);
-
         }
     }
 }
