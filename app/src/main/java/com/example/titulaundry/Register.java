@@ -1,10 +1,13 @@
 package com.example.titulaundry;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -33,11 +36,26 @@ public class Register extends AppCompatActivity {
         dbcenter = new Database_Tb_user(this);
         setTectxtColour();
         RegistAccount();
+        setCheckBox();
         kembaliKeLogin();
 
     }
 
+    public void setCheckBox(){
+        syrt = (CheckBox) findViewById(R.id.syarat);
+        syrt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (syrt.isChecked()){
+                    syrt.setBackgroundTintList(getResources().getColorStateList(R.color.niceBlue));
+                    Toast.makeText(Register.this, "turu", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
+
+
+    }
 
     public void setTectxtColour(){
         takonAkun = (TextView) findViewById(R.id.takonAkun);
@@ -90,14 +108,14 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this,"Email tidak valid",Toast.LENGTH_LONG).show();
                 } else{
                     Toast.makeText(Register.this,"Email valid",Toast.LENGTH_LONG).show();
-//                    boolean insert = dbcenter.insertData(numberRandom,getNama, getTelp, getEmail, getPw);
-//                    if (insert==true){
-//                        Toast.makeText(Register.this,"Berhasil",Toast.LENGTH_LONG).show();
-//                        Intent i = new Intent(getApplicationContext(),Konfirmasi.class);
-//                        startActivity(i);
-//                    } else{
-//                        Toast.makeText(Register.this,"gagal",Toast.LENGTH_LONG).show();
-//                    }
+                    boolean insert = dbcenter.insertData(numberRandom,getNama, getTelp, getEmail, getPw);
+                    if (insert==true){
+                        Toast.makeText(Register.this,"Berhasil",Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(getApplicationContext(),Konfirmasi.class);
+                        startActivity(i);
+                    } else{
+                        Toast.makeText(Register.this,"gagal",Toast.LENGTH_LONG).show();
+                    }
 
                 }
             }

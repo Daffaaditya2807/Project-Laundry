@@ -70,6 +70,7 @@ public class pesanan extends AppCompatActivity {
                 i.putExtra("layanan",layanan);
                 i.putExtra("waktu",waktu);
                 i.putExtra("harga",harga);
+                i.putExtra("email",getIntent().getStringExtra("email"));
 
                 //bawah data dari class waktuAlamat
                 i.putExtra("hariJemput",getIntent().getStringExtra("hariJemput"));
@@ -99,11 +100,14 @@ public class pesanan extends AppCompatActivity {
 
         setWaktualamat = (TextView) findViewById(R.id.inpowaktu);
         String setAlamat = getIntent().getStringExtra("hariJemput");
+        System.out.println("Jika Sendiri" + setAlamat);
 
         if (setAlamat == null){
             setWaktualamat.setText("Pilih waktu jemput dan pengiriman");
             System.out.println("kenek 2");
-        } else{
+        } else if(setAlamat.equals("Antar Sendiri")){
+            setWaktualamat.setText(setAlamat);
+        }else{
             SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
             SimpleDateFormat format2 = new SimpleDateFormat("dd MMMM yyyy");
             try {
@@ -142,6 +146,7 @@ public class pesanan extends AppCompatActivity {
                 i.putExtra("layanan",layanan);
                 i.putExtra("waktu",waktu);
                 i.putExtra("harga",harga);
+                i.putExtra("email",getIntent().getStringExtra("email"));
                 //bawah data dari class beratcucian
                 i.putExtra("berat",getIntent().getStringExtra("berat"));
                 startActivity(i);
@@ -181,8 +186,7 @@ public class pesanan extends AppCompatActivity {
                 System.out.println("harga Laundry = "+harga);
                 System.out.println("total Berat = "+getIntent().getStringExtra("berat"));
 
-                if (dayPick == null || daySend == null || timePick == null || timeSend == null
-                        || addressPick == null || addressSend == null || weight ==null ){
+                if (dayPick == null  || weight ==null ){
                     Toast.makeText(pesanan.this,"Isi Lengkap Terlebih dahulu",Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -196,6 +200,7 @@ public class pesanan extends AppCompatActivity {
                     i.putExtra("alamatUserPick",addressPick);
                     i.putExtra("alamatUserSend",addressSend);
                     i.putExtra("harga",harga);
+                    i.putExtra("email",getIntent().getStringExtra("email"));
                     startActivity(i);
                 }
 

@@ -89,6 +89,7 @@ public class BeratCucian extends AppCompatActivity {
                 i.putExtra("layanan",layanan);
                 i.putExtra("waktu",waktu);
                 i.putExtra("harga",harga);
+                i.putExtra("email",getIntent().getStringExtra("email"));
 
                 //data dari class pesanan
                 i.putExtra("hariJemput",tanggal);
@@ -120,7 +121,7 @@ public class BeratCucian extends AppCompatActivity {
         hrgCucian.setText("Rp. "+hargaBarang+" X " + String.valueOf(numberOrder)+ " Kg");
 
         hargaFix = (TextView) findViewById(R.id.hargaFix);
-        hargaFix.setText("Rp. "+ String.valueOf(totalHarga));
+        hargaFix.setText("Rp. "+ String.valueOf(totalHargabrg));
 
         plsButton = (CardView) findViewById(R.id.plsBtn);
         minButton = (CardView) findViewById(R.id.minBtn);

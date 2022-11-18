@@ -72,8 +72,9 @@
             <RadioButton
                 android:id="@+id/radioButton1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                android:theme="@style/colored_checkbox"
                 app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -129,7 +130,8 @@
             <RadioButton
                 android:id="@+id/radioButton2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:theme="@style/colored_checkbox"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -248,7 +250,7 @@
                             android:textAlignment="center"
                             android:textColor="@color/black"
                             android:textSize="14dp"
-                            android:text="Penjemputan"/>
+                            android:text="Pengiriman"/>
                         <TextView
                             android:id="@+id/TanggalJemput2"
                             android:layout_width="match_parent"
@@ -366,7 +368,7 @@
             android:id="@+id/alamatPengiriman"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Alamat Penjemputan"
+            android:text="Alamat Pengiriman"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/line4"
             android:textSize="16dp"
@@ -445,7 +447,7 @@
         android:text="Buat Pesanan"
         android:visibility="invisible"
         android:layout_marginBottom="20dp"
-        android:padding="10dp"
+        android:padding="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

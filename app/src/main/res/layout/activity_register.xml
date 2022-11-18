@@ -166,6 +166,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
             android:layout_marginTop="16dp"
+            android:theme="@style/colored_checkbox"
             android:textColor="#828282"
             android:text="Dengan mendaftar, kamu menyetujui Syarat dan Ketentuan dan Kebijakan Privasi kami"
             android:textAlignment="textStart"

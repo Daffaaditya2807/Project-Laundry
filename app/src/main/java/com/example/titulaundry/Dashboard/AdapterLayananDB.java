@@ -20,13 +20,15 @@ import java.util.ArrayList;
 public class AdapterLayananDB extends RecyclerView.Adapter<AdapterLayananDB.myViewHolder> {
     private Context context;
     private ArrayList jenis_layanan , deskripsi_layanan,waktu_layanan,harga_layanan;
+    String email;
 
-    public AdapterLayananDB(Context context, ArrayList jenis_layanan, ArrayList deskripsi_layanan, ArrayList waktu_layanan, ArrayList harga_layanan) {
+    public AdapterLayananDB(Context context, ArrayList jenis_layanan, ArrayList deskripsi_layanan, ArrayList waktu_layanan, ArrayList harga_layanan,String email) {
         this.context = context;
         this.jenis_layanan = jenis_layanan;
         this.deskripsi_layanan = deskripsi_layanan;
         this.waktu_layanan = waktu_layanan;
         this.harga_layanan = harga_layanan;
+        this.email = email;
     }
 
     @NonNull
@@ -38,15 +40,17 @@ public class AdapterLayananDB extends RecyclerView.Adapter<AdapterLayananDB.myVi
 
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
+
+
         String lyn = String.valueOf(jenis_layanan.get(position));
         String desc = String.valueOf(deskripsi_layanan.get(position));
         String wak = String.valueOf(waktu_layanan.get(position));
         String hrg = String.valueOf(harga_layanan.get(position));
+
         holder.jenis_layanan.setText(lyn);
         holder.descLayanan.setText(desc);
         holder.waktuLayanan.setText(wak);
         holder.hargaLayanan.setText(hrg);
-        String turu = hrg;
         holder.cardLayanan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,6 +60,8 @@ public class AdapterLayananDB extends RecyclerView.Adapter<AdapterLayananDB.myVi
                 i.putExtra("waktu",wak);
                 i.putExtra("harga",hrg);
                 i.putExtra("turu",hrg);
+                i.putExtra("email",email);
+                System.out.println("Emailnya adalah : "+email);
                 context.startActivity(i);
             }
         });

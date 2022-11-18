@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,13 +101,16 @@ public class home_fragment extends Fragment {
         deskripsi = new ArrayList<>();
         waktuLayanan = new ArrayList<>();
         harga = new ArrayList<>();
+        String email = getActivity().getIntent().getStringExtra("email");
         recyclerView = getView().findViewById(R.id.recycleLayanan);
-        adapterLayananDB = new AdapterLayananDB(getContext(),jenis,deskripsi,waktuLayanan,harga);
+        adapterLayananDB = new AdapterLayananDB(getContext(),jenis,deskripsi,waktuLayanan,harga,email);
         //insert layanan
 //        DB.inserDataLayanan("js200","Cuci Uap","Mencuci baju dengan uap panas","2 hari" ,"3000");
 //        DB.inserDataLayanan("js201","Cuci Tidak Basah","Mencuci baju dengan Tanpa air","1 hari" ,"7000");
 //        DB.inserDataLayanan("js202","Cuci Mandiri","Mencuci baju Sendiri di Tokoh kami","1 hari" ,"12000");
 //        DB.inserDataLayanan("js204","Cuci Jual","Mencuci baju Kemudian dijual","7 hari" ,"2500");
+//        DB.inserDataLayanan("js205","Cuci Hilang","Setelah di cuci baju Hilang","30 hari" ,"500");
+//        DB.inserDataLayanan("js207","Jual Mesin cuci","Spek Bore Up std Tiger","1 hari" ,"2500000");
         //======================
         layoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
@@ -125,7 +129,6 @@ public class home_fragment extends Fragment {
                 deskripsi.add(cursor.getString(2));
                 waktuLayanan.add(cursor.getString(3));
                 harga.add("Rp. "+cursor.getString(4));
-
             }
         }
     }

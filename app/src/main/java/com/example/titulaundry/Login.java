@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,14 +16,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.titulaundry.API.ApiInterface;
+import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.Dashboard.MainMenu;
+import com.example.titulaundry.Model.ResponeLogin;
 import com.example.titulaundry.db_help.Database_Tb_user;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Login extends AppCompatActivity {
     TextView takonAkun , ToLupaPw;
     EditText getEmail , getPassword;
     Button toLoginDashBoard;
     String[] user;
+    ApiInterface apiInterface;
     protected Cursor cursor;
     Database_Tb_user dbcenter;
     public static Login lg;
@@ -92,17 +101,48 @@ public class Login extends AppCompatActivity {
                 if (userCheck.equals("") || passCheck.equals("")){
                     Toast.makeText(Login.this,"Mohon Isi Semua Data",Toast.LENGTH_LONG).show();
                 } else {
-                    Boolean checkLogin = dbcenter.checkUserNamePassword(userCheck,passCheck);
-                    if (checkLogin == true){
-                        Toast.makeText(Login.this,"Sukses Login",Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), MainMenu.class);
-                        intent.putExtra("email",userCheck);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(Login.this,"Username / Password salah",Toast.LENGTH_LONG).show();
-                    }
-                }
+//                    Boolean checkLogin = dbcenter.checkUserNamePassword(userCheck,passCheck);
+//                    if (checkLogin == true){
+//                        Toast.makeText(Login.this,"Sukses Login",Toast.LENGTH_LONG).show();
+//                        Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+//                        intent.putExtra("email",userCheck);
+//                        startActivity(intent);
+//                        finish();
+//                    } else {
+//                        Toast.makeText(Login.this,"Username / Password salah",Toast.LENGTH_LONG).show();
+//                    }
+
+                    apiInterface = AppClient.getClient().create(ApiInterface.class);
+                    Call<ResponeLogin> loginCall = apiInterface.loginResponse(getEmail.getText().toString(),getPassword.getText().toString());
+                    loginCall.enqueue(new Callback<ResponeLogin>() {
+                        @Override
+                        public void onResponse(Call<ResponeLogin> call, Response<ResponeLogin> response) {
+                            if (response.body() != null && response.isSuccessful() && response.body().isStatus()) {
+
+
+                                //Ini untuk pindah
+                                Toast.makeText(Login.this,"Sukses Login",Toast.LENGTH_LONG).show();
+//                        Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+//                        intent.putExtra("email",userCheck);
+//                        startActivity(intent);
+//                        finish();
+
+                            } else {
+                                System.out.println("tesss  = "+response.body().getData());
+                                Toast.makeText(Login.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponeLogin> call, Throwable t) {
+                            Toast.makeText(Login.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
+
+            }
 
 
             }

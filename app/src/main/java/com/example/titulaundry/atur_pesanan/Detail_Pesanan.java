@@ -1,6 +1,7 @@
 package com.example.titulaundry.atur_pesanan;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -30,6 +31,7 @@ public class Detail_Pesanan extends AppCompatActivity {
     String formatHariJemput,formatHariKirim;
     int GettotalHarga;
     Button backToHome;
+    ConstraintLayout lyt;
 
 
     Database_Tb_Pesanan PS;
@@ -39,7 +41,7 @@ public class Detail_Pesanan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_pesanan);
         notif(Detail_Pesanan.this);
-
+        setLayoutPesanan();
         getDataFromPesanan();
         HitungTotal();
         setFormatHari();
@@ -47,6 +49,16 @@ public class Detail_Pesanan extends AppCompatActivity {
         setDataFromPesanan();
         InsertPesanan();
 
+
+    }
+
+    public void setLayoutPesanan(){
+        lyt = (ConstraintLayout) findViewById(R.id.menuKurir);
+
+        String layout = getIntent().getStringExtra("hariJemput");
+        if (layout.equals("Antar Sendiri")){
+            lyt.setVisibility(View.GONE);
+        }
 
     }
 
@@ -82,7 +94,7 @@ public class Detail_Pesanan extends AppCompatActivity {
 
         //harga x berat
         beratXharga = (TextView) findViewById(R.id.totalBeratCucian);
-        beratXharga.setText(hargaLayanan+" X "+beratCucian+" Kg");
+        beratXharga.setText(String.valueOf(hargaLayanan)+" X "+String.valueOf(beratCucian)+" Kg");
 
         //total
         totalHarga = (TextView) findViewById(R.id.hargaFix);
@@ -101,8 +113,6 @@ public class Detail_Pesanan extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
 
     }
 
@@ -138,7 +148,9 @@ public class Detail_Pesanan extends AppCompatActivity {
 
                 PS.insertDataPesanan("lyn"+numberRandom,layanan,beratCucian,"Sedang dalam Perjalanan","1 hari",String.valueOf(GettotalHarga));
                 Intent i = new Intent(getApplicationContext(), MainMenu.class);
+                i.putExtra("email",getIntent().getStringExtra("email"));
                 startActivity(i);
+                finish();
             }
         });
 
