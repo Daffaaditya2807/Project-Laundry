@@ -121,11 +121,11 @@ public class Login extends AppCompatActivity {
 
 
                                 //Ini untuk pindah
-                                Toast.makeText(Login.this,"Sukses Login",Toast.LENGTH_LONG).show();
-//                        Intent intent = new Intent(getApplicationContext(), MainMenu.class);
-//                        intent.putExtra("email",userCheck);
-//                        startActivity(intent);
-//                        finish();
+                                Toast.makeText(Login.this,response.body().getData().getEmail(),Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                                intent.putExtra("email",userCheck);
+                                startActivity(intent);
+                                finish();
 
                             } else {
 //                                System.out.println("tesss  = "+response.body().getData());

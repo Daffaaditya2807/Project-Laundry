@@ -34,10 +34,12 @@ public class AdapterPesananDB extends RecyclerView.Adapter<AdapterPesananDB.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         String js = String.valueOf(JasaPesanan.get(position));
         String sts = String.valueOf(status.get(position));
         String wkt = String.valueOf(waktu.get(position));
         String todHarga = String.valueOf(total_harga.get(position));
+
         holder.jasa.setText(js);
         holder.status.setText(sts);
         holder.waktuEst.setText(wkt);

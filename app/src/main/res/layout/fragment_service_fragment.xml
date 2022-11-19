@@ -2,16 +2,61 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginHorizontal="20dp"
     android:layout_height="match_parent"
     tools:context=".Dashboard.Service_fragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="SERVICE"
-        android:textSize="40sp"
-        />
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!-- TODO: Update blank fragment layout -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputPencarian"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintEnabled="false"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:boxStrokeColor="#FFF"
+                app:boxBackgroundColor="#FFF">
+                <EditText
+                    android:id="@+id/getEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:inputType="textEmailAddress"
+                    android:background="@drawable/edt_rounded"
+                    android:padding="20dp"
+                    android:drawablePadding="12dp"
+                    android:hint="Email"
+                    android:drawableStart="@drawable/pesan" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleLayanan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/inputPencarian"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingBottom="15dp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/recycleLayanan"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
 
 </FrameLayout>
