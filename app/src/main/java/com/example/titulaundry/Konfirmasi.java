@@ -17,6 +17,7 @@ import com.chaos.view.PinView;
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.Model.ResponseEmail;
+import com.example.titulaundry.Model.VerifEmail;
 import com.example.titulaundry.Send_Email.JavaMailAPI;
 
 import retrofit2.Call;
@@ -97,12 +98,33 @@ public class Konfirmasi extends AppCompatActivity {
     }
 
     public void VerifyEMail(){
-
+        id_user = getIntent().getStringExtra("Userid");
         getCode = (PinView) findViewById(R.id.firstPinView);
         String inputKodeUSer = getCode.getText().toString();
         System.out.println("Input Usernya adalah "+inputKodeUSer);
         if (inputKodeUSer.equals(kodeVerif)){
-            Toast.makeText(this, "Berhasil Verif", Toast.LENGTH_SHORT).show();
+
+            apiInterface = AppClient.getClient().create(ApiInterface.class);
+            Call<VerifEmail> verifEmailCall = apiInterface.setUpdateEmail(id_user);
+            verifEmailCall.enqueue(new Callback<VerifEmail>() {
+                @Override
+                public void onResponse(Call<VerifEmail> call, Response<VerifEmail> response) {
+                    int kode = response.body().getKode();
+                    if (kode == 1){
+                        Toast.makeText(Konfirmasi.this, "Berhasil Verif", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(getApplicationContext(),KonfirmasiSukses.class);
+                        startActivity(i);
+                        finish();
+                    } else {
+                        Toast.makeText(Konfirmasi.this, "Gagal Verif", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<VerifEmail> call, Throwable t) {
+
+                }
+            });
         } else {
             Toast.makeText(this, "Kode Salah", Toast.LENGTH_SHORT).show();
             getCode.setText("");

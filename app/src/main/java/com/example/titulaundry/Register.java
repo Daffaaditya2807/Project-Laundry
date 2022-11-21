@@ -126,7 +126,9 @@ public class Register extends AppCompatActivity {
                                 i.putExtra("Userid",id);
                                 i.putExtra("EmailUser",getEmail);
                                 startActivity(i);
-                            } else {
+                            } else if(kode == 3){
+                                Toast.makeText(Register.this,"Email Already Exist",Toast.LENGTH_SHORT).show();
+                            }else {
                                 Toast.makeText(Register.this,"Gagal Daftar",Toast.LENGTH_SHORT).show();
                             }
                         }

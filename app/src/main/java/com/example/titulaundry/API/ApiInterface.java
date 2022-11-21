@@ -3,6 +3,7 @@ package com.example.titulaundry.API;
 import com.example.titulaundry.Model.ResponseEmail;
 import com.example.titulaundry.Model.ResponseLogin;
 import com.example.titulaundry.Model.ResponseRegister;
+import com.example.titulaundry.Model.VerifEmail;
 
 
 import retrofit2.Call;
@@ -32,7 +33,7 @@ public interface ApiInterface {
     );
     @FormUrlEncoded
     @POST("UpdateEmail.php")
-    Call<ResponseEmail> setUpdateEmail(
+    Call<VerifEmail> setUpdateEmail(
             @Field("id_user") String id_user
     );
 }
