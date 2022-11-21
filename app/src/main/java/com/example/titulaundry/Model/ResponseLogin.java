@@ -2,10 +2,10 @@ package com.example.titulaundry.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ResponeLogin{
+public class ResponseLogin {
 
 	@SerializedName("data")
-	private Data data;
+	private DataItemLogin data;
 
 	@SerializedName("message")
 	private String message;
@@ -13,11 +13,11 @@ public class ResponeLogin{
 	@SerializedName("status")
 	private boolean status;
 
-	public void setData(Data data){
+	public void setData(DataItemLogin data){
 		this.data = data;
 	}
 
-	public Data getData(){
+	public DataItemLogin getData(){
 		return data;
 	}
 

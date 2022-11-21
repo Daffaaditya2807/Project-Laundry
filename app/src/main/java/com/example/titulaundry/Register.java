@@ -19,13 +19,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.titulaundry.API.ApiInterface;
+import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.Model.ResponeRegister;
 import com.example.titulaundry.db_help.Database_Tb_user;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Register extends AppCompatActivity {
     TextView takonAkun,bckToLogin;
     EditText txNama , txTlp,txEmail,txPw,matchPw;
     Button btnRegist;
     CheckBox syrt;
+    ApiInterface apiInterface;
     Database_Tb_user dbcenter;
     AlertDialog dialog;
     @Override
@@ -107,15 +115,27 @@ public class Register extends AppCompatActivity {
                 } else if (!getEmail.matches(emailPattern)||!getEmail.contains("@gmail.com")){
                     Toast.makeText(Register.this,"Email tidak valid",Toast.LENGTH_LONG).show();
                 } else{
-                    Toast.makeText(Register.this,"Email valid",Toast.LENGTH_LONG).show();
-                    boolean insert = dbcenter.insertData(numberRandom,getNama, getTelp, getEmail, getPw);
-                    if (insert==true){
-                        Toast.makeText(Register.this,"Berhasil",Toast.LENGTH_LONG).show();
-                        Intent i = new Intent(getApplicationContext(),Konfirmasi.class);
-                        startActivity(i);
-                    } else{
-                        Toast.makeText(Register.this,"gagal",Toast.LENGTH_LONG).show();
-                    }
+                    apiInterface = AppClient.getClient().create(ApiInterface.class);
+                    Call<ResponeRegister> simpan = apiInterface.registerResponse(getNama,getTelp,getEmail,getPw);
+                    simpan.enqueue(new Callback<ResponeRegister>() {
+                        @Override
+                        public void onResponse(Call<ResponeRegister> call, Response<ResponeRegister> response) {
+                            int kode = response.body().getKode();
+                            if (kode == 1){
+                                Toast.makeText(Register.this,"Berhasil Daftar",Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(getApplicationContext(),Konfirmasi.class);
+                                 startActivity(i);
+                            } else {
+                                Toast.makeText(Register.this,"Gagal Daftar",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponeRegister> call, Throwable t) {
+
+                        }
+                    });
+
 
                 }
             }
