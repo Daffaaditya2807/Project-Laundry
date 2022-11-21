@@ -1,8 +1,8 @@
 package com.example.titulaundry.API;
 
-import com.example.titulaundry.Model.ResponeRegister;
+import com.example.titulaundry.Model.ResponseEmail;
 import com.example.titulaundry.Model.ResponseLogin;
-import com.example.titulaundry.Register;
+import com.example.titulaundry.Model.ResponseRegister;
 
 
 import retrofit2.Call;
@@ -19,10 +19,20 @@ public interface ApiInterface {
     );
     @FormUrlEncoded
     @POST("register.php")
-    Call<ResponeRegister> registerResponse(
+    Call<ResponseRegister> registerResponse(
             @Field("nama") String nama,
             @Field("no_telpon") String telp,
             @Field("email") String email,
             @Field("password") String password
+    );
+    @FormUrlEncoded
+    @POST("DataVerif_Email.php")
+    Call<ResponseEmail> getVerifEmail(
+            @Field("id_user") String id_user
+    );
+    @FormUrlEncoded
+    @POST("UpdateEmail.php")
+    Call<ResponseEmail> setUpdateEmail(
+            @Field("id_user") String id_user
     );
 }

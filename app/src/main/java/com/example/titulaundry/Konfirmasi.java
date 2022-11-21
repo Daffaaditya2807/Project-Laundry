@@ -5,31 +5,108 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.chaos.view.PinView;
+import com.example.titulaundry.API.ApiInterface;
+import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.Model.ResponseEmail;
+import com.example.titulaundry.Send_Email.JavaMailAPI;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Konfirmasi extends AppCompatActivity {
     Button btnContinue;
+    PinView getCode;
+    ApiInterface apiInterface;
+    TextView desc,sendCodeAgain;
+    String id_user,kodeVerif;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_konfirmasi);
         LoginToConfirm();
+        setDesc();
+        showDataEmail();
+        sendEmailAgain();
         notif(Konfirmasi.this);
     }
+    public void setDesc(){
+        String emaile = getIntent().getStringExtra("EmailUser");
+        desc = (TextView) findViewById(R.id.deskripsi);
+        String text = "Sebuah kode autentikasi telah dikirim ke alamat email kamu <b>"+emaile+"</b>";
+        desc.setText(Html.fromHtml(text));
+    }
 
+    public void sendEmailAgain(){
+        sendCodeAgain = (TextView) findViewById(R.id.text1);
+        String text = "Belum menerima kode? <font color=#2f80ed><b>Kirim ulang</b></font>";
+        sendCodeAgain.setText(Html.fromHtml(text));
+        sendCodeAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SendEmail();
+            }
+        });
+    }
     public void LoginToConfirm(){
         btnContinue = (Button) findViewById(R.id.continueSelamat);
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), KonfirmasiSukses.class);
-                startActivity(intent);
+                VerifyEMail();
             }
         });
+    }
+    public void SendEmail(){
+        String emaile = getIntent().getStringExtra("EmailUser");
+        String email = emaile;
+        String header = "VERIFIKASI EMAIL TO ACCES APP TITU LAUNDRY";
+        String pesan = "Kamu Nanya Kodenya Apa ? Nichhhh = "+kodeVerif;
+        JavaMailAPI javaMailAPI = new JavaMailAPI(Konfirmasi.this,email,header,pesan);
+        javaMailAPI.execute();
+    }
+    public void showDataEmail(){
+        id_user = getIntent().getStringExtra("Userid");
+        System.out.println("ID USernya adalah = "+id_user);
+        apiInterface = AppClient.getClient().create(ApiInterface.class);
+        Call<ResponseEmail> show = apiInterface.getVerifEmail(id_user);
+        show.enqueue(new Callback<ResponseEmail>() {
+            @Override
+            public void onResponse(Call<ResponseEmail> call, Response<ResponseEmail> response) {
+                kodeVerif = response.body().getData().getKodeVerifikasi();
+                System.out.println(kodeVerif);
+                SendEmail();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseEmail> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    public void VerifyEMail(){
+
+        getCode = (PinView) findViewById(R.id.firstPinView);
+        String inputKodeUSer = getCode.getText().toString();
+        System.out.println("Input Usernya adalah "+inputKodeUSer);
+        if (inputKodeUSer.equals(kodeVerif)){
+            Toast.makeText(this, "Berhasil Verif", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Kode Salah", Toast.LENGTH_SHORT).show();
+            getCode.setText("");
+        }
     }
     public void notif(Activity activity){
         //change color notif bar

@@ -1,13 +1,10 @@
 package com.example.titulaundry;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -21,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
-import com.example.titulaundry.Model.ResponeRegister;
+import com.example.titulaundry.Model.ResponseRegister;
 import com.example.titulaundry.db_help.Database_Tb_user;
 
 import retrofit2.Call;
@@ -116,22 +113,26 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this,"Email tidak valid",Toast.LENGTH_LONG).show();
                 } else{
                     apiInterface = AppClient.getClient().create(ApiInterface.class);
-                    Call<ResponeRegister> simpan = apiInterface.registerResponse(getNama,getTelp,getEmail,getPw);
-                    simpan.enqueue(new Callback<ResponeRegister>() {
+                    Call<ResponseRegister> simpan = apiInterface.registerResponse(getNama,getTelp,getEmail,getPw);
+                    simpan.enqueue(new Callback<ResponseRegister>() {
                         @Override
-                        public void onResponse(Call<ResponeRegister> call, Response<ResponeRegister> response) {
+                        public void onResponse(Call<ResponseRegister> call, Response<ResponseRegister> response) {
                             int kode = response.body().getKode();
                             if (kode == 1){
                                 Toast.makeText(Register.this,"Berhasil Daftar",Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(getApplicationContext(),Konfirmasi.class);
-                                 startActivity(i);
+                                String id = String.valueOf(response.body().getData().getIdUser());
+                                System.out.println("ID USERNYA PADA REGIST "+id);
+                                i.putExtra("Userid",id);
+                                i.putExtra("EmailUser",getEmail);
+                                startActivity(i);
                             } else {
                                 Toast.makeText(Register.this,"Gagal Daftar",Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<ResponeRegister> call, Throwable t) {
+                        public void onFailure(Call<ResponseRegister> call, Throwable t) {
 
                         }
                     });
