@@ -1,8 +1,10 @@
 package com.example.titulaundry.API;
 
+import com.example.titulaundry.Model.CheckEmail;
 import com.example.titulaundry.Model.ResponseEmail;
 import com.example.titulaundry.Model.ResponseLogin;
 import com.example.titulaundry.Model.ResponseRegister;
+import com.example.titulaundry.Model.UpdatePassword;
 import com.example.titulaundry.Model.VerifEmail;
 
 
@@ -35,5 +37,16 @@ public interface ApiInterface {
     @POST("UpdateEmail.php")
     Call<VerifEmail> setUpdateEmail(
             @Field("id_user") String id_user
+    );
+    @FormUrlEncoded
+    @POST("CheckEmail.php")
+    Call<CheckEmail> getCheckEmail(
+            @Field("email") String gmail
+    );
+    @FormUrlEncoded
+    @POST("LupaPassword.php")
+    Call<UpdatePassword> setNewPassword(
+            @Field("email") String gmail,
+            @Field("password") String pass
     );
 }

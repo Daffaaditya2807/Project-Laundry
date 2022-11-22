@@ -105,9 +105,9 @@ public class Login extends AppCompatActivity {
                     loginCall.enqueue(new Callback<ResponseLogin>() {
                         @Override
                         public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
-                            String verif = response.body().getData().getVerifyStatus();
-                            if (response.body() != null && response.isSuccessful() && response.body().isStatus())  {
 
+                            if (response.body() != null && response.isSuccessful() && response.body().isStatus())  {
+                                String verif = response.body().getData().getVerifyStatus();
                                 if (!verif.equals("verifikasi")){
                                     Toast.makeText(Login.this,"Akun Belum Verified",Toast.LENGTH_LONG).show();
 
