@@ -20,6 +20,9 @@
         tools:replace="android:allowBackup"
         tools:targetApi="31">
         <activity
+            android:name=".pengaturanAkun"
+            android:exported="false" />
+        <activity
             android:name=".profile"
             android:exported="false" />
         <activity
