@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginHorizontal="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Dashboard.account_fragment">
+    tools:context=".account.profile">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,39 +14,39 @@
         android:layout_marginTop="20dp"
         android:padding="6dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_image"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:src="@drawable/puan"
-            app:civ_border_color="#FF000000"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:src="@drawable/puan"
+        app:civ_border_color="#FF000000"/>
 
-        <TextView
-            android:id="@+id/profile_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ahmad Lutfi Aghizal"
-            android:layout_marginStart="10dp"
-            android:textSize="16dp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@id/profile_image"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-        <TextView
-            android:id="@+id/profile_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14dp"
-            android:layout_marginStart="10dp"
-            android:text="lutfiaghizal@gmail.com"
-            app:layout_constraintTop_toBottomOf="@+id/profile_name"
-            app:layout_constraintLeft_toRightOf="@id/profile_image"
-            android:layout_marginTop="2dp"
-            />
+    <TextView
+        android:id="@+id/profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ahmad Lutfi Aghizal"
+        android:layout_marginStart="10dp"
+        android:textSize="16dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/profile_image"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <TextView
+        android:id="@+id/profile_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:layout_marginStart="10dp"
+        android:text="lutfiaghizal@gmail.com"
+        app:layout_constraintTop_toBottomOf="@+id/profile_name"
+        app:layout_constraintLeft_toRightOf="@id/profile_image"
+        android:layout_marginTop="2dp"
+        />
         <View
             android:id="@+id/line1"
             android:layout_width="match_parent"
@@ -124,7 +125,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             />
 
-        <!--        DISINI MULAI GANTI PASSWORD-->
+<!--        DISINI MULAI GANTI PASSWORD-->
 
         <androidx.cardview.widget.CardView
             android:id="@+id/ganti_password"
@@ -193,7 +194,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             />
 
-        <!--        DISINI MULAI PENGATURAN ALAMAT-->
+<!--        DISINI MULAI PENGATURAN ALAMAT-->
 
         <androidx.cardview.widget.CardView
             android:id="@+id/ganti_alamat"
@@ -262,7 +263,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             />
 
-        <!--        DISINI MULAI PENGATURAN LAINNYA-->
+<!--        DISINI MULAI PENGATURAN LAINNYA-->
 
         <androidx.cardview.widget.CardView
             android:id="@+id/pengaturan_lainnya"
@@ -331,50 +332,83 @@
             app:layout_constraintEnd_toEndOf="parent"
             />
 
-        <!--        DISINI MULAI LOGOUT-->
+<!--        DISINI MULAI LOGOUT-->
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/logout"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:cardElevation="0dp"
-            android:layout_marginTop="16dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            app:layout_constraintTop_toBottomOf="@+id/line5"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:cardElevation="0dp"
+        android:layout_marginTop="16dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@+id/line5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/icon_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_logout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:id="@+id/icon_logout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_logout"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
-                <TextView
-                    android:id="@+id/title_logout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:textSize="16dp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:text="Logout"
-                    app:layout_constraintLeft_toRightOf="@+id/icon_logout"
-                    android:gravity="center_vertical"
-                    />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!--        DISINI MULAI MENU FOOTER-->
-
-
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <TextView
+            android:id="@+id/title_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="Logout"
+            app:layout_constraintLeft_toRightOf="@+id/icon_logout"
+            android:gravity="center_vertical"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+<!--        DISINI MULAI MENU FOOTER-->
 
+    </androidx.cardview.widget.CardView>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/home"
+                android:text="Home">
+            </com.google.android.material.tabs.TabItem>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/menu"
+                android:text="Service">
+            </com.google.android.material.tabs.TabItem>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/shop"
+                android:text="Order">
+            </com.google.android.material.tabs.TabItem>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/account"
+                android:text="Account">
+            </com.google.android.material.tabs.TabItem>
+        </com.google.android.material.tabs.TabLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
