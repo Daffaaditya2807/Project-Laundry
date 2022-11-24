@@ -55,6 +55,7 @@ public class lupaPassword3 extends AppCompatActivity {
                 String matchPw1 = pw1.getText().toString();
                 String matchPw2 = pw2.getText().toString();
                 System.out.println("Password Baru adalah = "+matchPw1);
+
                 if (matchPw1.equals(matchPw2)){
                     apiInterface = AppClient.getClient().create(ApiInterface.class);
                     Call<UpdatePassword> update = apiInterface.setNewPassword(getGmail,matchPw1);
@@ -63,7 +64,7 @@ public class lupaPassword3 extends AppCompatActivity {
                         public void onResponse(Call<UpdatePassword> call, Response<UpdatePassword> response) {
                             if (response.body().getKode() == 1){
                                 Toast.makeText(lupaPassword3.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(getApplicationContext(),KonfirmasiSukses.class);
+                                Intent i = new Intent(getApplicationContext(),lupaPasswordSucces.class);
                                 startActivity(i);
                                 finish();
                             }

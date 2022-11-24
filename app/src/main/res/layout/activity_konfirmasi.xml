@@ -36,6 +36,7 @@
         android:layout_height="wrap_content"
         android:cursorVisible="true"
         app:itemCount="5"
+        android:focusableInTouchMode="true"
         app:itemWidth="58dp"
         app:itemHeight="58dp"
         android:textColor="#333333"

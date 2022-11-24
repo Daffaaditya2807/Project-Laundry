@@ -40,7 +40,9 @@
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/drawable/edit.xml" value="0.14" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/drawable/edt_rounded.xml" value="0.1595" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/drawable/home.xml" value="0.14" />
+        <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.141" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/drawable/img_checkbox.xml" value="0.121" />
+        <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/drawable/search.xml" value="0.141" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/activity_berat_cucian.xml" value="0.264" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/activity_detail_pesanan.xml" value="0.2" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/activity_konfirmasi.xml" value="0.2441123188405797" />
@@ -51,6 +53,7 @@
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/activity_lupa_password3.xml" value="0.2441123188405797" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/activity_lupa_password_succes.xml" value="0.2441123188405797" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/activity_main_menu.xml" value="0.2441123188405797" />
+        <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/activity_maps.xml" value="0.264" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/activity_payment.xml" value="0.25" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/activity_pesanan.xml" value="0.264" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/activity_register.xml" value="0.37547892720306514" />

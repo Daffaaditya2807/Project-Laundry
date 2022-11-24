@@ -14,6 +14,7 @@ import com.example.titulaundry.Dashboard.MainMenu;
 
 public class KonfirmasiSukses extends AppCompatActivity {
     Button ToDashboard;
+    String id_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +35,13 @@ public class KonfirmasiSukses extends AppCompatActivity {
     }
     public void LoginToDasboard(){
         ToDashboard = (Button) findViewById(R.id.continueSelamat2);
+        String id_user = getIntent().getStringExtra("UserId");
         ToDashboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Login.class);
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                intent.putExtra("UserId",id_user);
+                System.out.println("USER Konfirm Sukses = "+id_user);
                 startActivity(intent);
                 finish();
             }

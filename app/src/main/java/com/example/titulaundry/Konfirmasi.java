@@ -3,7 +3,9 @@ package com.example.titulaundry;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -100,8 +102,10 @@ public class Konfirmasi extends AppCompatActivity {
     public void VerifyEMail(){
         id_user = getIntent().getStringExtra("Userid");
         getCode = (PinView) findViewById(R.id.firstPinView);
+
         String inputKodeUSer = getCode.getText().toString();
         System.out.println("Input Usernya adalah "+inputKodeUSer);
+
         if (inputKodeUSer.equals(kodeVerif)){
 
             apiInterface = AppClient.getClient().create(ApiInterface.class);
@@ -113,6 +117,7 @@ public class Konfirmasi extends AppCompatActivity {
                     if (kode == 1){
                         Toast.makeText(Konfirmasi.this, "Berhasil Verif", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(),KonfirmasiSukses.class);
+                        i.putExtra("UserId",id_user);
                         startActivity(i);
                         finish();
                     } else {
