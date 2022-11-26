@@ -4,7 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppClient {
-    public static String BASE_URL = "http:/172.16.109.206/API_LAUNDRY/";
+    public static String BASE_URL = "http:/192.168.0.108/API_LAUNDRY/";
     private static Retrofit retrofit;
 
     public static Retrofit getClient() {

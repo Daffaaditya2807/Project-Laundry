@@ -1,4 +1,4 @@
-package com.example.titulaundry.Dashboard;
+package com.example.titulaundry.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,52 +9,49 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.titulaundry.ModelMySQL.DataPesanan;
 import com.example.titulaundry.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class AdapterPesananDB extends RecyclerView.Adapter<AdapterPesananDB.ViewHolder> {
-    private Context context;
-    private ArrayList JasaPesanan,berat_cucian,status,waktu,total_harga;
+public class AdapterPesanan extends RecyclerView.Adapter<AdapterPesanan.ViewHolder> {
+    Context ctx;
+    List<DataPesanan> pesananList;
 
-    public AdapterPesananDB(Context context,  ArrayList jasa,  ArrayList status, ArrayList waktu, ArrayList total_harga) {
-        this.context = context;
-        this.JasaPesanan = jasa;
-        this.status = status;
-        this.waktu = waktu;
-        this.total_harga = total_harga;
+    public AdapterPesanan(Context ctx, List<DataPesanan> pesananList) {
+        this.ctx = ctx;
+        this.pesananList = pesananList;
     }
+
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pesanan_user,parent,false);
-        return new AdapterPesananDB.ViewHolder(view);
+        return new AdapterPesanan.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        DataPesanan pesanan = pesananList.get(position);
 
-        String js = String.valueOf(JasaPesanan.get(position));
-        String sts = String.valueOf(status.get(position));
-        String wkt = String.valueOf(waktu.get(position));
-        String todHarga = String.valueOf(total_harga.get(position));
+        holder.jasa.setText(String.valueOf(pesanan.getJenisJasa()+" "+pesanan.getTotalBerat()+" Kg"));
+        holder.status.setText(String.valueOf(pesanan.getStatusPesanan()));
+        holder.totalHarga.setText(String.valueOf(pesanan.getTotalHarga()));
+        holder.waktuEst.setText(String.valueOf(pesanan.getDurasi()));
 
-        holder.jasa.setText(js);
-        holder.status.setText(sts);
-        holder.waktuEst.setText(wkt);
-        holder.totalHarga.setText(todHarga);
     }
 
     @Override
     public int getItemCount() {
-        return JasaPesanan.size();
+        return pesananList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView jasa , status,waktuEst,totalHarga;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             jasa = itemView.findViewById(R.id.jasa);
             status = itemView.findViewById(R.id.status);
             waktuEst = itemView.findViewById(R.id.waktuEst);

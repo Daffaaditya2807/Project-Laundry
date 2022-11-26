@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.example.titulaundry.Dashboard.MainMenu;
 import com.example.titulaundry.Dashboard.home_fragment;
 import com.example.titulaundry.R;
-import com.example.titulaundry.db_help.Database_Tb_Pesanan;
+//import com.example.titulaundry.db_help.Database_Tb_Pesanan;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,8 +33,8 @@ public class Detail_Pesanan extends AppCompatActivity {
     Button backToHome;
     ConstraintLayout lyt;
 
-
-    Database_Tb_Pesanan PS;
+//
+//    Database_Tb_Pesanan PS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,28 +131,28 @@ public class Detail_Pesanan extends AppCompatActivity {
 
     public void InsertPesanan(){
 
-        PS = new Database_Tb_Pesanan(this);
-        backToHome = (Button) findViewById(R.id.buatPesanan);
-        backToHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int min = 1;
-                int max = 10000;
-
-                //Generate random int value from 50 to 100
-                System.out.println("Random value in int from "+min+" to "+max+ ":");
-                int random_int = (int)Math.floor(Math.random()*(max-min+1)+min);
-                System.out.println(random_int);
-                String numberRandom = String.valueOf(random_int);
-
-
-                PS.insertDataPesanan("lyn"+numberRandom,layanan,beratCucian,"Sedang dalam Perjalanan","1 hari",String.valueOf(GettotalHarga));
-                Intent i = new Intent(getApplicationContext(), MainMenu.class);
-                i.putExtra("email",getIntent().getStringExtra("email"));
-                startActivity(i);
-                finish();
-            }
-        });
+//        PS = new Database_Tb_Pesanan(this);
+//        backToHome = (Button) findViewById(R.id.buatPesanan);
+//        backToHome.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                int min = 1;
+//                int max = 10000;
+//
+//                //Generate random int value from 50 to 100
+//                System.out.println("Random value in int from "+min+" to "+max+ ":");
+//                int random_int = (int)Math.floor(Math.random()*(max-min+1)+min);
+//                System.out.println(random_int);
+//                String numberRandom = String.valueOf(random_int);
+//
+//
+//                PS.insertDataPesanan("lyn"+numberRandom,layanan,beratCucian,"Sedang dalam Perjalanan","1 hari",String.valueOf(GettotalHarga));
+//                Intent i = new Intent(getApplicationContext(), MainMenu.class);
+//                i.putExtra("email",getIntent().getStringExtra("email"));
+//                startActivity(i);
+//                finish();
+//            }
+//        });
 
     }
     public void notif(Activity activity){

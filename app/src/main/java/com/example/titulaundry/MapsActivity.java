@@ -198,7 +198,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         int kode = response.body().getKode();
                         if (kode == 1){
                             Toast.makeText(MapsActivity.this, "Alamat Terupdate", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(getApplicationContext(),Login.class);
+                            Intent i = new Intent(getApplicationContext(),all_is_set.class);
                             startActivity(i);
                             finish();
                         } else {

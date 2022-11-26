@@ -19,7 +19,6 @@ import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.Dashboard.MainMenu;
 import com.example.titulaundry.Model.ResponseLogin;
-import com.example.titulaundry.db_help.Database_Tb_user;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,7 +31,6 @@ public class Login extends AppCompatActivity {
     String[] user;
     ApiInterface apiInterface;
     protected Cursor cursor;
-    Database_Tb_user dbcenter;
     public static Login lg;
 
     @Override
@@ -40,7 +38,6 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         lg = this;
-        dbcenter = new Database_Tb_user(this);
 
         notif(Login.this);
 
@@ -117,6 +114,8 @@ public class Login extends AppCompatActivity {
                                     Toast.makeText(Login.this,response.body().getData().getEmail(),Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                                     intent.putExtra("email",userCheck);
+                                    intent.putExtra("id_user",response.body().getData().getIdUser());
+                                    System.out.println("ID User pada login ="+response.body().getData().getIdUser());
                                     startActivity(intent);
                                     finish();
                                 }

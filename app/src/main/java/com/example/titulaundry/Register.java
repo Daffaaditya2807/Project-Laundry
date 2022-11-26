@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.Model.ResponseRegister;
-import com.example.titulaundry.db_help.Database_Tb_user;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,14 +30,12 @@ public class Register extends AppCompatActivity {
     Button btnRegist;
     CheckBox syrt;
     ApiInterface apiInterface;
-    Database_Tb_user dbcenter;
     AlertDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         notif(Register.this);
-        dbcenter = new Database_Tb_user(this);
         setTectxtColour();
         RegistAccount();
         setCheckBox();

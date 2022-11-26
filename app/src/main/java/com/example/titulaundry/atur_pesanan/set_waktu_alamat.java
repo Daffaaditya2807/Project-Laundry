@@ -30,7 +30,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.titulaundry.R;
-import com.example.titulaundry.db_help.Database_Tb_user;
+//import com.example.titulaundry.db_help.Database_Tb_user;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -43,7 +43,7 @@ public class set_waktu_alamat extends AppCompatActivity {
     Button makePesanan,submit;
     Cursor cursor;
     DatePickerDialog picker;
-    public Database_Tb_user dbHelper;
+//    public Database_Tb_user dbHelper;
     ConstraintLayout viewMenu;
     TextView tgl1 , tgl2,jam1 ,jam2,alamatDetailJemput,alamatDetailKirim,BtnAlamatJemput,BtnAlamatKirim,namaUser,namaKirim;
     AlertDialog dialog;
@@ -71,17 +71,17 @@ public class set_waktu_alamat extends AppCompatActivity {
 
     public void setUser(){
 
-        namaUser = (TextView) findViewById(R.id.NamaUser);
-        namaKirim = (TextView) findViewById(R.id.NamaUserKirim);
-        dbHelper = new Database_Tb_user(this);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        cursor = db.rawQuery("SELECT nama FROM user WHERE email = '"+getIntent().getStringExtra("email")+"'",null);
-        cursor.moveToFirst();
-        if (cursor.getCount()>0){
-            cursor.moveToPosition(0);
-            namaUser.setText(cursor.getString(0));
-            namaKirim.setText(cursor.getString(0));
-        }
+//        namaUser = (TextView) findViewById(R.id.NamaUser);
+//        namaKirim = (TextView) findViewById(R.id.NamaUserKirim);
+//        dbHelper = new Database_Tb_user(this);
+//        SQLiteDatabase db = dbHelper.getReadableDatabase();
+//        cursor = db.rawQuery("SELECT nama FROM user WHERE email = '"+getIntent().getStringExtra("email")+"'",null);
+//        cursor.moveToFirst();
+//        if (cursor.getCount()>0){
+//            cursor.moveToPosition(0);
+//            namaUser.setText(cursor.getString(0));
+//            namaKirim.setText(cursor.getString(0));
+//        }
     }
 
     public void IntentPesanan(){
