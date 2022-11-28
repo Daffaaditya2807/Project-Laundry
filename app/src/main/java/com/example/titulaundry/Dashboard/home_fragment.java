@@ -24,16 +24,19 @@ import com.example.titulaundry.Adapter.AdapterBarang;
 import com.example.titulaundry.Adapter.AdapterPesanan;
 import com.example.titulaundry.Model.ResponeBarang;
 import com.example.titulaundry.Model.ResponsePesanan;
+import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.ModelMySQL.DataBarang;
 import com.example.titulaundry.ModelMySQL.DataPesanan;
 import com.example.titulaundry.R;
 import com.example.titulaundry.atur_pesanan.pesanan;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,6 +45,8 @@ import retrofit2.Response;
 public class home_fragment extends Fragment {
     public TextView greeting;
     String waktu;
+    TextView getGreeting,alamatUser;
+    CircleImageView profilePic;
 
     RecyclerView recyclerView;
     //use DB MySQL
@@ -56,7 +61,7 @@ public class home_fragment extends Fragment {
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
+        setGreeting();
         RecycleMySQL();
         RecycleMySQLPesanan();
 
@@ -96,6 +101,11 @@ public class home_fragment extends Fragment {
     }
 
     public void setGreeting(){
+        String id_user = getActivity().getIntent().getStringExtra("id_user");
+        getGreeting = (TextView)getView().findViewById(R.id.greeting);
+        alamatUser = (TextView) getView().findViewById(R.id.alamat);
+        profilePic = (CircleImageView) getView().findViewById(R.id.profile_image);
+
         //set waktu
         Calendar now = Calendar.getInstance();
         int hour = now.get(Calendar.HOUR_OF_DAY);
@@ -109,15 +119,21 @@ public class home_fragment extends Fragment {
             waktu = " Malam " ;
         }
 
-//        greeting = (TextView) getView().findViewById(R.id.greeting);
-//        dbHelper = new Database_Tb_user(getActivity());
-//        SQLiteDatabase db = dbHelper.getReadableDatabase();
-//        cursor = db.rawQuery("SELECT nama FROM user WHERE email = '"+getActivity().getIntent().getStringExtra("email")+"'",null);
-//        cursor.moveToFirst();
-//        if (cursor.getCount()>0){
-//            cursor.moveToPosition(0);
-//            greeting.setText("Selamat"+waktu+""+cursor.getString(0).toString());
-//        }
+        ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
+        Call<ResponseUser> dataUser = apiInterface.getDataUser(id_user);
+        dataUser.enqueue(new Callback<ResponseUser>() {
+            @Override
+            public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
+                getGreeting.setText("Selamat "+waktu+" "+String.valueOf(response.body().getData().getNama()));
+                alamatUser.setText(String.valueOf(response.body().getData().getAlamat()));
+                Picasso.get().load(AppClient.profileIMG+response.body().getData().getProfile_img()).error(R.mipmap.ic_launcher).into(profilePic);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseUser> call, Throwable t) {
+
+            }
+        });
 
     }
 

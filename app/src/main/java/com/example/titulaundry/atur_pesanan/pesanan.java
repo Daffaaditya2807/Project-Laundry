@@ -14,13 +14,16 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.Dashboard.MainMenu;
 import com.example.titulaundry.Dashboard.home_fragment;
 import com.example.titulaundry.Dashboard.order_fragment;
 import com.example.titulaundry.R;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -30,10 +33,11 @@ import java.util.Date;
 
 public class pesanan extends AppCompatActivity {
     ImageButton toDashboard;
+    ImageView imgLayanan;
     Button gasPesanan;
     CardView setAlamat,setBeratCuci;
     TextView header , headerBawah,hargaCucian,lamaWaktu,setWaktualamat,setBeratCucian;
-    public String layanan , desc , waktu , harga;
+    public String layanan , desc , waktu , harga,Imgg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,15 +129,18 @@ public class pesanan extends AppCompatActivity {
         headerBawah = (TextView) findViewById(R.id.headerbawah);
         lamaWaktu = (TextView) findViewById(R.id.keterangan);
         hargaCucian = (TextView) findViewById(R.id.totalBerat);
+        imgLayanan = (ImageView) findViewById(R.id.imgMsg);
 
         layanan = getIntent().getStringExtra("layanan");
         waktu = getIntent().getStringExtra("waktu");
         harga = getIntent().getStringExtra("harga");
+        Imgg = getIntent().getStringExtra("imagee");
 
         header.setText(layanan);
         headerBawah.setText(layanan);
         lamaWaktu.setText(waktu + " waktu pengerjaan");
         hargaCucian.setText(harga);
+        Picasso.get().load(AppClient.URL_IMG+Imgg).error(R.drawable.cuci_kering).into(imgLayanan);
 
     }
     public void setAlamat(){
@@ -146,6 +153,7 @@ public class pesanan extends AppCompatActivity {
                 i.putExtra("layanan",layanan);
                 i.putExtra("waktu",waktu);
                 i.putExtra("harga",harga);
+                i.putExtra("imagee",Imgg);
                 i.putExtra("email",getIntent().getStringExtra("email"));
                 //bawah data dari class beratcucian
                 i.putExtra("berat",getIntent().getStringExtra("berat"));

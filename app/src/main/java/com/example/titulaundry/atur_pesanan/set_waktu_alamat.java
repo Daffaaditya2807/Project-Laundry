@@ -89,11 +89,13 @@ public class set_waktu_alamat extends AppCompatActivity {
         String waktu;
         String harga;
         String berat;
+        String gambar;
 
         layanan = getIntent().getStringExtra("layanan");
         waktu = getIntent().getStringExtra("waktu");
         harga = getIntent().getStringExtra("harga");
         berat = getIntent().getStringExtra("berat");
+        gambar = getIntent().getStringExtra("imagee");
 
         Intent i = new Intent(getApplicationContext(),pesanan.class);
         if (rBtn1.isChecked()) {
@@ -103,6 +105,7 @@ public class set_waktu_alamat extends AppCompatActivity {
             i.putExtra("harga",harga);
             i.putExtra("berat",berat);
             i.putExtra("email",getIntent().getStringExtra("email"));
+            i.putExtra("imagee",gambar);
         }else {
             i.putExtra("hariJemput",hariJemput);
             i.putExtra("hariKembali",hariKembali);

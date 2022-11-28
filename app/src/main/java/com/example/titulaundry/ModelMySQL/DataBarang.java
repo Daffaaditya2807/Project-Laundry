@@ -2,7 +2,7 @@ package com.example.titulaundry.ModelMySQL;
 
 public class DataBarang {
     private int id_jasa,harga;
-    private String jenis_jasa,deskripsi,durasi;
+    private String jenis_jasa,deskripsi,durasi,image;
 
     public int getId_jasa() {
         return id_jasa;
@@ -10,6 +10,14 @@ public class DataBarang {
 
     public void setId_jasa(int id_jasa) {
         this.id_jasa = id_jasa;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getHarga() {

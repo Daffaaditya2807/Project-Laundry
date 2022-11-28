@@ -4,13 +4,16 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.ModelMySQL.DataPesanan;
 import com.example.titulaundry.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -39,6 +42,7 @@ public class AdapterPesanan extends RecyclerView.Adapter<AdapterPesanan.ViewHold
         holder.status.setText(String.valueOf(pesanan.getStatusPesanan()));
         holder.totalHarga.setText(String.valueOf(pesanan.getTotalHarga()));
         holder.waktuEst.setText(String.valueOf(pesanan.getDurasi()));
+        Picasso.get().load(AppClient.URL_IMG+pesananList.get(position).getImage()).error(R.drawable.meki).into(holder.imageView);
 
     }
 
@@ -49,6 +53,7 @@ public class AdapterPesanan extends RecyclerView.Adapter<AdapterPesanan.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView jasa , status,waktuEst,totalHarga;
+        ImageView imageView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -56,6 +61,7 @@ public class AdapterPesanan extends RecyclerView.Adapter<AdapterPesanan.ViewHold
             status = itemView.findViewById(R.id.status);
             waktuEst = itemView.findViewById(R.id.waktuEst);
             totalHarga = itemView.findViewById(R.id.totalHarga);
+            imageView = itemView.findViewById(R.id.img1);
         }
     }
 }
