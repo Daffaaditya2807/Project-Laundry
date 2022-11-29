@@ -27,6 +27,8 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,8 +38,8 @@ public class pesanan extends AppCompatActivity {
     ImageView imgLayanan;
     Button gasPesanan;
     CardView setAlamat,setBeratCuci;
-    TextView header , headerBawah,hargaCucian,lamaWaktu,setWaktualamat,setBeratCucian;
-    public String layanan , desc , waktu , harga,Imgg;
+    TextView header , headerBawah,hargaCucian,lamaWaktu,setWaktualamat,setBeratCucian,deskripsi;
+    public String layanan , desc , waktu , harga,Imgg,idWong,id_jasa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,7 @@ public class pesanan extends AppCompatActivity {
         dataFromAlamat();
         dataFromBerat();
         getPesanan();
-        System.out.println("Ini turu adalah = "+getIntent().getStringExtra("turu"));
+
     }
     public void notif(Activity activity){
         //change color notif bar
@@ -75,6 +77,12 @@ public class pesanan extends AppCompatActivity {
                 i.putExtra("waktu",waktu);
                 i.putExtra("harga",harga);
                 i.putExtra("email",getIntent().getStringExtra("email"));
+                i.putExtra("imagee",Imgg);
+                i.putExtra("id_user",idWong);
+                i.putExtra("deskripsi",desc);
+                i.putExtra("id_jasa",id_jasa);
+//                System.out.println("Pindah ke Berat = "+idWong);
+//                System.out.println("ID Jasa Pindah ke Barat = "+id_jasa);
 
                 //bawah data dari class waktuAlamat
                 i.putExtra("hariJemput",getIntent().getStringExtra("hariJemput"));
@@ -124,22 +132,37 @@ public class pesanan extends AppCompatActivity {
         }
 
     }
+    public static String toRupiah(int rupiah){
+        DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator('.');
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+        return kursIndonesia.format(rupiah).replace(".00","");
+    }
     public void setPesanan(){
         header = (TextView) findViewById(R.id.header);
         headerBawah = (TextView) findViewById(R.id.headerbawah);
         lamaWaktu = (TextView) findViewById(R.id.keterangan);
         hargaCucian = (TextView) findViewById(R.id.totalBerat);
         imgLayanan = (ImageView) findViewById(R.id.imgMsg);
+        deskripsi = (TextView) findViewById(R.id.isiDeskripsi);
 
         layanan = getIntent().getStringExtra("layanan");
         waktu = getIntent().getStringExtra("waktu");
         harga = getIntent().getStringExtra("harga");
         Imgg = getIntent().getStringExtra("imagee");
+        desc = getIntent().getStringExtra("deskripsi");
+        idWong = getIntent().getStringExtra("id_user");
+        id_jasa = getIntent().getStringExtra("id_jasa");
 
+
+        deskripsi.setText(desc);
         header.setText(layanan);
         headerBawah.setText(layanan);
         lamaWaktu.setText(waktu + " waktu pengerjaan");
-        hargaCucian.setText(harga);
+        hargaCucian.setText(toRupiah(Integer.parseInt(harga)));
         Picasso.get().load(AppClient.URL_IMG+Imgg).error(R.drawable.cuci_kering).into(imgLayanan);
 
     }
@@ -155,6 +178,11 @@ public class pesanan extends AppCompatActivity {
                 i.putExtra("harga",harga);
                 i.putExtra("imagee",Imgg);
                 i.putExtra("email",getIntent().getStringExtra("email"));
+                i.putExtra("id_user",idWong);
+                i.putExtra("deskripsi",desc);
+                i.putExtra("id_jasa",id_jasa);
+//                System.out.println("Pindah ke Berat = "+idWong);
+//                System.out.println("ID Jasa Pindah ke Alamat = "+id_jasa);
                 //bawah data dari class beratcucian
                 i.putExtra("berat",getIntent().getStringExtra("berat"));
                 startActivity(i);
@@ -184,6 +212,7 @@ public class pesanan extends AppCompatActivity {
                 String addressSend = getIntent().getStringExtra("alamatUserSend");
                 String weight = getIntent().getStringExtra("berat");
 
+
                 System.out.println("Jenis Pesanan = "+layanan + "" + getIntent().getStringExtra("berat")+" Kg");
                 System.out.println("Penjemputan = " + getIntent().getStringExtra("hariJemput"));
                 System.out.println("jam jemput = "+getIntent().getStringExtra("waktuJemput"));
@@ -193,6 +222,8 @@ public class pesanan extends AppCompatActivity {
                 System.out.println("Alamat = "+getIntent().getStringExtra("alamatUserSend"));
                 System.out.println("harga Laundry = "+harga);
                 System.out.println("total Berat = "+getIntent().getStringExtra("berat"));
+                System.out.println("ID Orang nya ke Detail "+idWong);
+                System.out.println("Id Layanan ke Detail"+id_jasa);
 
                 if (dayPick == null  || weight ==null ){
                     Toast.makeText(pesanan.this,"Isi Lengkap Terlebih dahulu",Toast.LENGTH_SHORT).show();
@@ -209,6 +240,8 @@ public class pesanan extends AppCompatActivity {
                     i.putExtra("alamatUserSend",addressSend);
                     i.putExtra("harga",harga);
                     i.putExtra("email",getIntent().getStringExtra("email"));
+                    i.putExtra("id_user",idWong);
+                    i.putExtra("id_jasa",id_jasa);
                     startActivity(i);
                 }
 

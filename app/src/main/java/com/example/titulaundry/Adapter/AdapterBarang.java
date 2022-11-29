@@ -19,16 +19,20 @@ import com.example.titulaundry.R;
 import com.example.titulaundry.atur_pesanan.pesanan;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterBarang extends RecyclerView.Adapter<AdapterBarang.HolderData> {
     Context ctx;
     List<DataBarang> dataBarangList;
+    Intent intent;
 
-    public AdapterBarang(Context ctx, List<DataBarang> dataBarangList) {
+    public AdapterBarang(Context ctx, List<DataBarang> dataBarangList,Intent intent) {
         this.ctx = ctx;
         this.dataBarangList = dataBarangList;
+        this.intent = intent;
     }
 
     @NonNull
@@ -37,16 +41,30 @@ public class AdapterBarang extends RecyclerView.Adapter<AdapterBarang.HolderData
         View layout = LayoutInflater.from(ctx).inflate(R.layout.grid_layanan,parent,false);
         return new HolderData(layout);
     }
+    public static String toRupiah(int rupiah){
+        DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator('.');
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+        return kursIndonesia.format(rupiah).replace(".00","");
+    }
 
     @Override
     public void onBindViewHolder(@NonNull HolderData holder,  int position) {
         DataBarang db = dataBarangList.get(position);
-
+        int harga = db.getHarga();
+        String turu = String.valueOf(toRupiah(harga));
+        System.out.println();
         holder.jenis_layanan.setText(String.valueOf(dataBarangList.get(position).getJenis_jasa()));
         holder.descLayanan.setText(String.valueOf(db.getDeskripsi()));
         holder.waktuLayanan.setText(String.valueOf(db.getDurrasi()));
-        holder.hargaLayanan.setText(String.valueOf(db.getHarga()));
+        holder.hargaLayanan.setText(String.valueOf(toRupiah(db.getHarga())));
         holder.id_jasa.setText(String.valueOf(db.getId_jasa()));
+        String turuu = intent.getStringExtra("id_user");
+
+
         Picasso.get().load(AppClient.URL_IMG+dataBarangList.get(position).getImage()).error(R.drawable.cuci_kering).into(holder.gmbr);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +75,9 @@ public class AdapterBarang extends RecyclerView.Adapter<AdapterBarang.HolderData
                 i.putExtra("waktu",db.getDurrasi());
                 i.putExtra("harga",String.valueOf(db.getHarga()));
                 i.putExtra("imagee",db.getImage());
+                i.putExtra("id_user",intent.getStringExtra("id_user"));
+                i.putExtra("id_jasa",String.valueOf(db.getId_jasa()));
+                System.out.println("ID JASA NYA DALAH"+db.getId_jasa());
                 ctx.startActivity(i);
             }
         });

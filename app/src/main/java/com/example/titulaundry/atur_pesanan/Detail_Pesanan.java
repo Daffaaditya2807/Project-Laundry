@@ -15,8 +15,11 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.titulaundry.API.ApiInterface;
+import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.Dashboard.MainMenu;
 import com.example.titulaundry.Dashboard.home_fragment;
+import com.example.titulaundry.Model.ResponseInsertPesanan;
 import com.example.titulaundry.R;
 //import com.example.titulaundry.db_help.Database_Tb_Pesanan;
 
@@ -24,14 +27,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class Detail_Pesanan extends AppCompatActivity {
 
-    String layanan , hargaLayanan , beratCucian,hariJemput,hariKirim,waktuJemput,waktuKirim,alamatUserPick,alamatUserSend;
+    String layanan , hargaLayanan , beratCucian,hariJemput,hariKirim,waktuJemput,waktuKirim,alamatUserPick,alamatUserSend,idOrg,IdJasa,idVoucher;
     TextView jnslyn,txHariJemput,txHariKirim,beratXharga,totalHarga,alamatDetailPick,alamatDetailSend;
     String formatHariJemput,formatHariKirim;
     int GettotalHarga;
     Button backToHome;
     ConstraintLayout lyt;
+    ApiInterface apiInterface;
 
 //
 //    Database_Tb_Pesanan PS;
@@ -43,11 +51,12 @@ public class Detail_Pesanan extends AppCompatActivity {
         notif(Detail_Pesanan.this);
         setLayoutPesanan();
         getDataFromPesanan();
-        HitungTotal();
         setFormatHari();
-        setAlamat();
         setDataFromPesanan();
-        InsertPesanan();
+
+        setAlamat();
+
+//        InsertPesanan();
 
 
     }
@@ -58,6 +67,8 @@ public class Detail_Pesanan extends AppCompatActivity {
         String layout = getIntent().getStringExtra("hariJemput");
         if (layout.equals("Antar Sendiri")){
             lyt.setVisibility(View.GONE);
+        } else {
+
         }
 
     }
@@ -69,14 +80,14 @@ public class Detail_Pesanan extends AppCompatActivity {
         alamatDetailSend.setText(alamatUserSend);
     }
 
-    public void HitungTotal(){
+    public static int HitungBro(String hargaLayanan , String beratCucian){
         String fm = hargaLayanan;
         fm = fm.replaceAll("[^\\d.]", "");
         fm = fm.replace(".","");
         int harga = Integer.parseInt(fm);
         int berat = Integer.parseInt(beratCucian);
         int ppn = 1320;
-        GettotalHarga = (harga*berat)+ppn;
+        return (harga*berat)+ppn;
     }
 
     public void setDataFromPesanan(){
@@ -96,23 +107,30 @@ public class Detail_Pesanan extends AppCompatActivity {
         beratXharga = (TextView) findViewById(R.id.totalBeratCucian);
         beratXharga.setText(String.valueOf(hargaLayanan)+" X "+String.valueOf(beratCucian)+" Kg");
 
+        int hargaa = HitungBro(hargaLayanan,beratCucian);
         //total
         totalHarga = (TextView) findViewById(R.id.hargaFix);
-        totalHarga.setText("Rp. "+GettotalHarga);
+        totalHarga.setText("Rp. "+String.valueOf(hargaa));
     }
 
     public void setFormatHari(){
-        SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
-        SimpleDateFormat format3 = new SimpleDateFormat("EEEE");
+        if (!hariJemput.equals("Antar Sendiri")||!hariKirim.equals("Antar Sendiri")){
+            SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat format3 = new SimpleDateFormat("EEEE");
+            SimpleDateFormat format4 = new SimpleDateFormat("yyyy-MM-dd");
 
-        try {
-            Date date = format1.parse(hariJemput);
-            Date date1 = format1.parse(hariKirim);
-            formatHariJemput = format3.format(date);
-            formatHariKirim = format3.format(date1);
-        } catch (ParseException e) {
-            e.printStackTrace();
+            try {
+                Date date = format1.parse(hariJemput);
+                Date date1 = format1.parse(hariKirim);
+                formatHariJemput = format3.format(date);
+                formatHariKirim = format3.format(date1);
+                hariJemput = format4.format(date);
+                hariKirim = format4.format(date1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
+
 
     }
 
@@ -126,12 +144,64 @@ public class Detail_Pesanan extends AppCompatActivity {
         waktuKirim = getIntent().getStringExtra("waktuKembali");
         alamatUserPick = getIntent().getStringExtra("alamatUserPick");
         alamatUserSend = getIntent().getStringExtra("alamatUserSend");
-        System.out.println("KIRIM KE = "+alamatUserSend);
+        idOrg = getIntent().getStringExtra("id_user");
+        IdJasa = getIntent().getStringExtra("id_jasa");
+
+
+        backToHome = (Button) findViewById(R.id.buatPesanan);
+        backToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //harga
+                int hargaa2 = HitungBro(hargaLayanan,beratCucian);
+
+                if (waktuJemput == null || waktuKirim == null){
+                    waktuJemput = "";
+                    waktuKirim = "";
+                }
+                //waktuJemput
+                String pickAku = hariJemput+" "+waktuJemput;
+                String SendAku = hariKirim+" "+waktuKirim;
+
+                System.out.println("Id User = "+idOrg);
+                System.out.println("Id Jasa = "+IdJasa);
+                System.out.println("total_berat = "+beratCucian);
+                System.out.println("total_harga = "+hargaa2);
+                System.out.println("Waktu Penjemputan = "+hariJemput);
+                System.out.println("Waktu Kirim = "+hariKirim);
+
+
+                System.out.println("Saat ada tanggal e "+pickAku);
+                System.out.println("Saat ada tanggal e  "+SendAku);
+
+                //Insert Data HERE
+                apiInterface = AppClient.getClient().create(ApiInterface.class);
+                Call<ResponseInsertPesanan> insertPesananCall = apiInterface.getDataPesanan(beratCucian,
+                        String.valueOf(hargaa2),String.valueOf(hargaa2),pickAku,SendAku,"1",IdJasa,idOrg);
+                insertPesananCall.enqueue(new Callback<ResponseInsertPesanan>() {
+                    @Override
+                    public void onResponse(Call<ResponseInsertPesanan> call, Response<ResponseInsertPesanan> response) {
+                        int kode = response.body().getKode();
+                        System.out.println("APAKAH MASUK "+kode);
+                        Intent i = new Intent(getApplicationContext(),MainMenu.class);
+                        i.putExtra("id_user",idOrg);
+                        startActivity(i);
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseInsertPesanan> call, Throwable t) {
+
+                    }
+                });
+
+            }
+        });
+
     }
 
-    public void InsertPesanan(){
-
-//        PS = new Database_Tb_Pesanan(this);
+//    public void InsertPesanan(){
+//
 //        backToHome = (Button) findViewById(R.id.buatPesanan);
 //        backToHome.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -144,17 +214,15 @@ public class Detail_Pesanan extends AppCompatActivity {
 //                int random_int = (int)Math.floor(Math.random()*(max-min+1)+min);
 //                System.out.println(random_int);
 //                String numberRandom = String.valueOf(random_int);
-//
-//
-//                PS.insertDataPesanan("lyn"+numberRandom,layanan,beratCucian,"Sedang dalam Perjalanan","1 hari",String.valueOf(GettotalHarga));
 //                Intent i = new Intent(getApplicationContext(), MainMenu.class);
-//                i.putExtra("email",getIntent().getStringExtra("email"));
+//                i.putExtra("id_user",getIntent().getStringExtra("id_user"));
+//                System.out.println("ID USER TO MAIN MENU == "+getIntent().getStringExtra("id_user"));
 //                startActivity(i);
 //                finish();
 //            }
 //        });
 
-    }
+  //  }
     public void notif(Activity activity){
         //change color notif bar
         Window window = this.getWindow();

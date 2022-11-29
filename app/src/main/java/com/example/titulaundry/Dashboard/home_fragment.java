@@ -138,11 +138,10 @@ public class home_fragment extends Fragment {
     }
 
     public void RecycleMySQL(){
-
-
         ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
         Call<ResponeBarang> GetData = apiInterface.getRetrive();
         GetData.enqueue(new Callback<ResponeBarang>() {
+
             @Override
             public void onResponse(Call<ResponeBarang> call, Response<ResponeBarang> response) {
                 int kode = response.body().getKode();
@@ -150,7 +149,7 @@ public class home_fragment extends Fragment {
 
                 dataBarangList = response.body().getData();
 
-                adData = new AdapterBarang(getContext(),dataBarangList);
+                adData = new AdapterBarang(getContext(),dataBarangList,getActivity().getIntent());
 
                 recyclerView = getView().findViewById(R.id.recycleLayanan);
                 recyclerView.setHasFixedSize(true);

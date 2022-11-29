@@ -126,16 +126,18 @@
             app:layout_constraintTop_toBottomOf="@+id/keterangan"
             app:layout_constraintStart_toStartOf="parent"
             />
+
         <TextView
             android:id="@+id/isiDeskripsi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="Minimal pemesanan untuk laundry cuci kering adalah 1 kg. Pakaian akan diproses mulai dari pencucian, pewangi, hingga pengeringan. Paket ini tidak termasuk dengan layanan setrika"
-            app:layout_constraintTop_toBottomOf="@+id/deskripsii"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/deskripsii" />
+
         <View
             android:id="@+id/line1"
             android:layout_width="match_parent"

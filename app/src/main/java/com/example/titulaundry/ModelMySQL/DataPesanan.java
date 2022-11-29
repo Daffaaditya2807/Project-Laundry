@@ -11,7 +11,7 @@ public class DataPesanan {
 	private String totalBerat;
 
 	@SerializedName("total_harga")
-	private String totalHarga;
+	private int totalHarga;
 
 	@SerializedName("id_user")
 	private String idUser;
@@ -49,11 +49,11 @@ public class DataPesanan {
 		return totalBerat;
 	}
 
-	public void setTotalHarga(String totalHarga){
+	public void setTotalHarga(int totalHarga){
 		this.totalHarga = totalHarga;
 	}
 
-	public String getTotalHarga(){
+	public int getTotalHarga(){
 		return totalHarga;
 	}
 

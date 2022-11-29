@@ -29,6 +29,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.titulaundry.API.ApiInterface;
+import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.R;
 //import com.example.titulaundry.db_help.Database_Tb_user;
 
@@ -36,6 +39,10 @@ import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class set_waktu_alamat extends AppCompatActivity {
     RadioButton rBtn1 , rBtn2;
@@ -48,6 +55,7 @@ public class set_waktu_alamat extends AppCompatActivity {
     TextView tgl1 , tgl2,jam1 ,jam2,alamatDetailJemput,alamatDetailKirim,BtnAlamatJemput,BtnAlamatKirim,namaUser,namaKirim;
     AlertDialog dialog;
     int hour , minute;
+    ApiInterface apiInterface;
 
     String waktuJemput , waktuPengembalian,hariJemput,hariKembali;
 
@@ -57,16 +65,37 @@ public class set_waktu_alamat extends AppCompatActivity {
         setContentView(R.layout.activity_set_waktu_alamat);
         notif(set_waktu_alamat.this);
         PilihTanggal();
-        inisiasiAlamat();
         setUser();
         setBckToPesanan();
         checkedButton();
         PickerTime();
+        setAlamat();
         bawahDataToPesanan();
     }
-    public void inisiasiAlamat(){
+
+
+    public void setAlamat(){
         alamatDetailJemput = (TextView) findViewById(R.id.alamatDetail);
         alamatDetailKirim = (TextView) findViewById(R.id.alamatDetailKirim);
+        namaUser = (TextView) findViewById(R.id.NamaUser);
+        namaKirim = (TextView) findViewById(R.id.NamaUserKirim);
+        apiInterface = AppClient.getClient().create(ApiInterface.class);
+        Call<ResponseUser> getData = apiInterface.getDataUser(getIntent().getStringExtra("id_user"));
+        getData.enqueue(new Callback<ResponseUser>() {
+            @Override
+            public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
+                alamatDetailJemput.setText(response.body().getData().getAlamat());
+                alamatDetailKirim.setText(response.body().getData().getAlamat());
+                namaUser.setText(response.body().getData().getNama());
+                namaKirim.setText(response.body().getData().getNama());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseUser> call, Throwable t) {
+
+            }
+        });
+
     }
 
     public void setUser(){
@@ -90,22 +119,33 @@ public class set_waktu_alamat extends AppCompatActivity {
         String harga;
         String berat;
         String gambar;
+        String id;
+        String desc;
+        String id_jasa;
 
         layanan = getIntent().getStringExtra("layanan");
         waktu = getIntent().getStringExtra("waktu");
         harga = getIntent().getStringExtra("harga");
         berat = getIntent().getStringExtra("berat");
         gambar = getIntent().getStringExtra("imagee");
+        id = getIntent().getStringExtra("id_user");
+        desc = getIntent().getStringExtra("deskripsi");
+        id_jasa = getIntent().getStringExtra("id_jasa");
 
         Intent i = new Intent(getApplicationContext(),pesanan.class);
         if (rBtn1.isChecked()) {
             i.putExtra("hariJemput","Antar Sendiri");
+            i.putExtra("hariKembali","Antar Sendiri");
             i.putExtra("layanan",layanan);
             i.putExtra("waktu",waktu);
             i.putExtra("harga",harga);
             i.putExtra("berat",berat);
             i.putExtra("email",getIntent().getStringExtra("email"));
             i.putExtra("imagee",gambar);
+            i.putExtra("id_user",id);
+            i.putExtra("deskripsi",desc);
+            i.putExtra("id_jasa",id_jasa);
+
         }else {
             i.putExtra("hariJemput",hariJemput);
             i.putExtra("hariKembali",hariKembali);
@@ -117,16 +157,21 @@ public class set_waktu_alamat extends AppCompatActivity {
             i.putExtra("waktu",waktu);
             i.putExtra("harga",harga);
             i.putExtra("berat",berat);
+            i.putExtra("email",getIntent().getStringExtra("email"));
+            i.putExtra("imagee",gambar);
+            i.putExtra("id_user",id);
+            i.putExtra("deskripsi",desc);
+            i.putExtra("id_jasa",id_jasa);
         }
 
         startActivity(i);
 
-        System.out.println("jemput = "+hariJemput);
-        System.out.println("kembali = "+hariKembali);
-        System.out.println("waktu jemput = "+waktuJemput);
-        System.out.println("Waktu Kembali = "+waktuPengembalian);
-        System.out.println("Alamat Pick = "+alamatDetailJemput.getText().toString());
-        System.out.println("Alamat Send = "+alamatDetailKirim.getText().toString());
+//        System.out.println("jemput = "+hariJemput);
+//        System.out.println("kembali = "+hariKembali);
+//        System.out.println("waktu jemput = "+waktuJemput);
+//        System.out.println("Waktu Kembali = "+waktuPengembalian);
+//        System.out.println("Alamat Pick = "+alamatDetailJemput.getText().toString());
+//        System.out.println("Alamat Send = "+alamatDetailKirim.getText().toString());
 
         //data dari class sebelumnya
 

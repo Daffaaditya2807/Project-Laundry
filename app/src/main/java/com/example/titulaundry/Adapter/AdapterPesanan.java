@@ -15,6 +15,8 @@ import com.example.titulaundry.ModelMySQL.DataPesanan;
 import com.example.titulaundry.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
 
 public class AdapterPesanan extends RecyclerView.Adapter<AdapterPesanan.ViewHolder> {
@@ -40,10 +42,19 @@ public class AdapterPesanan extends RecyclerView.Adapter<AdapterPesanan.ViewHold
 
         holder.jasa.setText(String.valueOf(pesanan.getJenisJasa()+" "+pesanan.getTotalBerat()+" Kg"));
         holder.status.setText(String.valueOf(pesanan.getStatusPesanan()));
-        holder.totalHarga.setText(String.valueOf(pesanan.getTotalHarga()));
+        holder.totalHarga.setText(String.valueOf(toRupiah(pesanan.getTotalHarga())));
         holder.waktuEst.setText(String.valueOf(pesanan.getDurasi()));
         Picasso.get().load(AppClient.URL_IMG+pesananList.get(position).getImage()).error(R.drawable.meki).into(holder.imageView);
 
+    }
+    public static String toRupiah(int rupiah){
+        DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator('.');
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+        return kursIndonesia.format(rupiah).replace(".00","");
     }
 
     @Override

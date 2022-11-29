@@ -13,7 +13,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.titulaundry.API.ApiInterface;
+import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BeratCucian extends AppCompatActivity {
     ImageButton bckToPesanan;
@@ -22,6 +29,7 @@ public class BeratCucian extends AppCompatActivity {
     CardView plsButton , minButton;
     TextView orderCount,brtCucian,hrgCucian,hargaFix;
     Button brtPsn;
+    ApiInterface apiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +50,8 @@ public class BeratCucian extends AppCompatActivity {
         View decor = activity.getWindow().getDecorView();
         decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
+
+
     public void setBckToPesanan(){
         bckToPesanan = (ImageButton) findViewById(R.id.kembali);
         bckToPesanan.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +72,10 @@ public class BeratCucian extends AppCompatActivity {
                 String waktu;
                 String harga;
                 String tanggal;
+                String gambar;
+                String id;
+                String desc;
+                String id_jasa;
                 String alamatPick;
                 String alamatSend;
                 String hariKembali;
@@ -72,6 +86,10 @@ public class BeratCucian extends AppCompatActivity {
                 layanan = getIntent().getStringExtra("layanan");
                 waktu = getIntent().getStringExtra("waktu");
                 harga = getIntent().getStringExtra("harga");
+                gambar = getIntent().getStringExtra("imagee");
+                id = getIntent().getStringExtra("id_user");
+                desc = getIntent().getStringExtra("deskripsi");
+                id_jasa = getIntent().getStringExtra("id_jasa");
 
                 //inisiasi dari class pesanan
                 tanggal = getIntent().getStringExtra("hariJemput");
@@ -90,6 +108,10 @@ public class BeratCucian extends AppCompatActivity {
                 i.putExtra("waktu",waktu);
                 i.putExtra("harga",harga);
                 i.putExtra("email",getIntent().getStringExtra("email"));
+                i.putExtra("id_user",id);
+                i.putExtra("deskripsi",desc);
+                i.putExtra("imagee",gambar);
+                i.putExtra("id_jasa",id_jasa);
 
                 //data dari class pesanan
                 i.putExtra("hariJemput",tanggal);
