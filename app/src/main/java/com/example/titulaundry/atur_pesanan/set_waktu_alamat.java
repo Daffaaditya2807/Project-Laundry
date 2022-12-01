@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Address;
+import android.location.Geocoder;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,9 +37,11 @@ import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.R;
 //import com.example.titulaundry.db_help.Database_Tb_user;
 
+import java.io.IOException;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -195,6 +199,25 @@ public class set_waktu_alamat extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                Geocoder geocoder = new Geocoder(set_waktu_alamat.this);
+//                List<Address> addresses;
+//                try {
+//                    addresses = geocoder.getFromLocationName(alamat.getText().toString(),1);
+//
+//                    if (addresses != null){
+//                        double lat = addresses.get(0).getLatitude();
+//                        double lon = addresses.get(0).getLongitude();
+//
+//                        System.out.println("Latitude : "+lat);
+//                        System.out.println("Langotitue : "+lon);
+//                        alamatDetailKirim.setText(alamat.getText().toString()+"\n LAT = "+String.valueOf(lat)+"\n LON = "+String.valueOf(lon));
+//                        dialog.dismiss();
+//                    } else {
+//                        Toast.makeText(set_waktu_alamat.this, "Lokasi Tidak Terdeteksi", Toast.LENGTH_SHORT).show();
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
                 alamatDetailKirim.setText(alamat.getText().toString());
                 dialog.dismiss();
             }

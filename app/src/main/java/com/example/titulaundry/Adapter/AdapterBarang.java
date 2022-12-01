@@ -21,18 +21,28 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class AdapterBarang extends RecyclerView.Adapter<AdapterBarang.HolderData> {
     Context ctx;
     List<DataBarang> dataBarangList;
     Intent intent;
 
+
+
     public AdapterBarang(Context ctx, List<DataBarang> dataBarangList,Intent intent) {
         this.ctx = ctx;
         this.dataBarangList = dataBarangList;
         this.intent = intent;
+    }
+
+
+    public void setFilteredList(List<DataBarang> filteredList){
+        this.dataBarangList = filteredList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -41,6 +51,13 @@ public class AdapterBarang extends RecyclerView.Adapter<AdapterBarang.HolderData
         View layout = LayoutInflater.from(ctx).inflate(R.layout.grid_layanan,parent,false);
         return new HolderData(layout);
     }
+    public static String convertRupiah(int price){
+        Locale locale = new Locale("in","ID");
+        NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+        String strFormat = format.format(price);
+        return strFormat.replace(",00","");
+    }
+
     public static String toRupiah(int rupiah){
         DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
         DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
@@ -55,12 +72,12 @@ public class AdapterBarang extends RecyclerView.Adapter<AdapterBarang.HolderData
     public void onBindViewHolder(@NonNull HolderData holder,  int position) {
         DataBarang db = dataBarangList.get(position);
         int harga = db.getHarga();
-        String turu = String.valueOf(toRupiah(harga));
+        String turu = String.valueOf(convertRupiah(harga));
         System.out.println();
         holder.jenis_layanan.setText(String.valueOf(dataBarangList.get(position).getJenis_jasa()));
         holder.descLayanan.setText(String.valueOf(db.getDeskripsi()));
         holder.waktuLayanan.setText(String.valueOf(db.getDurrasi()));
-        holder.hargaLayanan.setText(String.valueOf(toRupiah(db.getHarga())));
+        holder.hargaLayanan.setText(String.valueOf(convertRupiah(db.getHarga())));
         holder.id_jasa.setText(String.valueOf(db.getId_jasa()));
         String turuu = intent.getStringExtra("id_user");
 

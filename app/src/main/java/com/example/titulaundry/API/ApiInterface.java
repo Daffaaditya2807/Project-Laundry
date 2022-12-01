@@ -9,6 +9,7 @@ import com.example.titulaundry.Model.ResponseLogin;
 import com.example.titulaundry.Model.ResponsePesanan;
 import com.example.titulaundry.Model.ResponseRegister;
 import com.example.titulaundry.Model.ResponseUser;
+import com.example.titulaundry.Model.SemuaPesanan;
 import com.example.titulaundry.Model.UpdatePassword;
 import com.example.titulaundry.Model.VerifEmail;
 
@@ -86,6 +87,21 @@ public interface ApiInterface {
             @Field("waktu_antar") String waktu_antar,
             @Field("id_voucher") String id_voucher,
             @Field("id_jasa") String id_jasa,
+            @Field("id_user") String id_user
+    );
+    @FormUrlEncoded
+    @POST("PesananSemua.php")
+    Call<SemuaPesanan> getPesananSemua(
+            @Field("id_user") String id_user
+    );
+    @FormUrlEncoded
+    @POST("PesananSaatIni.php")
+    Call<SemuaPesanan> getPesananSaatIni(
+            @Field("id_user") String id_user
+    );
+    @FormUrlEncoded
+    @POST("PesananSelesai.php")
+    Call<SemuaPesanan> getPesananSelesai(
             @Field("id_user") String id_user
     );
 }

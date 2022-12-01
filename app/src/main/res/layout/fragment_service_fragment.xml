@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="20dp"
     android:layout_marginHorizontal="20dp"
     android:layout_height="match_parent"
     tools:context=".Dashboard.Service_fragment">
@@ -12,31 +13,23 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <!-- TODO: Update blank fragment layout -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputPencarian"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:hintEnabled="false"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
-                app:boxStrokeColor="#FFF"
-                app:boxBackgroundColor="#FFF">
-                <EditText
-                    android:id="@+id/getEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:inputType="textEmailAddress"
-                    android:background="@drawable/edt_rounded"
-                    android:padding="20dp"
-                    android:drawablePadding="12dp"
-                    android:hint="Email"
-                    android:drawableStart="@drawable/pesan" />
-            </com.google.android.material.textfield.TextInputLayout>
+           <SearchView
+               android:id="@+id/inputPencarian"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginHorizontal="10dp"
+               android:layout_marginBottom="8dp"
+               android:queryBackground="@android:color/transparent"
+               android:queryHint="Cari Layanan"
+               android:background="@drawable/search_view"
+               android:backgroundTint="#f2f2f2"
+               android:iconifiedByDefault="false"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycleLayanan"
                 android:layout_width="match_parent"

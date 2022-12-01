@@ -29,9 +29,11 @@ import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class pesanan extends AppCompatActivity {
     ImageButton toDashboard;
@@ -132,6 +134,12 @@ public class pesanan extends AppCompatActivity {
         }
 
     }
+    public static String convertRupiah(int price){
+        Locale locale = new Locale("in","ID");
+        NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+        String strFormat = format.format(price);
+        return strFormat.replace(",00","");
+    }
     public static String toRupiah(int rupiah){
         DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
         DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
@@ -162,7 +170,7 @@ public class pesanan extends AppCompatActivity {
         header.setText(layanan);
         headerBawah.setText(layanan);
         lamaWaktu.setText(waktu + " waktu pengerjaan");
-        hargaCucian.setText(toRupiah(Integer.parseInt(harga)));
+        hargaCucian.setText(convertRupiah(Integer.parseInt(harga)));
         Picasso.get().load(AppClient.URL_IMG+Imgg).error(R.drawable.cuci_kering).into(imgLayanan);
 
     }

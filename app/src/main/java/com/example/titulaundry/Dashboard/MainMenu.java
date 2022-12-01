@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.titulaundry.Adapter.AdapterBarang;
 import com.example.titulaundry.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -31,6 +32,7 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         switchMenu();
         notif(MainMenu.this);
+
     }
 
 
