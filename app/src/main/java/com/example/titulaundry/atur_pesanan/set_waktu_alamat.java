@@ -56,7 +56,7 @@ public class set_waktu_alamat extends AppCompatActivity {
     DatePickerDialog picker;
 //    public Database_Tb_user dbHelper;
     ConstraintLayout viewMenu;
-    TextView tgl1 , tgl2,jam1 ,jam2,alamatDetailJemput,alamatDetailKirim,BtnAlamatJemput,BtnAlamatKirim,namaUser,namaKirim;
+    TextView tgl1 , tgl2,jam1 ,jam2,alamatDetailJemput,alamatDetailKirim,BtnAlamatJemput,BtnAlamatKirim,namaUser,namaKirim,jarak1,jarak2;
     AlertDialog dialog;
     int hour , minute;
     ApiInterface apiInterface;
@@ -77,19 +77,71 @@ public class set_waktu_alamat extends AppCompatActivity {
         bawahDataToPesanan();
     }
 
+    static double distance(double lat1,double lon1 ){
+        double theta = lon1 - 111.89372907334791;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(-7.603485181020061)) + Math.cos(deg2rad(lat1)) *
+                Math.cos(deg2rad(-7.603485181020061))*  Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.515;
+        dist = dist * 1.60934;
+        dist = Math.round(dist);
+        return (dist);
+    }
+
+    static double deg2rad(double deg){
+        return (deg * Math.PI / 180.0);
+    }
+
+    static double rad2deg(double rad){
+        return (rad * 180.0 / Math.PI);
+    }
 
     public void setAlamat(){
         alamatDetailJemput = (TextView) findViewById(R.id.alamatDetail);
         alamatDetailKirim = (TextView) findViewById(R.id.alamatDetailKirim);
+        jarak1 = (TextView) findViewById(R.id.jarak_jemput);
+        jarak2 = (TextView) findViewById(R.id.jarak_kirim);
         namaUser = (TextView) findViewById(R.id.NamaUser);
         namaKirim = (TextView) findViewById(R.id.NamaUserKirim);
         apiInterface = AppClient.getClient().create(ApiInterface.class);
         Call<ResponseUser> getData = apiInterface.getDataUser(getIntent().getStringExtra("id_user"));
         getData.enqueue(new Callback<ResponseUser>() {
+
             @Override
             public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
                 alamatDetailJemput.setText(response.body().getData().getAlamat());
                 alamatDetailKirim.setText(response.body().getData().getAlamat());
+
+                Geocoder geocoder = new Geocoder(set_waktu_alamat.this);
+                List<Address> addresses;
+                List<Address> addresses1;
+                try {
+                    addresses = geocoder.getFromLocationName(alamatDetailJemput.getText().toString(),1);
+                    addresses1 = geocoder.getFromLocationName(alamatDetailKirim.getText().toString(),1);
+
+                    if (addresses != null){
+
+                        if (addresses.size() == 0 || addresses1.size() == 0){
+
+                        } else {
+                            double lat = addresses.get(0).getLatitude();
+                            double lon = addresses.get(0).getLongitude();
+                            double lat1 = addresses1.get(0).getLatitude();
+                            double lon1 = addresses1.get(0).getLongitude();
+
+                            double lokasi = distance(lat,lon);
+                            double lokasi2 = distance(lat1,lon1);
+
+                            jarak1.setText(String.valueOf(lokasi)+" Km");
+                            jarak2.setText(String.valueOf(lokasi2)+" Km");
+                        }
+                    } else {
+                        Toast.makeText(set_waktu_alamat.this, "Lokasi Tidak Terdeteksi", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 namaUser.setText(response.body().getData().getNama());
                 namaKirim.setText(response.body().getData().getNama());
             }
@@ -199,27 +251,29 @@ public class set_waktu_alamat extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Geocoder geocoder = new Geocoder(set_waktu_alamat.this);
-//                List<Address> addresses;
-//                try {
-//                    addresses = geocoder.getFromLocationName(alamat.getText().toString(),1);
-//
-//                    if (addresses != null){
-//                        double lat = addresses.get(0).getLatitude();
-//                        double lon = addresses.get(0).getLongitude();
-//
-//                        System.out.println("Latitude : "+lat);
-//                        System.out.println("Langotitue : "+lon);
-//                        alamatDetailKirim.setText(alamat.getText().toString()+"\n LAT = "+String.valueOf(lat)+"\n LON = "+String.valueOf(lon));
-//                        dialog.dismiss();
-//                    } else {
-//                        Toast.makeText(set_waktu_alamat.this, "Lokasi Tidak Terdeteksi", Toast.LENGTH_SHORT).show();
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-                alamatDetailKirim.setText(alamat.getText().toString());
-                dialog.dismiss();
+                Geocoder geocoder = new Geocoder(set_waktu_alamat.this);
+                List<Address> addresses;
+                try {
+                    addresses = geocoder.getFromLocationName(alamat.getText().toString(),1);
+
+                    if (addresses != null){
+                        double lat = addresses.get(0).getLatitude();
+                        double lon = addresses.get(0).getLongitude();
+
+                        System.out.println("Latitude : "+lat);
+                        System.out.println("Langotitue : "+lon);
+                        alamatDetailKirim.setText(alamat.getText().toString());
+                        double lokasi = distance(lat,lon);
+                        jarak2.setText(String.valueOf(lokasi)+" Km");
+                        dialog.dismiss();
+                    } else {
+                        Toast.makeText(set_waktu_alamat.this, "Lokasi Tidak Terdeteksi", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+//                alamatDetailKirim.setText(alamat.getText().toString());
+//                dialog.dismiss();
             }
         });
         builder.setView(view);
@@ -242,8 +296,29 @@ public class set_waktu_alamat extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alamatDetailJemput.setText(alamat.getText().toString());
-                dialog.dismiss();
+                Geocoder geocoder = new Geocoder(set_waktu_alamat.this);
+                List<Address> addresses;
+                try {
+                    addresses = geocoder.getFromLocationName(alamat.getText().toString(),1);
+
+                    if (addresses != null){
+                        double lat = addresses.get(0).getLatitude();
+                        double lon = addresses.get(0).getLongitude();
+
+                        System.out.println("Latitude : "+lat);
+                        System.out.println("Langotitue : "+lon);
+                        alamatDetailJemput.setText(alamat.getText().toString());
+                        double lokasi = distance(lat,lon);
+                        jarak1.setText(String.valueOf(lokasi)+" Km");
+                        dialog.dismiss();
+                    } else {
+                        Toast.makeText(set_waktu_alamat.this, "Lokasi Tidak Terdeteksi", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+//                alamatDetailJemput.setText(alamat.getText().toString());
+//                dialog.dismiss();
             }
         });
         builder.setView(view);
@@ -457,12 +532,23 @@ public class set_waktu_alamat extends AppCompatActivity {
                     } else if (waktuPengembalian == null){
                         Toast.makeText(set_waktu_alamat.this,"Harap pilih jam pengiriman",Toast.LENGTH_SHORT).show();
                     }else {
+                        //Pembatasan Jarak Kirim
+                        String j = jarak1.getText().toString().replace(" Km","");
+                        String k = jarak2.getText().toString().replace(" Km","");
 
-                        Intent i = new Intent(getApplicationContext(),pesanan.class);
-                        IntentPesanan();
-                        finish();
+                        double jrk2 = Double.parseDouble(k);
+                        double jrk = Double.parseDouble(j);
+                        if (jrk<20 || jrk2<20){
+                            Intent i = new Intent(getApplicationContext(),pesanan.class);
+                            IntentPesanan();
+                            finish();
+                        } else {
+                            Toast.makeText(set_waktu_alamat.this, "Terlalu Jauh Kasian Kurir", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 } else {
+                        //Antar Sendiri
                         Intent i = new Intent(getApplicationContext(),pesanan.class);
                         IntentPesanan();
                         finish();

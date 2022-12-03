@@ -4,9 +4,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppClient {
-    public static String BASE_URL = "http:/172.16.109.239/API_LAUNDRY/";
-    public static String URL_IMG = "http:/172.16.109.239/API_LAUNDRY/assets/";
-    public static String profileIMG = "http:/172.16.109.239/API_LAUNDRY/image_profile/";
+    public static String BASE_URL = "http:/192.168.0.105/API_LAUNDRY/";
+    public static String URL_IMG = "http:/192.168.0.105/API_LAUNDRY/assets/";
+    public static String profileIMG = "http:/192.168.0.105/API_LAUNDRY/image_profile/";
     private static Retrofit retrofit;
 
     public static Retrofit getClient() {
