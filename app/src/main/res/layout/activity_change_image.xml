@@ -7,24 +7,41 @@
     android:layout_marginTop="30dp"
     android:layout_height="match_parent"
     tools:context=".Dashboard.change_image">
-    <ImageView
+    <ImageButton
+        android:id="@+id/kembali"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_btn_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/header"
+        android:background="@drawable/ic_btn_back"
+        />
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Profile"
+        android:padding="2dp"
+        android:fontFamily="@font/inter_bold"
+        android:textSize="18dp"
+        android:textColor="#333333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:id="@+id/imgProfile"
+        android:layout_marginTop="20dp"
         android:src="@drawable/puan"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-    <ImageView
-        android:id="@+id/closee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/close"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header"
         />
     <LinearLayout
+        android:id="@+id/lytBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -35,20 +52,78 @@
         <Button
             android:id="@+id/ubah"
             android:layout_width="wrap_content"
-            android:backgroundTint="#dbeee3"
-            android:textColor="#219653"
+            android:backgroundTint="#deebfc"
+            android:textColor="#2f80ed"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:text="Ubah Profile"
+            android:text="Ganti Foto"
             />
         <Button
-            android:id="@+id/savePic"
+            android:id="@+id/HapusFoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Simpan"
+            android:backgroundTint="#ebebeb"
+            android:textColor="#828282"
+            android:text="Hapus Foto"
             android:layout_marginHorizontal="10dp"
             />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/lytBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama"
+            android:textSize="14dp"
+            android:textColor="@color/black" />
+        <EditText
+            android:id="@+id/editNama"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Email"
+            android:textSize="14dp"
+            android:textColor="@color/black" />
+        <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
+            android:inputType="textEmailAddress"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="No. Telp"
+            android:textSize="14dp"
+            android:textColor="@color/black" />
+        <EditText
+            android:id="@+id/editTelp"
+            android:layout_width="match_parent"
+            android:inputType="number"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/simpanPerubahan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Simpan"
+        android:padding="20dp"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

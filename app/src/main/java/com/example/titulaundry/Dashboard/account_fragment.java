@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -55,6 +56,7 @@ public class account_fragment extends Fragment {
     ApiInterface apiInterface;
     String part_image;
     String path;
+    CardView setAccount;
     public String URI_IMGG = "";
     Button savePic;
     TextView mail,name;
@@ -74,7 +76,7 @@ public class account_fragment extends Fragment {
 
         setProfile();
 //        UploadImage();
-
+        toSetAccount();
 
     }
 
@@ -84,16 +86,6 @@ public class account_fragment extends Fragment {
         mail = (TextView) getView().findViewById(R.id.profile_email);
         name = (TextView) getView().findViewById(R.id.profile_name);
         circleImageView = (CircleImageView) getView().findViewById(R.id.profile_image);
-        circleImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent i = new Intent(getActivity(),change_image.class);
-//                getActivity().startActivity(i);
-                ShowAlert();
-                dialog.show();
-            }
-        });
-
         apiInterface = AppClient.getClient().create(ApiInterface.class);
         Call<ResponseUser> userCall = apiInterface.getDataUser(id_user);
         userCall.enqueue(new Callback<ResponseUser>() {
@@ -116,132 +108,148 @@ public class account_fragment extends Fragment {
 
     }
 
-    public void UploadImage(){
-        savePic = (Button) getView().findViewById(R.id.savePic);
-        savePic.setOnClickListener(new View.OnClickListener() {
+    public void toSetAccount(){
+
+        setAccount = (CardView) getView().findViewById(R.id.pengaturan_akun);
+        setAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                File file = new File(path);
-                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                MultipartBody.Part body = MultipartBody.Part.createFormData("imageupload", file.getName(), requestFile);
-                RequestBody cus_name = RequestBody.create(MediaType.parse("multipart/form-data"),"1");
-
-                apiInterface = AppClient.getClient().create(ApiInterface.class);
-                Call<ResponseImg> imgCall = apiInterface.uploadImage(body,cus_name);
-                imgCall.enqueue(new Callback<ResponseImg>() {
-                    @Override
-                    public void onResponse(Call<ResponseImg> call, Response<ResponseImg> response) {
-                        if (response.body().getKode() == 1){
-                            Toast.makeText(getContext(), "Berhasil Upload", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseImg> call, Throwable t) {
-                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                        System.out.println(t.getMessage());
-                    }
-                });
-
+                String id_user = getActivity().getIntent().getStringExtra("id_user");
+                Intent i = new Intent(getContext(),change_image.class);
+                i.putExtra("id_user",id_user);
+                startActivity(i);
             }
         });
     }
-    public void ShowAlert(){
-        String id_user = getActivity().getIntent().getStringExtra("id_user");
-        System.out.println("In ubah foto"+URI_IMGG);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        //Inisiasi
-        View view =getLayoutInflater().inflate(R.layout.ubah_foto,null);
-        Button OpenGalery;
-        ImageView clsBtn;
-        ImageView foto;
+
+//    public void UploadImage(){
+//        savePic = (Button) getView().findViewById(R.id.savePic);
+//        savePic.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                File file = new File(path);
+//                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+//                MultipartBody.Part body = MultipartBody.Part.createFormData("imageupload", file.getName(), requestFile);
+//                RequestBody cus_name = RequestBody.create(MediaType.parse("multipart/form-data"),"1");
+//
+//                apiInterface = AppClient.getClient().create(ApiInterface.class);
+//                Call<ResponseImg> imgCall = apiInterface.uploadImage(body,cus_name);
+//                imgCall.enqueue(new Callback<ResponseImg>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseImg> call, Response<ResponseImg> response) {
+//                        if (response.body().getKode() == 1){
+//                            Toast.makeText(getContext(), "Berhasil Upload", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResponseImg> call, Throwable t) {
+//                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+//                        System.out.println(t.getMessage());
+//                    }
+//                });
+//
+//            }
+//        });
+//    }
 
 
-        //set Foto
+//    public void ShowAlert(){
+//        String id_user = getActivity().getIntent().getStringExtra("id_user");
+//        System.out.println("In ubah foto"+URI_IMGG);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//        //Inisiasi
+//        View view =getLayoutInflater().inflate(R.layout.ubah_foto,null);
+//        Button OpenGalery;
+//        ImageView clsBtn;
+//        ImageView foto;
+//
+//
+//        //set Foto
+//
+//        circleImageView2 = (CircleImageView) view.findViewById(R.id.imgProfile) ;
+//        Picasso.get().load(AppClient.profileIMG+URI_IMGG).error(R.mipmap.ic_launcher).into(circleImageView2);
+//
+//        //Dismis Dialog
+//        clsBtn = (ImageView) view.findViewById(R.id.closee);
+//        clsBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        //open Galery
+//        OpenGalery = view.findViewById(R.id.ubah2);
+//        OpenGalery.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(),
+//                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+//                    Intent intent = new Intent();
+//                    intent.setType("image/*");
+//                    intent.setAction(Intent.ACTION_GET_CONTENT);
+//                    startActivityForResult(Intent.createChooser(intent,"Open Gallery"),REQUEST_GALLERY);
+//                    Toast.makeText(getContext(), "Open Galleerrtyy", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    ActivityCompat.requestPermissions(getActivity(),
+//                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+//                    Toast.makeText(getContext(), "Open BO", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//
+//        savePic = (Button) view.findViewById(R.id.savePic);
+//        savePic.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                File file = new File(path);
+//                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+//                MultipartBody.Part body = MultipartBody.Part.createFormData("imageupload", file.getName(), requestFile);
+//                RequestBody cus_name = RequestBody.create(MediaType.parse("multipart/form-data"),id_user);
+//
+//                apiInterface = AppClient.getClient().create(ApiInterface.class);
+//                Call<ResponseImg> imgCall = apiInterface.uploadImage(body,cus_name);
+//                imgCall.enqueue(new Callback<ResponseImg>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseImg> call, Response<ResponseImg> response) {
+//                        if (response.body().getKode() == 1){
+//                            Toast.makeText(getContext(), "Berhasil Upload", Toast.LENGTH_SHORT).show();
+//                            dialog.dismiss();
+//                            startActivity(getActivity().getIntent());
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResponseImg> call, Throwable t) {
+//                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+//                        System.out.println(t.getMessage());
+//                    }
+//                });
+//            }
+//        });
+//
+//
+//
+//        builder.setView(view);
+//        dialog = builder.create();
+//    }
 
-        circleImageView2 = (CircleImageView) view.findViewById(R.id.imgProfile) ;
-        Picasso.get().load(AppClient.profileIMG+URI_IMGG).error(R.mipmap.ic_launcher).into(circleImageView2);
-
-        //Dismis Dialog
-        clsBtn = (ImageView) view.findViewById(R.id.closee);
-        clsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-
-        //open Galery
-        OpenGalery = view.findViewById(R.id.ubah2);
-        OpenGalery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(),
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent,"Open Gallery"),REQUEST_GALLERY);
-                    Toast.makeText(getContext(), "Open Galleerrtyy", Toast.LENGTH_SHORT).show();
-                } else {
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-                    Toast.makeText(getContext(), "Open BO", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        savePic = (Button) view.findViewById(R.id.savePic);
-        savePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                File file = new File(path);
-                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                MultipartBody.Part body = MultipartBody.Part.createFormData("imageupload", file.getName(), requestFile);
-                RequestBody cus_name = RequestBody.create(MediaType.parse("multipart/form-data"),id_user);
-
-                apiInterface = AppClient.getClient().create(ApiInterface.class);
-                Call<ResponseImg> imgCall = apiInterface.uploadImage(body,cus_name);
-                imgCall.enqueue(new Callback<ResponseImg>() {
-                    @Override
-                    public void onResponse(Call<ResponseImg> call, Response<ResponseImg> response) {
-                        if (response.body().getKode() == 1){
-                            Toast.makeText(getContext(), "Berhasil Upload", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-                            startActivity(getActivity().getIntent());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseImg> call, Throwable t) {
-                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                        System.out.println(t.getMessage());
-                    }
-                });
-            }
-        });
-
-
-
-        builder.setView(view);
-        dialog = builder.create();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_GALLERY && resultCode == Activity.RESULT_OK) {
-            Uri uri = data.getData();
-            Context context = getContext();
-            path = RealPathUtil.getRealPath(context, uri);
-            Bitmap bitmap = BitmapFactory.decodeFile(path);
-            circleImageView2.setImageBitmap(bitmap);
-
-
-        } else {
-            System.out.println("Mbuoh gagal");
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == REQUEST_GALLERY && resultCode == Activity.RESULT_OK) {
+//            Uri uri = data.getData();
+//            Context context = getContext();
+//            path = RealPathUtil.getRealPath(context, uri);
+//            Bitmap bitmap = BitmapFactory.decodeFile(path);
+//            circleImageView2.setImageBitmap(bitmap);
+//
+//
+//        } else {
+//            System.out.println("Mbuoh gagal");
+//        }
+//    }
 
 
 }

@@ -3,6 +3,7 @@ package com.example.titulaundry.API;
 import com.example.titulaundry.Model.CheckEmail;
 import com.example.titulaundry.Model.ResponeBarang;
 import com.example.titulaundry.Model.ResponseAlamat;
+import com.example.titulaundry.Model.ResponseEditUser;
 import com.example.titulaundry.Model.ResponseEmail;
 import com.example.titulaundry.Model.ResponseImg;
 import com.example.titulaundry.Model.ResponseInsertPesanan;
@@ -114,6 +115,18 @@ public interface ApiInterface {
     @POST("UpImage.php")
     Call<ResponseImg> uploadImage (
             @Part MultipartBody.Part image,
-            @Part("id_user")RequestBody idUser
+            @Part("id_user")RequestBody idUser,
+            @Part("nama")RequestBody nama,
+            @Part("email")RequestBody email,
+            @Part("no_telpon")RequestBody no_telpon
             );
+
+    @FormUrlEncoded
+    @POST("editDataSaja.php")
+    Call<ResponseEditUser> getUpdateDataUser(
+            @Field("id_user") String id_user,
+            @Field("nama") String nama,
+            @Field("email") String email,
+            @Field("no_telpon") String no_telpon
+    );
 }
