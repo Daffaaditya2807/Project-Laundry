@@ -5,11 +5,13 @@ import com.example.titulaundry.Model.ResponeBarang;
 import com.example.titulaundry.Model.ResponseAlamat;
 import com.example.titulaundry.Model.ResponseEditUser;
 import com.example.titulaundry.Model.ResponseEmail;
+import com.example.titulaundry.Model.ResponseHapusFoto;
 import com.example.titulaundry.Model.ResponseImg;
 import com.example.titulaundry.Model.ResponseInsertPesanan;
 import com.example.titulaundry.Model.ResponseLogin;
 import com.example.titulaundry.Model.ResponsePesanan;
 import com.example.titulaundry.Model.ResponseRegister;
+import com.example.titulaundry.Model.ResponseRubahPw;
 import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.Model.SemuaPesanan;
 import com.example.titulaundry.Model.UpdatePassword;
@@ -129,4 +131,20 @@ public interface ApiInterface {
             @Field("email") String email,
             @Field("no_telpon") String no_telpon
     );
+
+    @FormUrlEncoded
+    @POST("DeleteImage.php")
+    Call<ResponseHapusFoto> hapusFoto(
+            @Field("id_user") String id_user
+    );
+
+    @FormUrlEncoded
+    @POST("RubahPassword.php")
+    Call<ResponseRubahPw> UbahPw(
+            @Field("id_user") String id_user,
+            @Field("password") String password,
+            @Field("password2") String password2
+    );
+
+
 }

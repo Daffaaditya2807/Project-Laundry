@@ -56,7 +56,7 @@ public class account_fragment extends Fragment {
     ApiInterface apiInterface;
     String part_image;
     String path;
-    CardView setAccount;
+    CardView setAccount,setPassword,logOut,changeAlamat;
     public String URI_IMGG = "";
     Button savePic;
     TextView mail,name;
@@ -77,9 +77,46 @@ public class account_fragment extends Fragment {
         setProfile();
 //        UploadImage();
         toSetAccount();
+        changePw();
+        LogOut();
+        gantiAlamat();
 
     }
 
+    public void gantiAlamat(){
+        String id_user = getActivity().getIntent().getStringExtra("id_user");
+        changeAlamat = (CardView) getView().findViewById(R.id.ganti_alamat);
+        changeAlamat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(),RubahAlamat.class);
+                i.putExtra("id_user",id_user);
+                startActivity(i);
+            }
+        });
+    }
+
+    public void LogOut(){
+        logOut = (CardView) getView().findViewById(R.id.logout);
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.exit(0);
+            }
+        });
+    }
+    public void changePw(){
+        setPassword = (CardView) getView().findViewById(R.id.ganti_password);
+        setPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String id_user = getActivity().getIntent().getStringExtra("id_user");
+                Intent i = new Intent(getContext(),ubah_password.class);
+                i.putExtra("id_user",id_user);
+                startActivity(i);
+            }
+        });
+    }
 
     public void setProfile(){
         String id_user = getActivity().getIntent().getStringExtra("id_user");

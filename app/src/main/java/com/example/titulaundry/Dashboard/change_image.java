@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,8 +18,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -26,6 +30,7 @@ import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.Adapter.RealPathUtil;
 import com.example.titulaundry.Model.ResponseEditUser;
+import com.example.titulaundry.Model.ResponseHapusFoto;
 import com.example.titulaundry.Model.ResponseImg;
 import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.R;
@@ -43,7 +48,8 @@ import retrofit2.Response;
 
 public class change_image extends AppCompatActivity {
 
-    Button OpenGallery,savePic;
+    Button OpenGallery,savePic,DeletePic;
+    ImageButton kembali;
     EditText email , nama , phone;
     CircleImageView imgg;
     String part_image;
@@ -52,6 +58,7 @@ public class change_image extends AppCompatActivity {
     ImageView circleImageView;
     ApiInterface apiInterface;
     final int  REQUEST_GALLERY = 9544;
+    AlertDialog dialog;
 
 
     @Override
@@ -61,6 +68,84 @@ public class change_image extends AppCompatActivity {
         setOpenGallery();
         setData();
         UploadImage();
+        delimage();
+        kembaliLagi();
+        notif(change_image.this);
+    }
+
+    public void kembaliLagi(){
+        kembali = (ImageButton) findViewById(R.id.kembali);
+        kembali.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),MainMenu.class);
+                i.putExtra("id_user",getIntent().getStringExtra("id_user"));
+                startActivity(i);
+            }
+        });
+    }
+    public void notif(Activity activity){
+        //change color notif bar
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(this.getResources().getColor(R.color.white));
+        //set icons notifbar
+        View decor = activity.getWindow().getDecorView();
+        decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    }
+
+    public void delimage(){
+        DeletePic = (Button) findViewById(R.id.HapusFoto);
+        DeletePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmDelete();
+                dialog.show();
+
+            }
+        });
+    }
+
+    public void confirmDelete(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(change_image.this);
+        View view = getLayoutInflater().inflate(R.layout.ubah_foto,null);
+        builder.setView(view);
+        dialog = builder.create();
+        Button delete , cancel;
+
+        //DELETE
+        delete = view.findViewById(R.id.ubah2);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                apiInterface = AppClient.getClient().create(ApiInterface.class);
+                Call<ResponseHapusFoto> hapusFotoCall = apiInterface.hapusFoto(getIntent().getStringExtra("id_user"));
+                hapusFotoCall.enqueue(new Callback<ResponseHapusFoto>() {
+                    @Override
+                    public void onResponse(Call<ResponseHapusFoto> call, Response<ResponseHapusFoto> response) {
+                        if (response.body().getKode() == 1){
+                            Toast.makeText(change_image.this, "Berhasil", Toast.LENGTH_SHORT).show();
+                            imgg.setImageResource(R.mipmap.ic_launcher);
+                            dialog.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseHapusFoto> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+        //Cancel
+        cancel = view.findViewById(R.id.batalBro);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
     }
 
     public void setData(){
@@ -77,7 +162,7 @@ public class change_image extends AppCompatActivity {
                 email.setText(response.body().getData().getEmail());
                 nama.setText(response.body().getData().getNama());
                 phone.setText(response.body().getData().getNoTelpon());
-                Picasso.get().load(AppClient.profileIMG+response.body().getData().getProfile_img()).into(imgg);
+                Picasso.get().load(AppClient.profileIMG+response.body().getData().getProfile_img()).error(R.mipmap.ic_launcher).into(imgg);
             }
 
             @Override

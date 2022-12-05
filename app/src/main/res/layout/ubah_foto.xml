@@ -6,20 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="20dp"
     android:layout_marginHorizontal="20dp">
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:id="@+id/imgProfile"
-        android:src="@drawable/puan"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-    <ImageView
-        android:id="@+id/closee"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/close"
+        android:id="@+id/imgProfile"
+        android:textSize="16dp"
+        android:textColor="@color/black"
+        android:text="Yakin akan Menghapus Foto"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
@@ -38,13 +32,13 @@
             android:textColor="#219653"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:text="Ubah Profile"
+            android:text="Hapus Foto"
             />
         <Button
-            android:id="@+id/savePic"
+            android:id="@+id/batalBro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Simpan"
+            android:text="Batal"
             android:layout_marginHorizontal="10dp"
             />
     </LinearLayout>
