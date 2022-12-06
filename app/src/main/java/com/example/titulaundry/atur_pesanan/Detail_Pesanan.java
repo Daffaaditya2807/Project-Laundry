@@ -1,10 +1,8 @@
 package com.example.titulaundry.atur_pesanan;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,9 +16,9 @@ import android.widget.TextView;
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.Dashboard.MainMenu;
-import com.example.titulaundry.Dashboard.home_fragment;
 import com.example.titulaundry.Model.ResponseInsertPesanan;
 import com.example.titulaundry.R;
+import com.example.titulaundry.Dashboard.Voucher;
 //import com.example.titulaundry.db_help.Database_Tb_Pesanan;
 
 import java.text.ParseException;
@@ -33,13 +31,16 @@ import retrofit2.Response;
 
 public class Detail_Pesanan extends AppCompatActivity {
 
-    String layanan , hargaLayanan , beratCucian,hariJemput,hariKirim,waktuJemput,waktuKirim,alamatUserPick,alamatUserSend,idOrg,IdJasa,idVoucher;
-    TextView jnslyn,txHariJemput,txHariKirim,beratXharga,totalHarga,alamatDetailPick,alamatDetailSend;
+    String layanan , hargaLayanan , beratCucian,hariJemput,hariKirim,waktuJemput,waktuKirim
+            ,alamatUserPick,alamatUserSend,idOrg,IdJasa,idVoucher,hargaDisc = "";
+
+    TextView jnslyn,txHariJemput,txHariKirim,beratXharga,totalHarga,alamatDetailPick,alamatDetailSend,diskon,deeskon;
     String formatHariJemput,formatHariKirim;
-    int GettotalHarga;
+    int GettotalHarga = 0;
     Button backToHome;
     ConstraintLayout lyt;
     ApiInterface apiInterface;
+    CardView goVoucher;
 
 //
 //    Database_Tb_Pesanan PS;
@@ -49,7 +50,9 @@ public class Detail_Pesanan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_pesanan);
         notif(Detail_Pesanan.this);
+        System.out.println("TES ID VOUCER = "+ getIntent().getStringExtra("idcer"));
         setLayoutPesanan();
+        setGoVoucher();
         getDataFromPesanan();
         setFormatHari();
         setDataFromPesanan();
@@ -59,6 +62,40 @@ public class Detail_Pesanan extends AppCompatActivity {
 //        InsertPesanan();
 
 
+    }
+
+    public void setGoVoucher(){
+        layanan = getIntent().getStringExtra("layanan");
+        hargaLayanan = getIntent().getStringExtra("harga");
+        beratCucian = getIntent().getStringExtra("berat");
+        hariJemput = getIntent().getStringExtra("hariJemput");
+        hariKirim = getIntent().getStringExtra("hariKembali");
+        waktuJemput = getIntent().getStringExtra("waktuJemput");
+        waktuKirim = getIntent().getStringExtra("waktuKembali");
+        alamatUserPick = getIntent().getStringExtra("alamatUserPick");
+        alamatUserSend = getIntent().getStringExtra("alamatUserSend");
+        idOrg = getIntent().getStringExtra("id_user");
+        IdJasa = getIntent().getStringExtra("id_jasa");
+
+        goVoucher = (CardView) findViewById(R.id.menu2);
+        goVoucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), Voucher.class);
+                i.putExtra("layanan",layanan);
+                i.putExtra("harga",hargaLayanan);
+                i.putExtra("berat",beratCucian);
+                i.putExtra("hariJemput",hariJemput);
+                i.putExtra("hariKembali",hariKirim);
+                i.putExtra("waktuJemput",waktuJemput);
+                i.putExtra("waktuKembali",waktuKirim);
+                i.putExtra("alamatUserPick",alamatUserPick);
+                i.putExtra("alamatUserSend",alamatUserSend);
+                i.putExtra("id_user",idOrg);
+                i.putExtra("id_jasa",IdJasa);
+                startActivity(i);
+            }
+        });
     }
 
     public void setLayoutPesanan(){
@@ -107,10 +144,24 @@ public class Detail_Pesanan extends AppCompatActivity {
         beratXharga = (TextView) findViewById(R.id.totalBeratCucian);
         beratXharga.setText(String.valueOf(hargaLayanan)+" X "+String.valueOf(beratCucian)+" Kg");
 
-        int hargaa = HitungBro(hargaLayanan,beratCucian);
-        //total
+        diskon = (TextView) findViewById(R.id.diskon);
         totalHarga = (TextView) findViewById(R.id.hargaFix);
-        totalHarga.setText("Rp. "+String.valueOf(hargaa));
+        deeskon = (TextView) findViewById(R.id.inpowaktu);
+
+        if (hargaDisc == null){
+            diskon.setText("0");
+            GettotalHarga = HitungBro(hargaLayanan,beratCucian);
+            totalHarga.setText("Rp. "+String.valueOf(GettotalHarga));
+        } else {
+            diskon.setText(hargaDisc);
+            int diskon = Integer.parseInt(hargaDisc);
+            GettotalHarga = HitungBro(hargaLayanan,beratCucian) - diskon;
+            System.out.println(diskon+" "+GettotalHarga);
+            totalHarga.setText("Rp. "+String.valueOf(GettotalHarga));
+            deeskon.setText("Potongan Harga : "+hargaDisc);
+            System.out.println("Harga udah Diskon = "+GettotalHarga);
+        }
+
     }
 
     public void setFormatHari(){
@@ -135,6 +186,8 @@ public class Detail_Pesanan extends AppCompatActivity {
     }
 
     public void getDataFromPesanan(){
+        idVoucher = getIntent().getStringExtra("idcer");
+        hargaDisc = getIntent().getStringExtra("potong_harga");
         layanan = getIntent().getStringExtra("layanan");
         hargaLayanan = getIntent().getStringExtra("harga");
         beratCucian = getIntent().getStringExtra("berat");
@@ -153,11 +206,24 @@ public class Detail_Pesanan extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //harga
-                int hargaa2 = HitungBro(hargaLayanan,beratCucian);
+                int hargaa2 = 0;
+                if (hargaDisc == null){
+                    hargaa2 = HitungBro(hargaLayanan,beratCucian);
+                    hargaDisc = "0";
+                    idVoucher = "1";
+                } else {
+                    int diskon = Integer.parseInt(hargaDisc);
+                    hargaa2 = HitungBro(hargaLayanan,beratCucian) - diskon;
+                }
 
-                if (waktuJemput == null || waktuKirim == null){
+
+
+
+                if (waktuJemput == null || waktuKirim == null || alamatUserPick == null || alamatUserSend == null){
                     waktuJemput = "";
                     waktuKirim = "";
+                    alamatUserPick = "";
+                    alamatUserSend = "";
                 }
                 //waktuJemput
                 String pickAku = hariJemput+" "+waktuJemput;
@@ -173,11 +239,14 @@ public class Detail_Pesanan extends AppCompatActivity {
 
                 System.out.println("Saat ada tanggal e "+pickAku);
                 System.out.println("Saat ada tanggal e  "+SendAku);
+                System.out.println(alamatUserPick + alamatUserSend);
+                System.out.println("id Voucher = "+idVoucher);
+                System.out.println("Harga Diskon = "+hargaDisc);
 
                 //Insert Data HERE
                 apiInterface = AppClient.getClient().create(ApiInterface.class);
                 Call<ResponseInsertPesanan> insertPesananCall = apiInterface.getDataPesanan(beratCucian,
-                        String.valueOf(hargaa2),String.valueOf(hargaa2),pickAku,SendAku,"1",IdJasa,idOrg);
+                        String.valueOf(hargaa2),hargaDisc,pickAku,SendAku,idVoucher,IdJasa,idOrg,alamatUserPick,alamatUserSend);
                 insertPesananCall.enqueue(new Callback<ResponseInsertPesanan>() {
                     @Override
                     public void onResponse(Call<ResponseInsertPesanan> call, Response<ResponseInsertPesanan> response) {
@@ -191,7 +260,7 @@ public class Detail_Pesanan extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<ResponseInsertPesanan> call, Throwable t) {
-
+                        System.out.println(t.getMessage());
                     }
                 });
 

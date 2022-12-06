@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.titulaundry.API.AppClient;
-import com.example.titulaundry.ModelMySQL.DataPesanan;
 import com.example.titulaundry.ModelMySQL.DataPesananSemua;
 import com.example.titulaundry.R;
 import com.squareup.picasso.Picasso;
@@ -45,16 +44,16 @@ public class AdapterPesananSemua extends RecyclerView.Adapter<AdapterPesananSemu
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DataPesananSemua db = pesananSemuas.get(position);
 
-        if (db.getStatusPesanan().equals("Sedang Di Proses")){
+        if (db.getStatusPesanan().equals("Sedang diproses")){
             holder.Status_pesanan.setBackground(ContextCompat.getDrawable(ctx,R.drawable.bunder_text_proses));
-            holder.Status_pesanan.setTextColor(Color.rgb(47, 128, 237));
-        } else if (db.getStatusPesanan().equals("Sedang Di Antar")){
+            holder.Status_pesanan.setTextColor(Color.rgb(246, 185, 131));
+        } else if (db.getStatusPesanan().equals("Sedang dalam pengiriman")){
             holder.Status_pesanan.setBackground(ContextCompat.getDrawable(ctx,R.drawable.bunder_text_antar));
-            holder.Status_pesanan.setTextColor(Color.rgb(242, 153, 74));
-        } else if (db.getStatusPesanan().equals("Proses Pencucian")){
-            holder.Status_pesanan.setBackground(ContextCompat.getDrawable(ctx,R.drawable.bunder_text_cuci));
-            holder.Status_pesanan.setTextColor(Color.rgb(255, 141, 199));
-        } else if (db.getStatusPesanan().equals("Dibatalkan")){
+            holder.Status_pesanan.setTextColor(Color.rgb(69, 141, 239));
+        } else if (db.getStatusPesanan().equals("Menunggu pembayaran")){
+            holder.Status_pesanan.setBackground(ContextCompat.getDrawable(ctx,R.drawable.bunder_text_bayar));
+            holder.Status_pesanan.setTextColor(Color.rgb(242, 201, 76));
+        } else if (db.getStatusPesanan().equals("Pesanan dibatalkan")){
             holder.Status_pesanan.setBackground(ContextCompat.getDrawable(ctx,R.drawable.bunder_text_batal));
             holder.Status_pesanan.setTextColor(Color.rgb(235, 87, 87));
         }

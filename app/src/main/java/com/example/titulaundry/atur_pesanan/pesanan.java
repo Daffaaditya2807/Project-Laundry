@@ -202,7 +202,9 @@ public class pesanan extends AppCompatActivity {
         toDashboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pesanan.super.onBackPressed();
+                Intent i = new Intent(getApplicationContext(),MainMenu.class);
+                i.putExtra("id_user",idWong);
+                startActivity(i);
             }
         });
     }

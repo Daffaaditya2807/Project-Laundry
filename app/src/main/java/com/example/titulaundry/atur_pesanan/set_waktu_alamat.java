@@ -2,6 +2,7 @@ package com.example.titulaundry.atur_pesanan;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.nfc.Tag;
@@ -264,6 +266,13 @@ public class set_waktu_alamat extends AppCompatActivity {
                         System.out.println("Langotitue : "+lon);
                         alamatDetailKirim.setText(alamat.getText().toString());
                         double lokasi = distance(lat,lon);
+                        if (lokasi>20){
+                            jarak2.setBackground(ContextCompat.getDrawable(set_waktu_alamat.this,R.drawable.bunder_text_batal));
+                            jarak2.setTextColor(Color.rgb(235,87,87));
+                        } else {
+                            jarak2.setBackground(ContextCompat.getDrawable(set_waktu_alamat.this,R.drawable.bunder_text_hijau));
+                            jarak2.setTextColor(Color.rgb(33, 150, 83));
+                        }
                         jarak2.setText(String.valueOf(lokasi)+" Km");
                         dialog.dismiss();
                     } else {
@@ -309,6 +318,14 @@ public class set_waktu_alamat extends AppCompatActivity {
                         System.out.println("Langotitue : "+lon);
                         alamatDetailJemput.setText(alamat.getText().toString());
                         double lokasi = distance(lat,lon);
+
+                        if (lokasi>20){
+                            jarak1.setBackground(ContextCompat.getDrawable(set_waktu_alamat.this,R.drawable.bunder_text_batal));
+                            jarak1.setTextColor(Color.rgb(235,87,87));
+                        } else {
+                            jarak1.setBackground(ContextCompat.getDrawable(set_waktu_alamat.this,R.drawable.bunder_text_hijau));
+                            jarak1.setTextColor(Color.rgb(33, 150, 83));
+                        }
                         jarak1.setText(String.valueOf(lokasi)+" Km");
                         dialog.dismiss();
                     } else {
@@ -538,11 +555,12 @@ public class set_waktu_alamat extends AppCompatActivity {
 
                         double jrk2 = Double.parseDouble(k);
                         double jrk = Double.parseDouble(j);
-                        if (jrk<20 || jrk2<20){
+                        if (jrk<20 && jrk2<20){
                             Intent i = new Intent(getApplicationContext(),pesanan.class);
                             IntentPesanan();
                             finish();
                         } else {
+
                             Toast.makeText(set_waktu_alamat.this, "Terlalu Jauh Kasian Kurir", Toast.LENGTH_SHORT).show();
                         }
 

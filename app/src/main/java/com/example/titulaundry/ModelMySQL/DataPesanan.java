@@ -25,6 +25,18 @@ public class DataPesanan {
 	@SerializedName("image")
 	private String image;
 
+	@SerializedName("id_pesanan")
+	private String id_pesanan;
+
+
+	public String getId_pesanan() {
+		return id_pesanan;
+	}
+
+	public void setId_pesanan(String id_pesanan) {
+		this.id_pesanan = id_pesanan;
+	}
+
 	public String getImage() {
 		return image;
 	}

@@ -81,7 +81,7 @@ public class home_fragment extends Fragment {
                     System.out.println("Apakah Data ada ="+dataAda);
                     pesananList = response.body().getData();
 
-                    adData = new AdapterPesanan(getContext(),pesananList);
+                    adData = new AdapterPesanan(getContext(),pesananList,getActivity().getIntent());
                     recyclerView = getView().findViewById(R.id.recyclePesanan);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

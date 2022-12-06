@@ -10,9 +10,11 @@ import com.example.titulaundry.Model.ResponseImg;
 import com.example.titulaundry.Model.ResponseInsertPesanan;
 import com.example.titulaundry.Model.ResponseLogin;
 import com.example.titulaundry.Model.ResponsePesanan;
+import com.example.titulaundry.Model.ResponsePesananUser;
 import com.example.titulaundry.Model.ResponseRegister;
 import com.example.titulaundry.Model.ResponseRubahPw;
 import com.example.titulaundry.Model.ResponseUser;
+import com.example.titulaundry.Model.ResponseVoucher;
 import com.example.titulaundry.Model.SemuaPesanan;
 import com.example.titulaundry.Model.UpdatePassword;
 import com.example.titulaundry.Model.VerifEmail;
@@ -73,6 +75,9 @@ public interface ApiInterface {
     @GET("GetMenu.php")
     Call<ResponeBarang> getRetrive();
 
+    @GET("Voucher.php")
+    Call<ResponseVoucher> getVoucher();
+
     @FormUrlEncoded
     @POST("GetPesanan.php")
     Call<ResponsePesanan> getPesanan(
@@ -95,7 +100,9 @@ public interface ApiInterface {
             @Field("waktu_antar") String waktu_antar,
             @Field("id_voucher") String id_voucher,
             @Field("id_jasa") String id_jasa,
-            @Field("id_user") String id_user
+            @Field("id_user") String id_user,
+            @Field("alamat_penjemputan") String alamat_penjemputan,
+            @Field("alamat_pengiriman") String alamat_pengiriman
     );
     @FormUrlEncoded
     @POST("PesananSemua.php")
@@ -144,6 +151,12 @@ public interface ApiInterface {
             @Field("id_user") String id_user,
             @Field("password") String password,
             @Field("password2") String password2
+    );
+
+    @FormUrlEncoded
+    @POST("DataPesananUser.php")
+    Call<ResponsePesananUser> getDataPesanan(
+            @Field("id_pesanan") String id_pesanan
     );
 
 
