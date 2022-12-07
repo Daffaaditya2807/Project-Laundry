@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
@@ -24,6 +25,8 @@ public class lupaPassword3 extends AppCompatActivity {
     EditText pw1,pw2;
     Button Riset;
     ApiInterface apiInterface;
+    ImageButton kembali;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,28 @@ public class lupaPassword3 extends AppCompatActivity {
         setContentView(R.layout.activity_lupa_password3);
         notif(lupaPassword3.this);
         setPassword();
+        backToCode();
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(),lupaPassword2.class);
+        i.putExtra("EmailLupa",getIntent().getStringExtra("EmailLupa"));
+        startActivity(i);
+    }
+
+    private void backToCode() {
+        kembali = findViewById(R.id.kembali);
+        kembali.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),lupaPassword2.class);
+                i.putExtra("EmailLupa",getIntent().getStringExtra("EmailLupa"));
+                startActivity(i);
+            }
+        });
+    }
+
     public void notif(Activity activity){
         //change color notif bar
         Window window = this.getWindow();
@@ -42,6 +66,8 @@ public class lupaPassword3 extends AppCompatActivity {
         View decor = activity.getWindow().getDecorView();
         decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
+
+
 
     public void setPassword(){
         String getGmail = getIntent().getStringExtra("EmailLupa");

@@ -28,7 +28,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Voucher extends AppCompatActivity  {
-    String layanan , hargaLayanan , beratCucian,hariJemput,hariKirim,waktuJemput,waktuKirim,alamatUserPick,alamatUserSend,idOrg,IdJasa;
+    String layanan , hargaLayanan , beratCucian,hariJemput,hariKirim,
+            waktuJemput,waktuKirim,alamatUserPick,alamatUserSend,idOrg,IdJasa,desc,waktuKerja,imgg;
     RecyclerView recyclerView;
     List<DataItemVoucher> voucherList = new ArrayList<>();
     Button submit;
@@ -73,6 +74,9 @@ public class Voucher extends AppCompatActivity  {
                 alamatUserSend = getIntent().getStringExtra("alamatUserSend");
                 idOrg = getIntent().getStringExtra("id_user");
                 IdJasa = getIntent().getStringExtra("id_jasa");
+                desc = getIntent().getStringExtra("deskripsi");
+                waktuKerja = getIntent().getStringExtra("waktu");
+                imgg = getIntent().getStringExtra("imagee");
 
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -93,6 +97,9 @@ public class Voucher extends AppCompatActivity  {
                         i.putExtra("alamatUserSend",alamatUserSend);
                         i.putExtra("id_user",idOrg);
                         i.putExtra("id_jasa",IdJasa);
+                        i.putExtra("deskripsi",desc);
+                        i.putExtra("waktu",waktuKerja);
+                        i.putExtra("imagee",imgg);
                         i.putExtra("potong_harga",potongan_harga);
                         startActivity(i);
                     }

@@ -15,6 +15,13 @@ public class all_is_set extends AppCompatActivity {
         setContentView(R.layout.activity_all_is_set);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(),Login.class);
+        startActivity(i);
+        finish();
+    }
+
     public void funcLogin(View view) {
         Intent i = new Intent(getApplicationContext(),Login.class);
         startActivity(i);

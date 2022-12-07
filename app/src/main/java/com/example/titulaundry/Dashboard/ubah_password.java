@@ -3,12 +3,14 @@ package com.example.titulaundry.Dashboard;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
@@ -25,6 +27,7 @@ public class ubah_password extends AppCompatActivity {
     EditText passwordLama , passwordBaru , confirmPassword;
     Button submitPassword;
     ApiInterface apiInterface;
+    ImageButton bck;
 
 
     @Override
@@ -33,6 +36,19 @@ public class ubah_password extends AppCompatActivity {
         setContentView(R.layout.activity_ubah_password);
         notif(ubah_password.this);
         rubahPassword();
+        backMainMenu();
+    }
+
+    private void backMainMenu() {
+        bck = findViewById(R.id.kembali);
+        bck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),MainMenu.class);
+                i.putExtra("id_user",getIntent().getStringExtra("id_user"));
+                startActivity(i);
+            }
+        });
     }
 
     public void notif(Activity activity){

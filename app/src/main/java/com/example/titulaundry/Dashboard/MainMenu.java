@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -14,6 +15,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.titulaundry.Adapter.AdapterBarang;
+import com.example.titulaundry.KonfirmasiSukses;
+import com.example.titulaundry.Login;
 import com.example.titulaundry.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -65,5 +68,11 @@ public class MainMenu extends AppCompatActivity {
         tabLayout.getTabAt(2).setIcon(R.drawable.shop);
         tabLayout.getTabAt(3).setIcon(R.drawable.account);
 
+    }
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(), Login.class);
+        startActivity(i);
+        finish();
     }
 }

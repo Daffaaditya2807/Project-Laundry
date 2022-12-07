@@ -3,12 +3,14 @@ package com.example.titulaundry.Dashboard;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
@@ -25,6 +27,7 @@ public class RubahAlamat extends AppCompatActivity {
     EditText setAlamat;
     ApiInterface apiInterface;
     Button edt , submit;
+    ImageButton bck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +37,22 @@ public class RubahAlamat extends AppCompatActivity {
         enableDisable();
         notif(RubahAlamat.this);
         updateAlamat();
+        kembali();
     }
-    
+
+    private void kembali() {
+        bck = findViewById(R.id.kembali);
+        bck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String id_user = getIntent().getStringExtra("id_user");
+                Intent i = new Intent(getApplicationContext(),MainMenu.class);
+                i.putExtra("id_user",id_user);
+                startActivity(i);
+            }
+        });
+    }
+
     public void updateAlamat(){
         String id_user = getIntent().getStringExtra("id_user");
         submit = (Button) findViewById(R.id.gantiAlamat);

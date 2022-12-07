@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -64,6 +65,14 @@ public class Register extends AppCompatActivity {
         String text = "<font color=#333333>Sudah Punya Akun?</font> <font color=#2f80ed> Sign In</font>";
         takonAkun.setText(Html.fromHtml(text));
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(),Login.class);
+        startActivity(i);
+        finish();
+    }
+
     public void kembaliKeLogin(){
         bckToLogin = (TextView) findViewById(R.id.takonAkun);
         bckToLogin.setOnClickListener(new View.OnClickListener() {

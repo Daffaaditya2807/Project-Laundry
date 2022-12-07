@@ -15,6 +15,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -51,7 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     TextView alamat;
     EditText inputAlamat;
     ApiInterface apiInterface;
-    ImageButton searchAddress;
+    ImageButton searchAddress , kembali;
     Button submit;
     String id_user,alamatGet;
     List<Address> addressList = null;
@@ -65,6 +66,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         alamat = findViewById(R.id.setAlamat);
         inputAlamat = findViewById(R.id.getAlamatUser);
         searchAddress = findViewById(R.id.searchAddress);
+        kembali = findViewById(R.id.kembali);
+
 
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
@@ -72,7 +75,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
         notif(MapsActivity.this);
+        setKembali();
 
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
@@ -110,11 +115,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 MarkerOptions markerOptions = new MarkerOptions();
                                 markerOptions.position(latLng);
                                 String addressLine = addressList.get(0).getAddressLine(0);
+                                String p = "";
+                                if (addressLine.contains("+")){
+                                     p = addressLine.substring(9).trim();
+                                    System.out.println("Hilangi =" + p);
+                                } else {
+                                    p = addressLine;
+                                }
                                 LatLng Posisi = new LatLng(latLng.latitude, latLng.longitude);
                                 mMap.addMarker(new MarkerOptions().position(Posisi).title("Posisi"));
                                 mMap.moveCamera(CameraUpdateFactory.newLatLng(Posisi));
-                                alamat.setText(addressLine);
-                                alamatGet = addressLine;
+                                alamat.setText(p);
+                                alamatGet = p;
                                 float zoomLevel = 16.0f;
                                 mMap.clear();
                                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
@@ -168,6 +180,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         //kene
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        String idd = getIntent().getStringExtra("UserId");
+        Intent i = new Intent(getApplicationContext(),KonfirmasiSukses.class);
+        i.putExtra("UserId",idd);
+        startActivity(i);
+        finish();
+    }
+
+    public void setKembali(){
+        kembali.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String idd = getIntent().getStringExtra("UserId");
+                Intent i = new Intent(getApplicationContext(),KonfirmasiSukses.class);
+                i.putExtra("UserId",idd);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     public void notif(Activity activity) {

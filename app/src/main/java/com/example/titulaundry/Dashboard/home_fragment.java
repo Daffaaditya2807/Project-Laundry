@@ -22,6 +22,7 @@ import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.Adapter.AdapterBarang;
 import com.example.titulaundry.Adapter.AdapterPesanan;
+import com.example.titulaundry.KonfirmasiSukses;
 import com.example.titulaundry.Model.ResponeBarang;
 import com.example.titulaundry.Model.ResponsePesanan;
 import com.example.titulaundry.Model.ResponseUser;
@@ -67,6 +68,7 @@ public class home_fragment extends Fragment {
 
 
     }
+
 
     private void RecycleMySQLPesanan() {
         String id_user = getActivity().getIntent().getStringExtra("id_user");
@@ -126,7 +128,7 @@ public class home_fragment extends Fragment {
             public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
                 getGreeting.setText("Selamat "+waktu+" "+String.valueOf(response.body().getData().getNama()));
                 alamatUser.setText(String.valueOf(response.body().getData().getAlamat()));
-                Picasso.get().load(AppClient.profileIMG+response.body().getData().getProfile_img()).error(R.mipmap.ic_launcher).into(profilePic);
+                Picasso.get().load(AppClient.profileIMG+response.body().getData().getProfile_img()).error(R.drawable.blank).into(profilePic);
             }
 
             @Override

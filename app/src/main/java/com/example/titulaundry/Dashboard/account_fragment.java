@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.Adapter.RealPathUtil;
+import com.example.titulaundry.Login;
 import com.example.titulaundry.Model.ResponseImg;
 import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.R;
@@ -101,7 +102,9 @@ public class account_fragment extends Fragment {
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.exit(0);
+                Intent loginscreen=new Intent(getContext(), Login.class);
+                loginscreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(loginscreen);
             }
         });
     }
@@ -134,7 +137,7 @@ public class account_fragment extends Fragment {
                 System.out.println("String img == "+URI_IMGG);
                 mail.setText(e);
                 name.setText(m);
-                Picasso.get().load(AppClient.profileIMG+URI_IMGG).error(R.mipmap.ic_launcher).into(circleImageView);
+                Picasso.get().load(AppClient.profileIMG+URI_IMGG).error(R.drawable.blank).into(circleImageView);
             }
 
             @Override

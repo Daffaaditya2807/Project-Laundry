@@ -126,7 +126,7 @@ public class change_image extends AppCompatActivity {
                     public void onResponse(Call<ResponseHapusFoto> call, Response<ResponseHapusFoto> response) {
                         if (response.body().getKode() == 1){
                             Toast.makeText(change_image.this, "Berhasil", Toast.LENGTH_SHORT).show();
-                            imgg.setImageResource(R.mipmap.ic_launcher);
+                            imgg.setImageResource(R.drawable.blank);
                             dialog.dismiss();
                         }
                     }
@@ -162,7 +162,7 @@ public class change_image extends AppCompatActivity {
                 email.setText(response.body().getData().getEmail());
                 nama.setText(response.body().getData().getNama());
                 phone.setText(response.body().getData().getNoTelpon());
-                Picasso.get().load(AppClient.profileIMG+response.body().getData().getProfile_img()).error(R.mipmap.ic_launcher).into(imgg);
+                Picasso.get().load(AppClient.profileIMG+response.body().getData().getProfile_img()).error(R.drawable.blank).into(imgg);
             }
 
             @Override

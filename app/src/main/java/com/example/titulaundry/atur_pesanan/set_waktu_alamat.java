@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.Login;
 import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.R;
 //import com.example.titulaundry.db_help.Database_Tb_user;
@@ -169,6 +170,50 @@ public class set_waktu_alamat extends AppCompatActivity {
 //            namaUser.setText(cursor.getString(0));
 //            namaKirim.setText(cursor.getString(0));
 //        }
+    }
+    public void balek(){
+        String layanan;
+        String waktu;
+        String harga;
+        String berat;
+        String gambar;
+        String id;
+        String desc;
+        String id_jasa;
+
+        layanan = getIntent().getStringExtra("layanan");
+        waktu = getIntent().getStringExtra("waktu");
+        harga = getIntent().getStringExtra("harga");
+        berat = getIntent().getStringExtra("berat");
+        gambar = getIntent().getStringExtra("imagee");
+        id = getIntent().getStringExtra("id_user");
+        desc = getIntent().getStringExtra("deskripsi");
+        id_jasa = getIntent().getStringExtra("id_jasa");
+
+        Intent i = new Intent(getApplicationContext(),pesanan.class);
+
+            i.putExtra("layanan",layanan);
+            i.putExtra("waktu",waktu);
+            i.putExtra("harga",harga);
+            i.putExtra("berat",berat);
+            i.putExtra("email",getIntent().getStringExtra("email"));
+            i.putExtra("imagee",gambar);
+            i.putExtra("id_user",id);
+            i.putExtra("deskripsi",desc);
+            i.putExtra("id_jasa",id_jasa);
+
+        startActivity(i);
+
+//        System.out.println("jemput = "+hariJemput);
+//        System.out.println("kembali = "+hariKembali);
+//        System.out.println("waktu jemput = "+waktuJemput);
+//        System.out.println("Waktu Kembali = "+waktuPengembalian);
+//        System.out.println("Alamat Pick = "+alamatDetailJemput.getText().toString());
+//        System.out.println("Alamat Send = "+alamatDetailKirim.getText().toString());
+
+        //data dari class sebelumnya
+
+
     }
 
     public void IntentPesanan(){
@@ -342,13 +387,17 @@ public class set_waktu_alamat extends AppCompatActivity {
         dialog = builder.create();
 
     }
+    @Override
+    public void onBackPressed() {
+        balek();
+    }
     public void setBckToPesanan(){
         bckToPesanan = (ImageButton) findViewById(R.id.kembali);
         bckToPesanan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                IntentPesanan();
+                balek();
             }
         });
     }

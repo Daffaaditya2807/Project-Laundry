@@ -34,7 +34,18 @@ public class LupaPassword extends AppCompatActivity {
         kembali();
         notif(LupaPassword.this);
         getEmailUser();
+        setEmail();
     }
+
+    public void setEmail(){
+        String email = getIntent().getStringExtra("EmailLupa");
+        if (email == null || email.equals("")){
+            emailPassword.setText("");
+        } else {
+            emailPassword.setText(email);
+        }
+    }
+
     public void getEmailUser(){
         emailPassword = (EditText) findViewById(R.id.inputEmailLupaPw);
         submit = (Button) findViewById(R.id.Submit);
@@ -66,6 +77,12 @@ public class LupaPassword extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(),Login.class);
+        startActivity(i);
+        finish();
+    }
     public void kembali(){
         btnKembali = (ImageButton) findViewById(R.id.kembali);
         btnKembali.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +90,7 @@ public class LupaPassword extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),Login.class);
                 startActivity(i);
+                finish();
             }
         });
     }

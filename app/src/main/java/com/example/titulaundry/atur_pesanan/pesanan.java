@@ -22,6 +22,7 @@ import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.Dashboard.MainMenu;
 import com.example.titulaundry.Dashboard.home_fragment;
 import com.example.titulaundry.Dashboard.order_fragment;
+import com.example.titulaundry.Login;
 import com.example.titulaundry.R;
 import com.squareup.picasso.Picasso;
 
@@ -36,7 +37,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class pesanan extends AppCompatActivity {
-    ImageButton toDashboard;
+    ImageButton toDashboard,Kembali;
     ImageView imgLayanan;
     Button gasPesanan;
     CardView setAlamat,setBeratCuci;
@@ -55,7 +56,25 @@ public class pesanan extends AppCompatActivity {
         dataFromAlamat();
         dataFromBerat();
         getPesanan();
+        KembaliBruh();
+    }
 
+    public void KembaliBruh(){
+        Kembali = (ImageButton) findViewById(R.id.kembali);
+        Kembali.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),MainMenu.class);
+                startActivity(i);
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(), MainMenu.class);
+        startActivity(i);
+        finish();
     }
     public void notif(Activity activity){
         //change color notif bar
@@ -83,10 +102,6 @@ public class pesanan extends AppCompatActivity {
                 i.putExtra("id_user",idWong);
                 i.putExtra("deskripsi",desc);
                 i.putExtra("id_jasa",id_jasa);
-//                System.out.println("Pindah ke Berat = "+idWong);
-//                System.out.println("ID Jasa Pindah ke Barat = "+id_jasa);
-
-                //bawah data dari class waktuAlamat
                 i.putExtra("hariJemput",getIntent().getStringExtra("hariJemput"));
                 i.putExtra("alamatUserPick",getIntent().getStringExtra("alamatUserPick"));
                 i.putExtra("alamatUserSend",getIntent().getStringExtra("alamatUserSend"));
@@ -189,9 +204,6 @@ public class pesanan extends AppCompatActivity {
                 i.putExtra("id_user",idWong);
                 i.putExtra("deskripsi",desc);
                 i.putExtra("id_jasa",id_jasa);
-//                System.out.println("Pindah ke Berat = "+idWong);
-//                System.out.println("ID Jasa Pindah ke Alamat = "+id_jasa);
-                //bawah data dari class beratcucian
                 i.putExtra("berat",getIntent().getStringExtra("berat"));
                 startActivity(i);
             }
@@ -252,6 +264,9 @@ public class pesanan extends AppCompatActivity {
                     i.putExtra("email",getIntent().getStringExtra("email"));
                     i.putExtra("id_user",idWong);
                     i.putExtra("id_jasa",id_jasa);
+                    i.putExtra("deskripsi",desc);
+                    i.putExtra("waktu",waktu);
+                    i.putExtra("imagee",Imgg);
                     startActivity(i);
                 }
 

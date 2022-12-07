@@ -98,7 +98,7 @@ public class Detail_PesananUser extends AppCompatActivity {
         userCall.enqueue(new Callback<ResponsePesananUser>() {
             @Override
             public void onResponse(Call<ResponsePesananUser> call, Response<ResponsePesananUser> response) {
-                Picasso.get().load(AppClient.URL_IMG+response.body().getData().getImage()).error(R.mipmap.ic_launcher).into(gambarJasa);
+                Picasso.get().load(AppClient.URL_IMG+response.body().getData().getImage()).error(R.drawable.meki).into(gambarJasa);
                 jenis_jasa.setText(response.body().getData().getJenisJasa()+" "+response.body().getData().getTotalBerat()+" KG");
 
                 if (response.body().getData().getStatusPesanan().equals("Sedang diproses")){

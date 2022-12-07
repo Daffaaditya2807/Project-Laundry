@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
@@ -32,12 +34,13 @@ import retrofit2.Response;
 public class Detail_Pesanan extends AppCompatActivity {
 
     String layanan , hargaLayanan , beratCucian,hariJemput,hariKirim,waktuJemput,waktuKirim
-            ,alamatUserPick,alamatUserSend,idOrg,IdJasa,idVoucher,hargaDisc = "";
+            ,alamatUserPick,alamatUserSend,idOrg,IdJasa,idVoucher,hargaDisc = "",desc,waktuKerja,imgg;
 
     TextView jnslyn,txHariJemput,txHariKirim,beratXharga,totalHarga,alamatDetailPick,alamatDetailSend,diskon,deeskon;
     String formatHariJemput,formatHariKirim;
     int GettotalHarga = 0;
     Button backToHome;
+    ImageButton bckk;
     ConstraintLayout lyt;
     ApiInterface apiInterface;
     CardView goVoucher;
@@ -52,16 +55,56 @@ public class Detail_Pesanan extends AppCompatActivity {
         notif(Detail_Pesanan.this);
         System.out.println("TES ID VOUCER = "+ getIntent().getStringExtra("idcer"));
         setLayoutPesanan();
-        setGoVoucher();
+
         getDataFromPesanan();
         setFormatHari();
         setDataFromPesanan();
-
+        setGoVoucher();
         setAlamat();
-
+        KembaliSayang();
 //        InsertPesanan();
 
 
+    }
+
+    public void KembaliSayang(){
+        bckk = (ImageButton) findViewById(R.id.kembali);
+        bckk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                layanan = getIntent().getStringExtra("layanan");
+                hargaLayanan = getIntent().getStringExtra("harga");
+                beratCucian = getIntent().getStringExtra("berat");
+                hariJemput = getIntent().getStringExtra("hariJemput");
+                hariKirim = getIntent().getStringExtra("hariKembali");
+                waktuJemput = getIntent().getStringExtra("waktuJemput");
+                waktuKirim = getIntent().getStringExtra("waktuKembali");
+                alamatUserPick = getIntent().getStringExtra("alamatUserPick");
+                alamatUserSend = getIntent().getStringExtra("alamatUserSend");
+                idOrg = getIntent().getStringExtra("id_user");
+                IdJasa = getIntent().getStringExtra("id_jasa");
+                desc = getIntent().getStringExtra("deskripsi");
+                waktuKerja = getIntent().getStringExtra("waktu");
+                imgg = getIntent().getStringExtra("imagee");
+
+                Intent i = new Intent(getApplicationContext(), pesanan.class);
+                i.putExtra("layanan",layanan);
+                i.putExtra("harga",hargaLayanan);
+                i.putExtra("berat",beratCucian);
+                i.putExtra("hariJemput",hariJemput);
+                i.putExtra("hariKembali",hariKirim);
+                i.putExtra("waktuJemput",waktuJemput);
+                i.putExtra("waktuKembali",waktuKirim);
+                i.putExtra("alamatUserPick",alamatUserPick);
+                i.putExtra("alamatUserSend",alamatUserSend);
+                i.putExtra("id_user",idOrg);
+                i.putExtra("id_jasa",IdJasa);
+                i.putExtra("deskripsi",desc);
+                i.putExtra("waktu",waktuKerja);
+                i.putExtra("imagee",imgg);
+                startActivity(i);
+            }
+        });
     }
 
     public void setGoVoucher(){
@@ -76,24 +119,35 @@ public class Detail_Pesanan extends AppCompatActivity {
         alamatUserSend = getIntent().getStringExtra("alamatUserSend");
         idOrg = getIntent().getStringExtra("id_user");
         IdJasa = getIntent().getStringExtra("id_jasa");
+        desc = getIntent().getStringExtra("deskripsi");
+        waktuKerja = getIntent().getStringExtra("waktu");
+        imgg = getIntent().getStringExtra("imagee");
 
         goVoucher = (CardView) findViewById(R.id.menu2);
         goVoucher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), Voucher.class);
-                i.putExtra("layanan",layanan);
-                i.putExtra("harga",hargaLayanan);
-                i.putExtra("berat",beratCucian);
-                i.putExtra("hariJemput",hariJemput);
-                i.putExtra("hariKembali",hariKirim);
-                i.putExtra("waktuJemput",waktuJemput);
-                i.putExtra("waktuKembali",waktuKirim);
-                i.putExtra("alamatUserPick",alamatUserPick);
-                i.putExtra("alamatUserSend",alamatUserSend);
-                i.putExtra("id_user",idOrg);
-                i.putExtra("id_jasa",IdJasa);
-                startActivity(i);
+                if (GettotalHarga>=30000){
+                    Intent i = new Intent(getApplicationContext(), Voucher.class);
+                    i.putExtra("layanan",layanan);
+                    i.putExtra("harga",hargaLayanan);
+                    i.putExtra("berat",beratCucian);
+                    i.putExtra("hariJemput",hariJemput);
+                    i.putExtra("hariKembali",hariKirim);
+                    i.putExtra("waktuJemput",waktuJemput);
+                    i.putExtra("waktuKembali",waktuKirim);
+                    i.putExtra("alamatUserPick",alamatUserPick);
+                    i.putExtra("alamatUserSend",alamatUserSend);
+                    i.putExtra("id_user",idOrg);
+                    i.putExtra("id_jasa",IdJasa);
+                    i.putExtra("deskripsi",desc);
+                    i.putExtra("waktu",waktuKerja);
+                    i.putExtra("imagee",imgg);
+                    startActivity(i);
+                } else {
+                    Toast.makeText(Detail_Pesanan.this, "Harga Belanjaan Kurang", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -290,8 +344,8 @@ public class Detail_Pesanan extends AppCompatActivity {
 //                finish();
 //            }
 //        });
-
-  //  }
+//
+//    }
     public void notif(Activity activity){
         //change color notif bar
         Window window = this.getWindow();

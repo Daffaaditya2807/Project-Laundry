@@ -32,6 +32,12 @@ public class lupaPassword2 extends AppCompatActivity {
         submit();
         sendKodeAgain();
     }
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(),LupaPassword.class);
+        i.putExtra("EmailLupa",getIntent().getStringExtra("EmailLupa"));
+        startActivity(i);
+    }
     public void notif(Activity activity){
         //change color notif bar
         Window window = this.getWindow();
