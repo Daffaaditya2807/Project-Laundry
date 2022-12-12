@@ -37,6 +37,17 @@ public class DataPesananUser {
 	@SerializedName("waktu_antar")
 	private String waktuAntar;
 
+	@SerializedName("harga_diskon")
+	private String harga_diskon;
+
+	public String getHarga_diskon() {
+		return harga_diskon;
+	}
+
+	public void setHarga_diskon(String harga_diskon) {
+		this.harga_diskon = harga_diskon;
+	}
+
 	public void setImage(String image){
 		this.image = image;
 	}

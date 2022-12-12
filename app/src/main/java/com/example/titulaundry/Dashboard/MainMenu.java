@@ -72,7 +72,9 @@ public class MainMenu extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent i = new Intent(getApplicationContext(), Login.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
+
         finish();
     }
 }

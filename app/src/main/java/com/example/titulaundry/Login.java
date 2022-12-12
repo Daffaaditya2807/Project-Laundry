@@ -3,7 +3,10 @@ package com.example.titulaundry;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Html;
@@ -51,12 +54,30 @@ public class Login extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Log.d("CDA", "onBackPressed Called");
-        Intent setIntent = new Intent(Intent.ACTION_MAIN);
-        setIntent.addCategory(Intent.CATEGORY_HOME);
-        setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(setIntent);
-        finish();
+        this.finishAffinity();
+        finishAndRemoveTask();
+//        Log.d("CDA", "onBackPressed Called");
+//        Intent setIntent = new Intent(Intent.ACTION_MAIN);
+//        setIntent.addCategory(Intent.CATEGORY_HOME);
+//        setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        setIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(setIntent);
+//        finish();
+//        Intent intent = new Intent(this, Login.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+//       this.finish();
+    // MyRootActivity should be the name of your root (launcher) activity
+//        IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction("com.package.ACTION_LOGOUT");
+//        registerReceiver(new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                Log.d("onReceive","Logout in progress");
+//                //At this point you should start the login activity and finish this one
+//                finish();
+//            }
+//        }, intentFilter);
     }
 
     public void lupaPassword(){
@@ -118,8 +139,12 @@ public class Login extends AppCompatActivity {
                                 String verif = response.body().getData().getVerifyStatus();
                                 if (!verif.equals("verifikasi")){
                                     Toast.makeText(Login.this,"Akun Belum Verified",Toast.LENGTH_LONG).show();
-
-                                } else {
+                                    Intent i = new Intent(getApplicationContext(),Konfirmasi.class);
+                                    i.putExtra("EmailUser",userCheck);
+                                    i.putExtra("Userid",response.body().getData().getIdUser());
+                                    startActivity(i);
+                                    finish();
+                                }  else  {
 
                                     //Ini untuk pindah
                                     Toast.makeText(Login.this,response.body().getData().getEmail(),Toast.LENGTH_LONG).show();

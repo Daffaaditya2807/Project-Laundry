@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
@@ -25,6 +26,7 @@ import retrofit2.Response;
 
 public class RubahAlamat extends AppCompatActivity {
     EditText setAlamat;
+    TextView alamat;
     ApiInterface apiInterface;
     Button edt , submit;
     ImageButton bck;
@@ -33,8 +35,8 @@ public class RubahAlamat extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rubah_alamat);
+        alamat = (TextView) findViewById(R.id.setAlamat);
         setSetAlamat ();
-        enableDisable();
         notif(RubahAlamat.this);
         updateAlamat();
         kembali();
@@ -66,6 +68,7 @@ public class RubahAlamat extends AppCompatActivity {
                     public void onResponse(Call<ResponseAlamat> call, Response<ResponseAlamat> response) {
                         if (response.body().getKode() == 1){
                             Toast.makeText(RubahAlamat.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            alamat.setText(setAlamat.getText().toString());
                         }
 
                     }
@@ -91,32 +94,19 @@ public class RubahAlamat extends AppCompatActivity {
 
     public void setSetAlamat (){
         setAlamat = (EditText) findViewById(R.id.textAlamat);
+
         String id_user = getIntent().getStringExtra("id_user");
         apiInterface = AppClient.getClient().create(ApiInterface.class);
         Call<ResponseUser> userCall = apiInterface.getDataUser(id_user);
         userCall.enqueue(new Callback<ResponseUser>() {
             @Override
             public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
-                setAlamat.setText(response.body().getData().getAlamat());
+                alamat.setText(response.body().getData().getAlamat());
             }
 
             @Override
             public void onFailure(Call<ResponseUser> call, Throwable t) {
 
-            }
-        });
-    }
-
-    public void enableDisable(){
-        edt = (Button) findViewById(R.id.enbdsb);
-        edt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!setAlamat.isEnabled()){
-                    setAlamat.setEnabled(true);
-                } else {
-                    setAlamat.setEnabled(false);
-                }
             }
         });
     }

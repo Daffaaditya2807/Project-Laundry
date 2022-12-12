@@ -57,11 +57,13 @@ public class Detail_Pesanan extends AppCompatActivity {
         setLayoutPesanan();
 
         getDataFromPesanan();
-        setFormatHari();
-        setDataFromPesanan();
+
+
         setGoVoucher();
         setAlamat();
         KembaliSayang();
+        setFormatHari();
+        setDataFromPesanan();
 //        InsertPesanan();
 
 

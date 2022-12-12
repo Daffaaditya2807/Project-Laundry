@@ -30,6 +30,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Selamat Pagi, "
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:fadingEdge="horizontal"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
                 android:layout_marginStart="10dp"
                 android:textSize="16dp"
                 android:textColor="@color/black"
@@ -39,7 +44,7 @@
                 />
             <TextView
                 android:id="@+id/alamat"
-                android:layout_width="wrap_content"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="Jln. Suparjan , Ds. Kauman"
@@ -53,6 +58,7 @@
                 android:src="@drawable/down_arrow"
                 app:layout_constraintLeft_toRightOf="@id/alamat"
                 app:layout_constraintBottom_toBottomOf="@id/alamat"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginLeft="5dp"
                 />
             <HorizontalScrollView

@@ -43,29 +43,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Alamat Saat Ini"
+            android:textStyle="bold"
             android:textSize="14dp"
             android:textColor="@color/black" />
-        <com.google.android.material.textfield.TextInputLayout
+        <TextView
+            android:id="@+id/setAlamat"
+            android:textSize="14dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:boxBackgroundColor="@android:color/transparent"
-            android:background="@android:color/transparent">
+            android:layout_height="wrap_content"/>
+
             <EditText
                 android:id="@+id/textAlamat"
                 android:inputType="text"
-                android:editable="false"
+                android:layout_marginTop="20dp"
+                android:padding="20dp"
+                android:background="@drawable/edt_rounded"
+                android:hint="input alamat baru"
+                android:textSize="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <Button
-            android:id="@+id/enbdsb"
-            android:layout_width="wrap_content"
-            android:backgroundTint="#dbeee3"
-            android:textColor="#219653"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"
-            android:text="Edit"
-            />
+
+
         <Button
             android:id="@+id/gantiAlamat"
             android:text="Rubah Alamat"

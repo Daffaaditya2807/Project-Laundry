@@ -49,7 +49,7 @@ public class pesanan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesanan);
         notif(pesanan.this);
-        toKembali();
+
         setAlamat();
         setPesanan();
         setBeratCucuian();
@@ -57,6 +57,7 @@ public class pesanan extends AppCompatActivity {
         dataFromBerat();
         getPesanan();
         KembaliBruh();
+        toKembali();
     }
 
     public void KembaliBruh(){
@@ -65,7 +66,9 @@ public class pesanan extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),MainMenu.class);
+                i.addFlags(i.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
+                finish();
             }
         });
     }
@@ -73,8 +76,10 @@ public class pesanan extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent i = new Intent(getApplicationContext(), MainMenu.class);
+        i.addFlags(i.FLAG_ACTIVITY_CLEAR_TASK);
+        i.putExtra("id_user",idWong);
         startActivity(i);
-        finish();
+       finish();
     }
     public void notif(Activity activity){
         //change color notif bar

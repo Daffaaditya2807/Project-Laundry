@@ -127,6 +127,7 @@ public class home_fragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
                 getGreeting.setText("Selamat "+waktu+" "+String.valueOf(response.body().getData().getNama()));
+                getGreeting.setSelected(true);
                 alamatUser.setText(String.valueOf(response.body().getData().getAlamat()));
                 Picasso.get().load(AppClient.profileIMG+response.body().getData().getProfile_img()).error(R.drawable.blank).into(profilePic);
             }

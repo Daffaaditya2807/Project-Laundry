@@ -34,7 +34,7 @@ public class Detail_PesananUser extends AppCompatActivity {
     ApiInterface apiInterface;
     ImageButton back;
     ImageView gambarJasa;
-    TextView jenis_jasa , status , tgl , est , namaUser , alamatJemput , namaUserKirim , alamatKirim,berat,harga;
+    TextView jenis_jasa , status , tgl , est , namaUser , alamatJemput , namaUserKirim , alamatKirim,berat,harga,deskon;
     Context ctx;
     FrameLayout frameLayout;
 
@@ -87,6 +87,8 @@ public class Detail_PesananUser extends AppCompatActivity {
         berat = (TextView) findViewById(R.id.totalBeratCucian);
         harga = (TextView) findViewById(R.id.hargaFix);
         frameLayout = (FrameLayout) findViewById(R.id.frmee);
+        deskon = (TextView) findViewById(R.id.diskon);
+
 
 
         System.out.println(getIntent().getStringExtra("id_pesanan")+"turuuu");
@@ -117,7 +119,13 @@ public class Detail_PesananUser extends AppCompatActivity {
 
                 status.setText(response.body().getData().getStatusPesanan());
                 tgl.setText(response.body().getData().getTanggal());
-                est.setText(response.body().getData().getWaktuAntar());
+
+                if (response.body().getData().getWaktuAntar().equals("0000-00-00 00:00:00")) {
+                    est.setText("COD / ANTAR SENDIRI");
+                } else {
+                    est.setText(response.body().getData().getWaktuAntar());
+                }
+
 
                 if (response.body().getData().getAlamatPenjemputan().equals("")){
                     frameLayout.setVisibility(View.GONE);
@@ -130,6 +138,9 @@ public class Detail_PesananUser extends AppCompatActivity {
                 }
                 berat.setText("Rp."+response.body().getData().getHarga()+" X "+response.body().getData().getTotalBerat()+"Kg");
                 harga.setText("Rp."+response.body().getData().getTotalHarga());
+                deskon.setText(response.body().getData().getHarga_diskon());
+
+
 
 
             }
