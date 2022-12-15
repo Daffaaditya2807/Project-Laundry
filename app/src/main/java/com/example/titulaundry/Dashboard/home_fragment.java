@@ -5,12 +5,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +25,13 @@ import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.Adapter.AdapterBanner;
 import com.example.titulaundry.Adapter.AdapterBarang;
 import com.example.titulaundry.Adapter.AdapterPesanan;
 import com.example.titulaundry.KonfirmasiSukses;
+import com.example.titulaundry.Model.DataItemBanner;
 import com.example.titulaundry.Model.ResponeBarang;
+import com.example.titulaundry.Model.ResponseBanner;
 import com.example.titulaundry.Model.ResponsePesanan;
 import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.ModelMySQL.DataBarang;
@@ -48,10 +56,13 @@ public class home_fragment extends Fragment {
     String waktu;
     TextView getGreeting,alamatUser;
     CircleImageView profilePic;
+    private ViewPager2 viewPager2;
+    List<DataItemBanner> itemBanners = new ArrayList<>();
 
     RecyclerView recyclerView;
     //use DB MySQL
     RecyclerView.Adapter adData;
+    private Handler slideHandler = new Handler();
     private List<DataBarang> dataBarangList = new ArrayList<>();
     private List<DataPesanan> pesananList = new ArrayList<>();
 
@@ -65,9 +76,62 @@ public class home_fragment extends Fragment {
         setGreeting();
         RecycleMySQL();
         RecycleMySQLPesanan();
+        BannerSlideShow();
 
 
     }
+
+    private void BannerSlideShow(){
+        viewPager2 = (ViewPager2) getView().findViewById(R.id.banner);
+        ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
+        Call<ResponseBanner> bannerCall = apiInterface.getBanner();
+        bannerCall.enqueue(new Callback<ResponseBanner>() {
+            @Override
+            public void onResponse(Call<ResponseBanner> call, Response<ResponseBanner> response) {
+                System.out.println("Data Banner = "+response.body().getPesan());
+                itemBanners = response.body().getData();
+                viewPager2.setAdapter(new AdapterBanner(itemBanners,viewPager2,getContext()));
+                viewPager2.setClipToPadding(false);
+                viewPager2.setClipChildren(false);
+                viewPager2.setOffscreenPageLimit(3);
+                viewPager2.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+                CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+                compositePageTransformer.addTransformer(new MarginPageTransformer(40));
+                compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
+                    @Override
+                    public void transformPage(@NonNull View page, float position) {
+                        float r = 1 - Math.abs(position);
+                        page.setScaleY(0.85f + r * 0.15f);
+
+                    }
+                });
+
+                viewPager2.setPageTransformer(compositePageTransformer);
+                viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        super.onPageSelected(position);
+                        slideHandler.removeCallbacks(slideRunnable);
+                        slideHandler.postDelayed(slideRunnable,3000);
+
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBanner> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private Runnable slideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            viewPager2.setCurrentItem(viewPager2.getCurrentItem()+1);
+        }
+    };
 
 
     private void RecycleMySQLPesanan() {

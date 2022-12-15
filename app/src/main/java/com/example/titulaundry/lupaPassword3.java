@@ -17,6 +17,8 @@ import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.Model.UpdatePassword;
 
+import java.util.regex.Pattern;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,26 +84,33 @@ public class lupaPassword3 extends AppCompatActivity {
                 String matchPw2 = pw2.getText().toString();
                 System.out.println("Password Baru adalah = "+matchPw1);
 
+                Pattern specailCharPatten = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+
                 if (matchPw1.equals(matchPw2)){
-                    apiInterface = AppClient.getClient().create(ApiInterface.class);
-                    Call<UpdatePassword> update = apiInterface.setNewPassword(getGmail,matchPw1);
-                    update.enqueue(new Callback<UpdatePassword>() {
-                        @Override
-                        public void onResponse(Call<UpdatePassword> call, Response<UpdatePassword> response) {
-                            if (response.body().getKode() == 1){
-                                Toast.makeText(lupaPassword3.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(getApplicationContext(),lupaPasswordSucces.class);
-                                startActivity(i);
-                                finish();
-                            }
-                        }
+                     if (matchPw1.length()<7 || !specailCharPatten.matcher(matchPw1).find()){
+                        Toast.makeText(lupaPassword3.this, "Password kurang dari 8 dan harus mengandung karakter spesial", Toast.LENGTH_SHORT).show();
+                    } else {
+                         apiInterface = AppClient.getClient().create(ApiInterface.class);
+                         Call<UpdatePassword> update = apiInterface.setNewPassword(getGmail,matchPw1);
+                         update.enqueue(new Callback<UpdatePassword>() {
+                             @Override
+                             public void onResponse(Call<UpdatePassword> call, Response<UpdatePassword> response) {
+                                 if (response.body().getKode() == 1){
+                                     Toast.makeText(lupaPassword3.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                     Intent i = new Intent(getApplicationContext(),lupaPasswordSucces.class);
+                                     startActivity(i);
+                                     finish();
+                                 }
+                             }
 
-                        @Override
-                        public void onFailure(Call<UpdatePassword> call, Throwable t) {
+                             @Override
+                             public void onFailure(Call<UpdatePassword> call, Throwable t) {
 
-                        }
-                    });
-                } else {
+                             }
+                         });
+                     }
+
+                }  else {
                     Toast.makeText(lupaPassword3.this, "Password Tidak Sama", Toast.LENGTH_SHORT).show();
                 }
             }

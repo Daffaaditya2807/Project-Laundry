@@ -19,6 +19,7 @@ import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.Dashboard.MainMenu;
 import com.example.titulaundry.Model.ResponseInsertPesanan;
+import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.R;
 import com.example.titulaundry.Dashboard.Voucher;
 //import com.example.titulaundry.db_help.Database_Tb_Pesanan;
@@ -36,7 +37,7 @@ public class Detail_Pesanan extends AppCompatActivity {
     String layanan , hargaLayanan , beratCucian,hariJemput,hariKirim,waktuJemput,waktuKirim
             ,alamatUserPick,alamatUserSend,idOrg,IdJasa,idVoucher,hargaDisc = "",desc,waktuKerja,imgg;
 
-    TextView jnslyn,txHariJemput,txHariKirim,beratXharga,totalHarga,alamatDetailPick,alamatDetailSend,diskon,deeskon;
+    TextView jnslyn,txHariJemput,txHariKirim,beratXharga,totalHarga,alamatDetailPick,alamatDetailSend,diskon,deeskon,user,userkirim;
     String formatHariJemput,formatHariKirim;
     int GettotalHarga = 0;
     Button backToHome;
@@ -57,12 +58,12 @@ public class Detail_Pesanan extends AppCompatActivity {
         setLayoutPesanan();
 
         getDataFromPesanan();
-
-
+        setUser();
+        setFormatHari();
         setGoVoucher();
         setAlamat();
         KembaliSayang();
-        setFormatHari();
+
         setDataFromPesanan();
 //        InsertPesanan();
 
@@ -165,6 +166,24 @@ public class Detail_Pesanan extends AppCompatActivity {
         }
 
     }
+    public void setUser(){
+        user = findViewById(R.id.NamaUser);
+        userkirim = findViewById(R.id.NamaUserKirim);
+        ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
+        Call<ResponseUser> userCall = apiInterface.getDataUser(getIntent().getStringExtra("id_user"));
+        userCall.enqueue(new Callback<ResponseUser>() {
+            @Override
+            public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
+                user.setText(response.body().getData().getNama());
+                userkirim.setText(response.body().getData().getNama());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseUser> call, Throwable t) {
+
+            }
+        });
+    }
 
     public void setAlamat(){
         alamatDetailPick = (TextView) findViewById(R.id.alamatDetail);
@@ -237,8 +256,6 @@ public class Detail_Pesanan extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
-
     }
 
     public void getDataFromPesanan(){
@@ -274,12 +291,23 @@ public class Detail_Pesanan extends AppCompatActivity {
 
 
 
-
                 if (waktuJemput == null || waktuKirim == null || alamatUserPick == null || alamatUserSend == null){
                     waktuJemput = "";
                     waktuKirim = "";
                     alamatUserPick = "";
                     alamatUserSend = "";
+                } else {
+                    SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
+                    SimpleDateFormat format4 = new SimpleDateFormat("yyyy-MM-dd");
+
+                    try {
+                        Date date = format1.parse(hariJemput);
+                        Date date1 = format1.parse(hariKirim);
+                        hariJemput = format4.format(date);
+                        hariKirim = format4.format(date1);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
                 //waktuJemput
                 String pickAku = hariJemput+" "+waktuJemput;
@@ -308,8 +336,10 @@ public class Detail_Pesanan extends AppCompatActivity {
                     public void onResponse(Call<ResponseInsertPesanan> call, Response<ResponseInsertPesanan> response) {
                         int kode = response.body().getKode();
                         System.out.println("APAKAH MASUK "+kode);
-                        Intent i = new Intent(getApplicationContext(),MainMenu.class);
+                        Intent i = new Intent(getApplicationContext(),Pembayaran.class);
                         i.putExtra("id_user",idOrg);
+                        i.putExtra("hargaCucian",totalHarga.getText().toString());
+                        i.putExtra("layanan",jnslyn.getText().toString());
                         startActivity(i);
                         finish();
                     }

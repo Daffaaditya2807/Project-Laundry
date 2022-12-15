@@ -3,6 +3,7 @@ package com.example.titulaundry.API;
 import com.example.titulaundry.Model.CheckEmail;
 import com.example.titulaundry.Model.ResponeBarang;
 import com.example.titulaundry.Model.ResponseAlamat;
+import com.example.titulaundry.Model.ResponseBanner;
 import com.example.titulaundry.Model.ResponseEditUser;
 import com.example.titulaundry.Model.ResponseEmail;
 import com.example.titulaundry.Model.ResponseHapusFoto;
@@ -77,6 +78,9 @@ public interface ApiInterface {
 
     @GET("Voucher.php")
     Call<ResponseVoucher> getVoucher();
+
+    @GET("Banner.php")
+    Call<ResponseBanner> getBanner();
 
     @FormUrlEncoded
     @POST("GetPesanan.php")

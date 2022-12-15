@@ -17,6 +17,9 @@ import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.Model.ResponseRubahPw;
 import com.example.titulaundry.R;
+import com.example.titulaundry.lupaPassword3;
+
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,25 +75,31 @@ public class ubah_password extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (passwordBaru.getText().toString().equals(confirmPassword.getText().toString())){
-                    apiInterface = AppClient.getClient().create(ApiInterface.class);
-                    Call<ResponseRubahPw> pwCall = apiInterface.UbahPw(getIntent().getStringExtra("id_user"),passwordLama.getText().toString(),passwordBaru.getText().toString());
-                    pwCall.enqueue(new Callback<ResponseRubahPw>() {
-                        @Override
-                        public void onResponse(Call<ResponseRubahPw> call, Response<ResponseRubahPw> response) {
 
-                            if (response.body().getKode() == 1){
-                                Toast.makeText(ubah_password.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    Pattern specailCharPatten = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+                    if (passwordBaru.getText().toString().length()<7 || !specailCharPatten.matcher(passwordBaru.getText().toString()).find()){
+                        Toast.makeText(ubah_password.this, "Password kurang dari 8 dan harus mengandung karakter spesial", Toast.LENGTH_SHORT).show();
+                    } else {
+                        apiInterface = AppClient.getClient().create(ApiInterface.class);
+                        Call<ResponseRubahPw> pwCall = apiInterface.UbahPw(getIntent().getStringExtra("id_user"),passwordLama.getText().toString(),passwordBaru.getText().toString());
+                        pwCall.enqueue(new Callback<ResponseRubahPw>() {
+                            @Override
+                            public void onResponse(Call<ResponseRubahPw> call, Response<ResponseRubahPw> response) {
 
-                            } else if (response.body().getKode() == 2){
-                                Toast.makeText(ubah_password.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                if (response.body().getKode() == 1){
+                                    Toast.makeText(ubah_password.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                } else if (response.body().getKode() == 2){
+                                    Toast.makeText(ubah_password.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<ResponseRubahPw> call, Throwable t) {
-                            Toast.makeText(ubah_password.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                            @Override
+                            public void onFailure(Call<ResponseRubahPw> call, Throwable t) {
+                                Toast.makeText(ubah_password.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 } else {
                     Toast.makeText(ubah_password.this, "Password Tidak Sama", Toast.LENGTH_SHORT).show();
                 }

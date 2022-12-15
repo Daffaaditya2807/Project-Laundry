@@ -21,6 +21,8 @@ import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.Model.ResponseRegister;
 
+import java.util.regex.Pattern;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -110,10 +112,13 @@ public class Register extends AppCompatActivity {
                 String numberRandom = String.valueOf(random_int);
 
                 String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
+                Pattern specailCharPatten = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
 
                 if (!getPw.equals(matPw)){
                     Toast.makeText(Register.this,"Password Tidak Sama",Toast.LENGTH_LONG).show();
-                } else if  (getNama.equals("")||getTelp.equals("")||getEmail.equals("")||getPw.equals("")||matPw.equals("")||!syrt.isChecked()){
+                }else if (getPw.length()<7 || !specailCharPatten.matcher(getPw).find()){
+                    Toast.makeText(Register.this, "Password kurang dari 8 dan harus mengandung karakter spesial", Toast.LENGTH_SHORT).show();
+                }else if  (getNama.equals("")||getTelp.equals("")||getEmail.equals("")||getPw.equals("")||matPw.equals("")||!syrt.isChecked()){
                     Toast.makeText(Register.this,"Harap Lengkapi",Toast.LENGTH_LONG).show();
                 } else if (!getEmail.matches(emailPattern)||!getEmail.contains("@gmail.com")){
                     Toast.makeText(Register.this,"Email tidak valid",Toast.LENGTH_LONG).show();
