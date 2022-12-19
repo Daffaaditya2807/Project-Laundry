@@ -5,6 +5,9 @@ import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -13,6 +16,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Dashboard.MainMenu;
 import com.example.titulaundry.R;
 import com.google.android.material.button.MaterialButton;
@@ -23,6 +27,7 @@ public class Pembayaran extends AppCompatActivity {
     Button Chat;
     MaterialButton bckHome;
     CardView nomerShopay , NomerBri;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,7 @@ public class Pembayaran extends AppCompatActivity {
         switchBuy();
         KeMainMenu();
         setBayar();
+        setChat();
     }
     public void notif(Activity activity){
         //change color notif bar
@@ -72,6 +78,18 @@ public class Pembayaran extends AppCompatActivity {
         });
     }
 
+    public void setChat(){
+        Chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://api.whatsapp.com/send?phone=6285851065295";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+    }
+
     public void switchBuy(){
         cod.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,5 +122,18 @@ public class Pembayaran extends AppCompatActivity {
                 NomerBri.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 }

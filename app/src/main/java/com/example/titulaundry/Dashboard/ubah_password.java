@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -11,12 +13,16 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.API.NetworkChangeListener;
+import com.example.titulaundry.LupaPassword;
 import com.example.titulaundry.Model.ResponseRubahPw;
 import com.example.titulaundry.R;
+import com.example.titulaundry.layanan.Alert_App;
 import com.example.titulaundry.lupaPassword3;
 
 import java.util.regex.Pattern;
@@ -28,9 +34,11 @@ import retrofit2.Response;
 public class ubah_password extends AppCompatActivity {
 
     EditText passwordLama , passwordBaru , confirmPassword;
+    TextView lupaPassword;
     Button submitPassword;
     ApiInterface apiInterface;
     ImageButton bck;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
 
     @Override
@@ -40,6 +48,7 @@ public class ubah_password extends AppCompatActivity {
         notif(ubah_password.this);
         rubahPassword();
         backMainMenu();
+        setLupaPassword();
     }
 
     private void backMainMenu() {
@@ -53,7 +62,16 @@ public class ubah_password extends AppCompatActivity {
             }
         });
     }
-
+    private void setLupaPassword(){
+        lupaPassword = (TextView) findViewById(R.id.lupa_password);
+        lupaPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), LupaPassword.class);
+                startActivity(i);
+            }
+        });
+    }
     public void notif(Activity activity){
         //change color notif bar
         Window window = this.getWindow();
@@ -87,10 +105,11 @@ public class ubah_password extends AppCompatActivity {
                             public void onResponse(Call<ResponseRubahPw> call, Response<ResponseRubahPw> response) {
 
                                 if (response.body().getKode() == 1){
-                                    Toast.makeText(ubah_password.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-
+//                                    Toast.makeText(ubah_password.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    Alert_App.alertBro(ubah_password.this,response.body().getMessage());
                                 } else if (response.body().getKode() == 2){
-                                    Toast.makeText(ubah_password.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(ubah_password.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    Alert_App.alertBro(ubah_password.this,response.body().getMessage());
                                 }
                             }
 
@@ -102,10 +121,22 @@ public class ubah_password extends AppCompatActivity {
                     }
                 } else {
                     Toast.makeText(ubah_password.this, "Password Tidak Sama", Toast.LENGTH_SHORT).show();
+                    Alert_App.alertBro(ubah_password.this,"Password Tidak Sama");
                 }
             }
         });
     }
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,filter);
+        super.onStart();
+    }
 
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
+    }
 
 }

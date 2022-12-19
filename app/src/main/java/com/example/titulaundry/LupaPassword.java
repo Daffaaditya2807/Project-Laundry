@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Model.CheckEmail;
 
 import retrofit2.Call;
@@ -24,6 +27,7 @@ import retrofit2.Response;
 public class LupaPassword extends AppCompatActivity {
     ImageButton btnKembali;
     Button submit;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
     EditText emailPassword;
     ApiInterface apiInterface;
 
@@ -103,5 +107,18 @@ public class LupaPassword extends AppCompatActivity {
         //set icons notifbar
         View decor = activity.getWindow().getDecorView();
         decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    }
+
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 }

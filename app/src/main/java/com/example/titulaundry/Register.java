@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -19,7 +21,9 @@ import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Model.ResponseRegister;
+import com.example.titulaundry.layanan.Alert_App;
 
 import java.util.regex.Pattern;
 
@@ -33,6 +37,7 @@ public class Register extends AppCompatActivity {
     Button btnRegist;
     CheckBox syrt;
     ApiInterface apiInterface;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
     AlertDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +58,6 @@ public class Register extends AppCompatActivity {
             public void onClick(View view) {
                 if (syrt.isChecked()){
                     syrt.setBackgroundTintList(getResources().getColorStateList(R.color.niceBlue));
-                    Toast.makeText(Register.this, "turu", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -115,13 +119,17 @@ public class Register extends AppCompatActivity {
                 Pattern specailCharPatten = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
 
                 if (!getPw.equals(matPw)){
-                    Toast.makeText(Register.this,"Password Tidak Sama",Toast.LENGTH_LONG).show();
+//                    Toast.makeText(Register.this,"Password Tidak Sama",Toast.LENGTH_LONG).show();
+                    Alert_App.alertBro(Register.this,"Password Tidak Sama");
                 }else if (getPw.length()<7 || !specailCharPatten.matcher(getPw).find()){
-                    Toast.makeText(Register.this, "Password kurang dari 8 dan harus mengandung karakter spesial", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Register.this, "Password kurang dari 8 dan harus mengandung karakter spesial", Toast.LENGTH_SHORT).show();
+                    Alert_App.alertBro(Register.this,"Password kurang dari 8 dan harus mengandung karakter spesial");
                 }else if  (getNama.equals("")||getTelp.equals("")||getEmail.equals("")||getPw.equals("")||matPw.equals("")||!syrt.isChecked()){
-                    Toast.makeText(Register.this,"Harap Lengkapi",Toast.LENGTH_LONG).show();
+//                    Toast.makeText(Register.this,"Harap Lengkapi",Toast.LENGTH_LONG).show();
+                    Alert_App.alertBro(Register.this,"Harap Lengkapi");
                 } else if (!getEmail.matches(emailPattern)||!getEmail.contains("@gmail.com")){
-                    Toast.makeText(Register.this,"Email tidak valid",Toast.LENGTH_LONG).show();
+//                    Toast.makeText(Register.this,"Email tidak valid",Toast.LENGTH_LONG).show();
+                    Alert_App.alertBro(Register.this,"Email tidak valid");
                 } else{
                     apiInterface = AppClient.getClient().create(ApiInterface.class);
                     Call<ResponseRegister> simpan = apiInterface.registerResponse(getNama,getTelp,getEmail,getPw);
@@ -138,9 +146,11 @@ public class Register extends AppCompatActivity {
                                 i.putExtra("EmailUser",getEmail);
                                 startActivity(i);
                             } else if(kode == 3){
-                                Toast.makeText(Register.this,"Email Already Exist",Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Register.this,"Email Already Exist",Toast.LENGTH_SHORT).show();
+                                Alert_App.alertBro(Register.this,"Email Already Exist");
                             }else {
-                                Toast.makeText(Register.this,"Gagal Daftar",Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Register.this,"Gagal Daftar",Toast.LENGTH_SHORT).show();
+                                Alert_App.alertBro(Register.this,"Gagal Daftar");
                             }
                         }
 
@@ -166,5 +176,18 @@ public class Register extends AppCompatActivity {
         //set icons notifbar
         View decor = activity.getWindow().getDecorView();
         decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    }
+
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 }

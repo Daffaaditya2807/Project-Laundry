@@ -8,7 +8,9 @@ import androidx.core.content.ContextCompat;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Trace;
 import android.view.View;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Model.ResponsePesananUser;
 import com.example.titulaundry.R;
 import com.squareup.picasso.Picasso;
@@ -37,6 +40,7 @@ public class Detail_PesananUser extends AppCompatActivity {
     TextView jenis_jasa , status , tgl , est , namaUser , alamatJemput , namaUserKirim , alamatKirim,berat,harga,deskon;
     Context ctx;
     FrameLayout frameLayout;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,5 +155,17 @@ public class Detail_PesananUser extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 }

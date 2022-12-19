@@ -7,6 +7,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -14,6 +16,8 @@ import android.view.WindowManager;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.titulaundry.API.CheckConnected;
+import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Adapter.AdapterBarang;
 import com.example.titulaundry.KonfirmasiSukses;
 import com.example.titulaundry.Login;
@@ -28,6 +32,7 @@ public class MainMenu extends AppCompatActivity {
     RadioButton btn1;
     private home_fragment home_fragment;
     private Service_fragment service_fragment;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +61,19 @@ public class MainMenu extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
 
-        fragmentSwitch swtch = new fragmentSwitch(getSupportFragmentManager(), 0);
-        swtch.addFragment(new home_fragment(),"Home");
-        swtch.addFragment(new Service_fragment(),"SERVICE");
-        swtch.addFragment(new order_fragment(),"ORDER");
-        swtch.addFragment(new account_fragment(),"ACCOUNT");
-        viewPager.setAdapter(swtch);
+            fragmentSwitch swtch = new fragmentSwitch(getSupportFragmentManager(), 0);
+            swtch.addFragment(new home_fragment(),"Home");
+            swtch.addFragment(new Service_fragment(),"SERVICE");
+            swtch.addFragment(new order_fragment(),"ORDER");
+            swtch.addFragment(new account_fragment(),"ACCOUNT");
+            viewPager.setAdapter(swtch);
 
-        tabLayout.getTabAt(0).setIcon(R.drawable.home);
-        tabLayout.getTabAt(1).setIcon(R.drawable.menu);
-        tabLayout.getTabAt(2).setIcon(R.drawable.shop);
-        tabLayout.getTabAt(3).setIcon(R.drawable.account);
+            tabLayout.getTabAt(0).setIcon(R.drawable.home);
+            tabLayout.getTabAt(1).setIcon(R.drawable.menu);
+            tabLayout.getTabAt(2).setIcon(R.drawable.shop);
+            tabLayout.getTabAt(3).setIcon(R.drawable.account);
+
+
 
     }
     @Override
@@ -76,5 +83,18 @@ public class MainMenu extends AppCompatActivity {
         startActivity(i);
 
         finish();
+    }
+
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 }

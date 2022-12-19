@@ -19,6 +19,7 @@ import com.example.titulaundry.Adapter.AdapterBarang;
 import com.example.titulaundry.Model.ResponeBarang;
 import com.example.titulaundry.ModelMySQL.DataBarang;
 import com.example.titulaundry.R;
+import com.example.titulaundry.layanan.Alert_App;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +78,8 @@ public class Service_fragment extends Fragment {
         }
 
         if (FilteredList.isEmpty()){
-            Toast.makeText(getContext(), "No Data", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "No Data", Toast.LENGTH_SHORT).show();
+            Alert_App.alertBro(getContext(),"Data Tidak Tersedia");
         } else {
 
             adapterBarang.setFilteredList(FilteredList);

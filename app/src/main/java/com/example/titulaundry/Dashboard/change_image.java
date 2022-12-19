@@ -10,10 +10,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -29,6 +31,7 @@ import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Adapter.RealPathUtil;
 import com.example.titulaundry.Model.ResponseEditUser;
 import com.example.titulaundry.Model.ResponseHapusFoto;
@@ -60,6 +63,7 @@ public class change_image extends AppCompatActivity {
     ApiInterface apiInterface;
     final int  REQUEST_GALLERY = 9544;
     AlertDialog dialog;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
 
     @Override
@@ -270,5 +274,17 @@ public class change_image extends AppCompatActivity {
             } else {
                 System.out.println("Mbuoh gagal");
             }
+    }
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 }

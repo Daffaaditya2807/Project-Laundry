@@ -8,12 +8,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +29,9 @@ import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Model.ResponseAlamat;
+import com.example.titulaundry.layanan.Alert_App;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -49,6 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
     private boolean oke = false;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
     TextView alamat;
     EditText inputAlamat;
     ApiInterface apiInterface;
@@ -237,7 +242,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             startActivity(i);
                             finish();
                         } else {
-                            Toast.makeText(MapsActivity.this, "gagal Terupdate", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MapsActivity.this, "gagal Terupdate", Toast.LENGTH_SHORT).show();
+                            Alert_App.alertBro(MapsActivity.this,"Alamat gagal diupdate!");
                         }
                     }
 
@@ -279,5 +285,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         mMap.setMyLocationEnabled(true);
+    }
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 }

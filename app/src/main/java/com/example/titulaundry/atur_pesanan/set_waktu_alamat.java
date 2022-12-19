@@ -9,12 +9,14 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.ConnectivityManager;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,9 +37,11 @@ import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Login;
 import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.R;
+import com.example.titulaundry.layanan.Alert_App;
 //import com.example.titulaundry.db_help.Database_Tb_user;
 
 import java.io.IOException;
@@ -63,6 +67,7 @@ public class set_waktu_alamat extends AppCompatActivity {
     AlertDialog dialog;
     int hour , minute;
     ApiInterface apiInterface;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
     String waktuJemput , waktuPengembalian,hariJemput,hariKembali;
 
@@ -140,7 +145,8 @@ public class set_waktu_alamat extends AppCompatActivity {
                             jarak2.setText(String.valueOf(lokasi2)+" Km");
                         }
                     } else {
-                        Toast.makeText(set_waktu_alamat.this, "Lokasi Tidak Terdeteksi", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(set_waktu_alamat.this, "Lokasi Tidak Terdeteksi", Toast.LENGTH_SHORT).show();
+                        Alert_App.alertBro(set_waktu_alamat.this,"Lokasi Tidak Terdeteksi");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -528,6 +534,7 @@ public class set_waktu_alamat extends AppCompatActivity {
                         if (rBtn1.isChecked()){
                             if (hour>21 || hour<=7){
                                 Toast.makeText(set_waktu_alamat.this,"Gaboleh",Toast.LENGTH_LONG).show();
+                                Alert_App.alertBro(set_waktu_alamat.this,"Melebihi Jam penjemputan Kurir");
                             } else {
                                 jam1.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));
                                 waktuJemput = String.format(Locale.getDefault(),"%02d:%02d",hour,minute);
@@ -536,6 +543,7 @@ public class set_waktu_alamat extends AppCompatActivity {
                         } else if (rBtn2.isChecked()){
                             if (hour>15 || hour<7){
                                 Toast.makeText(set_waktu_alamat.this,"Gaboleh",Toast.LENGTH_LONG).show();
+                                Alert_App.alertBro(set_waktu_alamat.this,"Melebihi Jam penjemputan Kurir");
                             } else {
                                 jam1.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));
                                 waktuJemput = String.format(Locale.getDefault(),"%02d:%02d",hour,minute);
@@ -569,7 +577,8 @@ public class set_waktu_alamat extends AppCompatActivity {
                             }
                         } else if (rBtn2.isChecked()){
                             if (hour>15 || hour<7){
-                                Toast.makeText(set_waktu_alamat.this,"Gaboleh",Toast.LENGTH_LONG).show();
+//                                Toast.makeText(set_waktu_alamat.this,"Gaboleh",Toast.LENGTH_LONG).show();
+                                Alert_App.alertBro(set_waktu_alamat.this,"Melebihi Jam pengantaran Kurir");
                             } else {
                                 jam2.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));
                                 waktuPengembalian = String.format(Locale.getDefault(),"%02d:%02d",hour,minute);
@@ -594,9 +603,11 @@ public class set_waktu_alamat extends AppCompatActivity {
                 if (rBtn2.isChecked()){
                     //membawah data dari pesanan dan berat
                     if (waktuJemput == null ){
-                        Toast.makeText(set_waktu_alamat.this,"Harap pilih jam Penjemputan",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(set_waktu_alamat.this,"Harap pilih jam Penjemputan",Toast.LENGTH_SHORT).show();
+                        Alert_App.alertBro(set_waktu_alamat.this,"Harap pilih jam penjemputan");
                     } else if (waktuPengembalian == null){
-                        Toast.makeText(set_waktu_alamat.this,"Harap pilih jam pengiriman",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(set_waktu_alamat.this,"Harap pilih jam pengiriman",Toast.LENGTH_SHORT).show();
+                        Alert_App.alertBro(set_waktu_alamat.this,"Harap pilih jam pengiriman");
                     }else {
                         //Pembatasan Jarak Kirim
                         String j = jarak1.getText().toString().replace(" Km","");
@@ -610,7 +621,8 @@ public class set_waktu_alamat extends AppCompatActivity {
                             finish();
                         } else {
 
-                            Toast.makeText(set_waktu_alamat.this, "Terlalu Jauh Kasian Kurir", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(set_waktu_alamat.this, "Terlalu Jauh Kasian Kurir", Toast.LENGTH_SHORT).show();
+                            Alert_App.alertBro(set_waktu_alamat.this,"Mohon Maaf , Lokasi terlalu jauh tidak bisa menggunakan jasa kurir");
                         }
 
                     }
@@ -648,5 +660,16 @@ public class set_waktu_alamat extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,filter);
+        super.onStart();
+    }
 
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
+    }
 }

@@ -56,6 +56,7 @@
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/drawable/ic_account.xml" value="0.216" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/drawable/ic_address.xml" value="0.216" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.141" />
+        <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/drawable/ic_baseline_signal_wifi_off_24.xml" value="0.1365" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/drawable/ic_btn_back.xml" value="0.216" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/drawable/ic_launcher_background.xml" value="0.216" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/drawable/ic_logout.xml" value="0.216" />
@@ -92,13 +93,16 @@
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/activity_splash.xml" value="0.2441123188405797" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/activity_ubah_password.xml" value="0.176" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/activity_voucher.xml" value="0.264" />
+        <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/alert.xml" value="0.2" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/alert_edit_alamat.xml" value="0.264" />
+        <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/connect.xml" value="0.2" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/fragment_account_fragment.xml" value="0.176" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/fragment_home_fragment.xml" value="0.4" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/fragment_order_fragment.xml" value="0.264" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/fragment_service_fragment.xml" value="0.264" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/grid_layanan.xml" value="0.4" />
-        <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/list_pesanan.xml" value="0.4" />
+        <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/list_pesanan.xml" value="0.215" />
+        <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/lost_conect.xml" value="0.20436083796494228" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/pesanan_user.xml" value="0.47574626865671643" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/slide_image.xml" value="0.20436083796494228" />
         <entry key="..\:/Users/LENOVO/OneDrive/Dokumen/GitHub/Project-Laundry/app/src/main/res/layout/tes.xml" value="0.18671875" />

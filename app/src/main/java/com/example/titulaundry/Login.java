@@ -21,8 +21,10 @@ import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.API.CheckConnected;
 import com.example.titulaundry.Dashboard.MainMenu;
 import com.example.titulaundry.Model.ResponseLogin;
+import com.example.titulaundry.layanan.Alert_App;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,7 +35,9 @@ public class Login extends AppCompatActivity {
     EditText getEmail , getPassword;
     Button toLoginDashBoard;
     String[] user;
+
     ApiInterface apiInterface;
+    CheckConnected connected;
     protected Cursor cursor;
     public static Login lg;
 
@@ -127,7 +131,8 @@ public class Login extends AppCompatActivity {
                 //end
 
                 if (userCheck.equals("") || passCheck.equals("")){
-                    Toast.makeText(Login.this,"Mohon Isi Semua Data",Toast.LENGTH_LONG).show();
+//                    Toast.makeText(Login.this,"Mohon Isi Semua Data",Toast.LENGTH_LONG).show();
+                    Alert_App.alertBro(Login.this,"Mohon Isi Semua Data");
                 } else {
                     apiInterface = AppClient.getClient().create(ApiInterface.class);
                     Call<ResponseLogin> loginCall = apiInterface.loginResponse(getEmail.getText().toString(),getPassword.getText().toString());
@@ -157,9 +162,10 @@ public class Login extends AppCompatActivity {
                                 }
 
                             } else {
-//                                System.out.println("tesss  = "+response.body().getData());
-                                Toast.makeText(Login.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
+//                                System.out.println("tesss  = "+response.body().getData());
+//                                Toast.makeText(Login.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                Alert_App.alertBro(Login.this,response.body().getMessage());
                             }
                         }
 

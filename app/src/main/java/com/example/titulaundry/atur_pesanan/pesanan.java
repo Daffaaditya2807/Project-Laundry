@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -19,11 +21,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Dashboard.MainMenu;
 import com.example.titulaundry.Dashboard.home_fragment;
 import com.example.titulaundry.Dashboard.order_fragment;
 import com.example.titulaundry.Login;
 import com.example.titulaundry.R;
+import com.example.titulaundry.layanan.Alert_App;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -43,6 +47,7 @@ public class pesanan extends AppCompatActivity {
     CardView setAlamat,setBeratCuci;
     TextView header , headerBawah,hargaCucian,lamaWaktu,setWaktualamat,setBeratCucian,deskripsi;
     public String layanan , desc , waktu , harga,Imgg,idWong,id_jasa;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -253,7 +258,8 @@ public class pesanan extends AppCompatActivity {
                 System.out.println("Id Layanan ke Detail"+id_jasa);
 
                 if (dayPick == null  || weight ==null ){
-                    Toast.makeText(pesanan.this,"Isi Lengkap Terlebih dahulu",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(pesanan.this,"Isi Lengkap Terlebih dahulu",Toast.LENGTH_SHORT).show();
+                    Alert_App.alertBro(pesanan.this,"Isi Lengkap Terlebih dahulu");
 
                 } else {
                     Intent i = new Intent(getApplicationContext(),Detail_Pesanan.class);
@@ -277,5 +283,18 @@ public class pesanan extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 }

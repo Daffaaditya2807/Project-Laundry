@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.input.InputManager;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -18,9 +20,11 @@ import android.widget.Toast;
 import com.chaos.view.PinView;
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Model.ResponseEmail;
 import com.example.titulaundry.Model.VerifEmail;
 import com.example.titulaundry.Send_Email.JavaMailAPI;
+import com.example.titulaundry.layanan.Alert_App;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +33,7 @@ import retrofit2.Response;
 public class Konfirmasi extends AppCompatActivity {
     Button btnContinue;
     PinView getCode;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
     ApiInterface apiInterface;
     TextView desc,sendCodeAgain;
     String id_user,kodeVerif;
@@ -74,7 +79,7 @@ public class Konfirmasi extends AppCompatActivity {
         String emaile = getIntent().getStringExtra("EmailUser");
         String email = emaile;
         String header = "VERIFIKASI EMAIL TO ACCES APP TITU LAUNDRY";
-        String pesan = "Kamu Nanya Kodenya Apa ? Nichhhh = "+kodeVerif;
+        String pesan = "Kode Verif Account : "+kodeVerif;
         JavaMailAPI javaMailAPI = new JavaMailAPI(Konfirmasi.this,email,header,pesan);
         javaMailAPI.execute();
     }
@@ -115,13 +120,14 @@ public class Konfirmasi extends AppCompatActivity {
                 public void onResponse(Call<VerifEmail> call, Response<VerifEmail> response) {
                     int kode = response.body().getKode();
                     if (kode == 1){
-                        Toast.makeText(Konfirmasi.this, "Berhasil Verif", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Konfirmasi.this, "Berhasil Verif", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(),KonfirmasiSukses.class);
                         i.putExtra("UserId",id_user);
                         startActivity(i);
                         finish();
                     } else {
-                        Toast.makeText(Konfirmasi.this, "Gagal Verif", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Konfirmasi.this, "Gagal Verif", Toast.LENGTH_SHORT).show();
+                        Alert_App.alertBro(Konfirmasi.this,"Gagal Verifikasi Account");
                     }
                 }
 
@@ -131,7 +137,8 @@ public class Konfirmasi extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(this, "Kode Salah", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Kode Salah", Toast.LENGTH_SHORT).show();
+            Alert_App.alertBro(this,"Kode yang anda masukkan salah!");
             getCode.setText("");
         }
     }
@@ -144,6 +151,18 @@ public class Konfirmasi extends AppCompatActivity {
         //set icons notifbar
         View decor = activity.getWindow().getDecorView();
         decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    }
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 
 }

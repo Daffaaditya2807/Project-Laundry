@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -14,6 +16,7 @@ import android.widget.Button;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Adapter.AdapterVoucher;
 import com.example.titulaundry.Model.ResponseVoucher;
 import com.example.titulaundry.ModelMySQL.DataItemVoucher;
@@ -35,6 +38,7 @@ public class Voucher extends AppCompatActivity  {
     Button submit;
     AdapterVoucher adapterVoucher;
     ApiInterface apiInterface;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
 
 
@@ -132,5 +136,16 @@ public class Voucher extends AppCompatActivity  {
         });
     }
 
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,filter);
+        super.onStart();
+    }
 
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
+    }
 }

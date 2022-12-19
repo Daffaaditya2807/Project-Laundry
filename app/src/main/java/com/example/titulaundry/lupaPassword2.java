@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chaos.view.PinView;
+import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Send_Email.JavaMailAPI;
 
 import java.util.Random;
@@ -21,6 +24,7 @@ public class lupaPassword2 extends AppCompatActivity {
     PinView kode;
     Button Continue;
     String KodeVerify;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
     TextView sendAgain;
 
     @Override
@@ -89,8 +93,21 @@ public class lupaPassword2 extends AppCompatActivity {
         Random r = new Random( System.currentTimeMillis() );
         int x =  10000 + r.nextInt(20000);
         KodeVerify = String.valueOf(x);
-        JavaMailAPI javaMailAPI = new JavaMailAPI(lupaPassword2.this,emailLupa,"LUPA PASSWORD","Kode = "+KodeVerify);
+        JavaMailAPI javaMailAPI = new JavaMailAPI(lupaPassword2.this,emailLupa,"LUPA PASSWORD","Kode Lupa Password : "+KodeVerify);
         javaMailAPI.execute();
 
+    }
+
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 }

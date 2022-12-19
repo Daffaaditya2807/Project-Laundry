@@ -6,6 +6,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Dashboard.MainMenu;
 import com.example.titulaundry.Model.ResponseInsertPesanan;
 import com.example.titulaundry.Model.ResponseUser;
@@ -45,7 +48,7 @@ public class Detail_Pesanan extends AppCompatActivity {
     ConstraintLayout lyt;
     ApiInterface apiInterface;
     CardView goVoucher;
-
+NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 //
 //    Database_Tb_Pesanan PS;
 
@@ -387,5 +390,18 @@ public class Detail_Pesanan extends AppCompatActivity {
         //set icons notifbar
         View decor = activity.getWindow().getDecorView();
         decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    }
+
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 }

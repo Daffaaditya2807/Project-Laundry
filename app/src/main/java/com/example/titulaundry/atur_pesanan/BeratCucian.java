@@ -5,6 +5,8 @@ import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Login;
 import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.R;
@@ -31,6 +34,7 @@ public class BeratCucian extends AppCompatActivity {
     TextView orderCount,brtCucian,hrgCucian,hargaFix;
     Button brtPsn;
     ApiInterface apiInterface;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,5 +228,18 @@ public class BeratCucian extends AppCompatActivity {
                 hargaFix.setText("Rp. "+ String.valueOf(totalHarga));
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 }

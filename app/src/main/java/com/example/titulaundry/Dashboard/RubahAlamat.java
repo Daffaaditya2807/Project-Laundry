@@ -1,9 +1,19 @@
 package com.example.titulaundry.Dashboard;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -16,20 +26,33 @@ import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.API.NetworkChangeListener;
+import com.example.titulaundry.MapsActivity;
 import com.example.titulaundry.Model.ResponseAlamat;
 import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.R;
+import com.example.titulaundry.databinding.ActivityMapsBinding;
+import com.example.titulaundry.layanan.Alert_App;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RubahAlamat extends AppCompatActivity {
+public class RubahAlamat extends AppCompatActivity{
     EditText setAlamat;
     TextView alamat;
     ApiInterface apiInterface;
     Button edt , submit;
     ImageButton bck;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +64,7 @@ public class RubahAlamat extends AppCompatActivity {
         updateAlamat();
         kembali();
     }
+
 
     private void kembali() {
         bck = findViewById(R.id.kembali);
@@ -67,7 +91,8 @@ public class RubahAlamat extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ResponseAlamat> call, Response<ResponseAlamat> response) {
                         if (response.body().getKode() == 1){
-                            Toast.makeText(RubahAlamat.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(RubahAlamat.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            Alert_App.alertBro(RubahAlamat.this,response.body().getMessage());
                             alamat.setText(setAlamat.getText().toString());
                         }
 
@@ -110,4 +135,17 @@ public class RubahAlamat extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
+    }
+
 }
