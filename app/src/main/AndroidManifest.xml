@@ -25,32 +25,45 @@
         android:noHistory="true"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.TituLaundry"
         tools:replace="android:allowBackup"
         tools:targetApi="31">
         <activity
             android:name=".atur_pesanan.Pembayaran"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".Dashboard.Voucher"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".Dashboard.Detail_PesananUser"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".Dashboard.RubahAlamat"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".Dashboard.ubah_password"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".Dashboard.change_image"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".all_is_set"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -69,13 +82,17 @@
         <activity
             android:name=".MapsActivity"
             android:exported="false"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".atur_pesanan.Detail_Pesanan"
             android:exported="false" />
         <activity
             android:name=".atur_pesanan.BeratCucian"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".lupaPasswordSucces"
             android:exported="false" />
@@ -84,10 +101,14 @@
             android:exported="false" />
         <activity
             android:name=".lupaPassword2"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".atur_pesanan.set_waktu_alamat"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".atur_pesanan.pesanan"
             android:exported="false" />
@@ -102,10 +123,14 @@
             android:exported="false" />
         <activity
             android:name=".Dashboard.MainMenu"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".Login"
-            android:exported="false" />
+            android:exported="false"
+
+            />
         <activity
             android:name=".Register"
             android:exported="false" />

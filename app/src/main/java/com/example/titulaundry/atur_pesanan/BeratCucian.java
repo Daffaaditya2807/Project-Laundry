@@ -22,6 +22,9 @@ import com.example.titulaundry.Login;
 import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.R;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -180,6 +183,12 @@ public class BeratCucian extends AppCompatActivity {
             }
         });
     }
+    public static String convertRupiah(int price){
+        Locale locale = new Locale("in","ID");
+        NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+        String strFormat = format.format(price);
+        return strFormat.replace(",00","");
+    }
     public void itemCountOrder(){
 
         brtCucian = (TextView) findViewById(R.id.totalBeratCucian);
@@ -198,7 +207,7 @@ public class BeratCucian extends AppCompatActivity {
         hrgCucian.setText("Rp. "+hargaBarang+" X " + String.valueOf(numberOrder)+ " Kg");
 
         hargaFix = (TextView) findViewById(R.id.hargaFix);
-        hargaFix.setText("Rp. "+ String.valueOf(totalHargabrg));
+        hargaFix.setText(convertRupiah(totalHargabrg));
 
         plsButton = (CardView) findViewById(R.id.plsBtn);
         minButton = (CardView) findViewById(R.id.minBtn);
@@ -211,7 +220,8 @@ public class BeratCucian extends AppCompatActivity {
                 brtCucian.setText(String.valueOf(numberOrder)+ " Kg");
                 hrgCucian.setText("Rp. "+String.valueOf(totalHargabrg)+" X " + String.valueOf(numberOrder)+ " Kg");
                 totalHarga = totalHargabrg * numberOrder;
-                hargaFix.setText("Rp. "+ String.valueOf(totalHarga));
+//                hargaFix.setText("Rp. "+ String.valueOf(totalHarga));
+                hargaFix.setText(convertRupiah(totalHarga));
             }
         });
 
@@ -225,7 +235,8 @@ public class BeratCucian extends AppCompatActivity {
                 brtCucian.setText(String.valueOf(numberOrder)+ " Kg");
                 hrgCucian.setText("Rp. "+String.valueOf(totalHargabrg)+" X " + String.valueOf(numberOrder)+ " Kg");
                 totalHarga = totalHargabrg * numberOrder;
-                hargaFix.setText("Rp. "+ String.valueOf(totalHarga));
+//                hargaFix.setText("Rp. "+ String.valueOf(totalHarga));
+                hargaFix.setText(convertRupiah(totalHarga));
             }
         });
     }

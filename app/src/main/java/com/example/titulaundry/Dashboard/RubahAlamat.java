@@ -85,24 +85,31 @@ public class RubahAlamat extends AppCompatActivity{
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                apiInterface = AppClient.getClient().create(ApiInterface.class);
-                Call<ResponseAlamat> alamatCall = apiInterface.setAlamat(id_user,setAlamat.getText().toString());
-                alamatCall.enqueue(new Callback<ResponseAlamat>() {
-                    @Override
-                    public void onResponse(Call<ResponseAlamat> call, Response<ResponseAlamat> response) {
-                        if (response.body().getKode() == 1){
+                if (!setAlamat.getText().toString().equals("")){
+                    apiInterface = AppClient.getClient().create(ApiInterface.class);
+                    Call<ResponseAlamat> alamatCall = apiInterface.setAlamat(id_user,setAlamat.getText().toString());
+                    alamatCall.enqueue(new Callback<ResponseAlamat>() {
+                        @Override
+                        public void onResponse(Call<ResponseAlamat> call, Response<ResponseAlamat> response) {
+                            if (response.body().getKode() == 1){
 //                            Toast.makeText(RubahAlamat.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            Alert_App.alertBro(RubahAlamat.this,response.body().getMessage());
-                            alamat.setText(setAlamat.getText().toString());
+                                Alert_App.alertBro(RubahAlamat.this,response.body().getMessage());
+                                alamat.setText(setAlamat.getText().toString());
+                                setAlamat.setText("");
+                            }
+
                         }
 
-                    }
+                        @Override
+                        public void onFailure(Call<ResponseAlamat> call, Throwable t) {
 
-                    @Override
-                    public void onFailure(Call<ResponseAlamat> call, Throwable t) {
+                        }
+                    });
 
-                    }
-                });
+                } else {
+                    Alert_App.alertBro(RubahAlamat.this,"Alamat yang dimasukkan kosong");
+                }
+
             }
         });
     }

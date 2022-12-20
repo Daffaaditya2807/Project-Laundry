@@ -19,6 +19,7 @@ import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Model.UpdatePassword;
+import com.example.titulaundry.layanan.Alert_App;
 
 import java.util.regex.Pattern;
 
@@ -92,7 +93,8 @@ public class lupaPassword3 extends AppCompatActivity {
 
                 if (matchPw1.equals(matchPw2)){
                      if (matchPw1.length()<7 || !specailCharPatten.matcher(matchPw1).find()){
-                        Toast.makeText(lupaPassword3.this, "Password kurang dari 8 dan harus mengandung karakter spesial", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(lupaPassword3.this, "Password kurang dari 8 dan harus mengandung karakter spesial", Toast.LENGTH_SHORT).show();
+                         Alert_App.alertBro(lupaPassword3.this,"Password kurang dari 8 dan harus mengandung karakter spesial");
                     } else {
                          apiInterface = AppClient.getClient().create(ApiInterface.class);
                          Call<UpdatePassword> update = apiInterface.setNewPassword(getGmail,matchPw1);
@@ -115,7 +117,8 @@ public class lupaPassword3 extends AppCompatActivity {
                      }
 
                 }  else {
-                    Toast.makeText(lupaPassword3.this, "Password Tidak Sama", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(lupaPassword3.this, "Password Tidak Sama", Toast.LENGTH_SHORT).show();
+                    Alert_App.alertBro(lupaPassword3.this,"Password Tidak Sama");
                 }
             }
         });

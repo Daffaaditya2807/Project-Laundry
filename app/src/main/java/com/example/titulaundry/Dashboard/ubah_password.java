@@ -96,7 +96,8 @@ public class ubah_password extends AppCompatActivity {
 
                     Pattern specailCharPatten = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
                     if (passwordBaru.getText().toString().length()<7 || !specailCharPatten.matcher(passwordBaru.getText().toString()).find()){
-                        Toast.makeText(ubah_password.this, "Password kurang dari 8 dan harus mengandung karakter spesial", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(ubah_password.this, "Password kurang dari 8 dan harus mengandung karakter spesial", Toast.LENGTH_SHORT).show();
+                        Alert_App.alertBro(ubah_password.this,"Password kurang dari 8 dan harus mengandung karakter spesial");
                     } else {
                         apiInterface = AppClient.getClient().create(ApiInterface.class);
                         Call<ResponseRubahPw> pwCall = apiInterface.UbahPw(getIntent().getStringExtra("id_user"),passwordLama.getText().toString(),passwordBaru.getText().toString());
@@ -120,7 +121,7 @@ public class ubah_password extends AppCompatActivity {
                         });
                     }
                 } else {
-                    Toast.makeText(ubah_password.this, "Password Tidak Sama", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(ubah_password.this, "Password Tidak Sama", Toast.LENGTH_SHORT).show();
                     Alert_App.alertBro(ubah_password.this,"Password Tidak Sama");
                 }
             }

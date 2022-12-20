@@ -25,11 +25,14 @@ import com.example.titulaundry.Model.ResponseInsertPesanan;
 import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.R;
 import com.example.titulaundry.Dashboard.Voucher;
+import com.example.titulaundry.layanan.Alert_App;
 //import com.example.titulaundry.db_help.Database_Tb_Pesanan;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,7 +75,12 @@ NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
 
     }
-
+    public static String convertRupiah(int price){
+        Locale locale = new Locale("in","ID");
+        NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+        String strFormat = format.format(price);
+        return strFormat.replace(",00","");
+    }
     public void KembaliSayang(){
         bckk = (ImageButton) findViewById(R.id.kembali);
         bckk.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +159,8 @@ NetworkChangeListener networkChangeListener = new NetworkChangeListener();
                     i.putExtra("imagee",imgg);
                     startActivity(i);
                 } else {
-                    Toast.makeText(Detail_Pesanan.this, "Harga Belanjaan Kurang", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Detail_Pesanan.this, "Harga Belanjaan Kurang", Toast.LENGTH_SHORT).show();
+                    Alert_App.alertBro(Detail_Pesanan.this,"Harga belanjaan kurang minimal Rp.30.000 untuk menggunakan voucher");
                 }
 
             }
@@ -229,13 +238,13 @@ NetworkChangeListener networkChangeListener = new NetworkChangeListener();
         if (hargaDisc == null){
             diskon.setText("0");
             GettotalHarga = HitungBro(hargaLayanan,beratCucian);
-            totalHarga.setText("Rp. "+String.valueOf(GettotalHarga));
+            totalHarga.setText(convertRupiah(GettotalHarga));
         } else {
             diskon.setText(hargaDisc);
             int diskon = Integer.parseInt(hargaDisc);
             GettotalHarga = HitungBro(hargaLayanan,beratCucian) - diskon;
             System.out.println(diskon+" "+GettotalHarga);
-            totalHarga.setText("Rp. "+String.valueOf(GettotalHarga));
+            totalHarga.setText(convertRupiah(GettotalHarga));
             deeskon.setText("Potongan Harga : "+hargaDisc);
             System.out.println("Harga udah Diskon = "+GettotalHarga);
         }

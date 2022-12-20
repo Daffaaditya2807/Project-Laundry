@@ -533,7 +533,7 @@ public class set_waktu_alamat extends AppCompatActivity {
                         System.out.println(String.valueOf(hour));
                         if (rBtn1.isChecked()){
                             if (hour>21 || hour<=7){
-                                Toast.makeText(set_waktu_alamat.this,"Gaboleh",Toast.LENGTH_LONG).show();
+//                                Toast.makeText(set_waktu_alamat.this,"Gaboleh",Toast.LENGTH_LONG).show();
                                 Alert_App.alertBro(set_waktu_alamat.this,"Melebihi Jam penjemputan Kurir");
                             } else {
                                 jam1.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));
@@ -542,7 +542,7 @@ public class set_waktu_alamat extends AppCompatActivity {
                             }
                         } else if (rBtn2.isChecked()){
                             if (hour>15 || hour<7){
-                                Toast.makeText(set_waktu_alamat.this,"Gaboleh",Toast.LENGTH_LONG).show();
+//                                Toast.makeText(set_waktu_alamat.this,"Gaboleh",Toast.LENGTH_LONG).show();
                                 Alert_App.alertBro(set_waktu_alamat.this,"Melebihi Jam penjemputan Kurir");
                             } else {
                                 jam1.setText(String.format(Locale.getDefault(),"%02d : %02d WIB",hour,minute));

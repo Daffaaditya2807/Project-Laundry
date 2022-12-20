@@ -28,6 +28,9 @@ import com.example.titulaundry.Model.ResponsePesananUser;
 import com.example.titulaundry.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,6 +78,12 @@ public class Detail_PesananUser extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+    public static String convertRupiah(int price){
+        Locale locale = new Locale("in","ID");
+        NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+        String strFormat = format.format(price);
+        return strFormat.replace(",00","");
     }
     public void setDetailPesanan(){
 
@@ -141,7 +150,8 @@ public class Detail_PesananUser extends AppCompatActivity {
 
                 }
                 berat.setText("Rp."+response.body().getData().getHarga()+" X "+response.body().getData().getTotalBerat()+"Kg");
-                harga.setText("Rp."+response.body().getData().getTotalHarga());
+
+                harga.setText(convertRupiah(Integer.parseInt(response.body().getData().getTotalHarga())));
                 deskon.setText(response.body().getData().getHarga_diskon());
 
 

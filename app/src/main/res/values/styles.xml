@@ -9,4 +9,5 @@
         <item name="colorAccent">@color/niceBlue</item>
         <item name="android:textColorSecondary">@android:color/darker_gray</item>
     </style>
+
 </resources>
