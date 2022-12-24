@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class DataItemBanner {
 
-	@SerializedName("nama_banner")
+	@SerializedName("image")
 	private String namaBanner;
 
 	@SerializedName("id_banner")

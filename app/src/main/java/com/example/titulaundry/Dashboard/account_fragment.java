@@ -36,6 +36,7 @@ import com.example.titulaundry.Login;
 import com.example.titulaundry.Model.ResponseImg;
 import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.R;
+import com.example.titulaundry.layanan.Alert_App;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import com.squareup.picasso.Picasso;
 
@@ -126,6 +127,7 @@ public class account_fragment extends Fragment {
         mail = (TextView) getView().findViewById(R.id.profile_email);
         name = (TextView) getView().findViewById(R.id.profile_name);
         circleImageView = (CircleImageView) getView().findViewById(R.id.profile_image);
+        Alert_App.ShowLoadScreenData(getContext());
         apiInterface = AppClient.getClient().create(ApiInterface.class);
         Call<ResponseUser> userCall = apiInterface.getDataUser(id_user);
         userCall.enqueue(new Callback<ResponseUser>() {
@@ -138,6 +140,7 @@ public class account_fragment extends Fragment {
                 mail.setText(e);
                 name.setText(m);
                 Picasso.get().load(AppClient.profileIMG+URI_IMGG).error(R.drawable.blank).into(circleImageView);
+                Alert_App.HideLoadScreenData(getContext());
             }
 
             @Override

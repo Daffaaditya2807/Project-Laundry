@@ -13,6 +13,18 @@ public class DataItemVoucher {
 	@SerializedName("potongan_harga")
 	private String potonganHarga;
 
+	@SerializedName("nama")
+	private String namaVoucher;
+
+
+	public String getNamaVoucher() {
+		return namaVoucher;
+	}
+
+	public void setNamaVoucher(String namaVoucher) {
+		this.namaVoucher = namaVoucher;
+	}
+
 	public void setSlotVoucher(String slotVoucher){
 		this.slotVoucher = slotVoucher;
 	}

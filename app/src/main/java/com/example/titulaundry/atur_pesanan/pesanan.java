@@ -196,7 +196,7 @@ public class pesanan extends AppCompatActivity {
         headerBawah.setText(layanan);
         lamaWaktu.setText(waktu + " waktu pengerjaan");
         hargaCucian.setText(convertRupiah(Integer.parseInt(harga)));
-        Picasso.get().load(AppClient.URL_IMG+Imgg).error(R.drawable.cuci_kering).into(imgLayanan);
+        Picasso.get().load(AppClient.URL_IMG+Imgg).resize(650,400).error(R.drawable.cuci_kering).into(imgLayanan);
 
     }
     public void setAlamat(){

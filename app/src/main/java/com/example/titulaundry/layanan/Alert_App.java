@@ -17,6 +17,9 @@ import com.example.titulaundry.SplashScreen;
 
 public class Alert_App {
 
+    static AlertDialog.Builder data ;
+    static  AlertDialog dialog2;
+
 public static void alertBro(Context context,String pesan){
     AlertDialog.Builder builder = new AlertDialog.Builder(context);
     View layout_dialog = LayoutInflater.from(context).inflate(R.layout.alert,null);
@@ -52,4 +55,26 @@ public static void alertBro(Context context,String pesan){
 
 }
 
+public static void ShowLoadScreenData(Context context){
+    data = new AlertDialog.Builder(context);
+    View view = LayoutInflater.from(context).inflate(R.layout.loading_screen,null);
+    data.setView(view);
+    dialog2 = data.create();
+    dialog2.setCancelable(false);
+    dialog2.getWindow().setGravity(Gravity.CENTER);
+
+    if (dialog2 != null && !dialog2.isShowing()){
+        dialog2.show();
+    }
+
+
+}
+    public static void HideLoadScreenData(Context context){
+
+        if (dialog2 != null && dialog2.isShowing()){
+            dialog2.dismiss();
+        }
+
+
+    }
 }

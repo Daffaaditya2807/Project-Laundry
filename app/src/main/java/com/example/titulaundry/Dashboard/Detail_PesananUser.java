@@ -26,6 +26,7 @@ import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Model.ResponsePesananUser;
 import com.example.titulaundry.R;
+import com.example.titulaundry.layanan.Alert_App;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
@@ -108,6 +109,7 @@ public class Detail_PesananUser extends AppCompatActivity {
         String id_pesan = getIntent().getStringExtra("id_pesanan");
 
         //set
+        Alert_App.ShowLoadScreenData(this);
         apiInterface = AppClient.getClient().create(ApiInterface.class);
         Call<ResponsePesananUser> userCall = apiInterface.getDataPesanan(id_pesan);
         userCall.enqueue(new Callback<ResponsePesananUser>() {
@@ -153,7 +155,7 @@ public class Detail_PesananUser extends AppCompatActivity {
 
                 harga.setText(convertRupiah(Integer.parseInt(response.body().getData().getTotalHarga())));
                 deskon.setText(response.body().getData().getHarga_diskon());
-
+                Alert_App.HideLoadScreenData(Detail_PesananUser.this);
 
 
 

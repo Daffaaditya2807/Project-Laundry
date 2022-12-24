@@ -49,7 +49,6 @@ public class AdapterBanner extends RecyclerView.Adapter<AdapterBanner.SliderView
 
     @Override
     public int getItemCount() {
-
         return itemBanners.size();
     }
 

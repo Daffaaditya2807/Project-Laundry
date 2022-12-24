@@ -1,5 +1,6 @@
 package com.example.titulaundry.Dashboard;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -38,6 +39,7 @@ import com.example.titulaundry.ModelMySQL.DataBarang;
 import com.example.titulaundry.ModelMySQL.DataPesanan;
 import com.example.titulaundry.R;
 import com.example.titulaundry.atur_pesanan.pesanan;
+import com.example.titulaundry.layanan.Alert_App;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -58,7 +60,7 @@ public class home_fragment extends Fragment {
     CircleImageView profilePic;
     private ViewPager2 viewPager2;
     List<DataItemBanner> itemBanners = new ArrayList<>();
-
+    ProgressDialog mProgressDialog;
     RecyclerView recyclerView;
     //use DB MySQL
     RecyclerView.Adapter adData;
@@ -81,7 +83,11 @@ public class home_fragment extends Fragment {
 
     }
 
+
+
     private void BannerSlideShow(){
+//        ShowProgress();
+        Alert_App.ShowLoadScreenData(getContext());
         viewPager2 = (ViewPager2) getView().findViewById(R.id.banner);
         ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
         Call<ResponseBanner> bannerCall = apiInterface.getBanner();
@@ -91,6 +97,8 @@ public class home_fragment extends Fragment {
                 System.out.println("Data Banner = "+response.body().getPesan());
                 itemBanners = response.body().getData();
                 viewPager2.setAdapter(new AdapterBanner(itemBanners,viewPager2,getContext()));
+//                HideProgressDialog();
+                Alert_App.HideLoadScreenData(getContext());
                 viewPager2.setClipToPadding(false);
                 viewPager2.setClipChildren(false);
                 viewPager2.setOffscreenPageLimit(3);

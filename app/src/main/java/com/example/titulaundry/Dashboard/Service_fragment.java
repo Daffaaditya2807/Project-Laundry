@@ -99,7 +99,7 @@ public class Service_fragment extends Fragment {
 
                 adapterBarang = new AdapterBarang(getContext(),dataBarangList,getActivity().getIntent());
 
-                recyclerView = getView().findViewById(R.id.recycleLayanan);
+                recyclerView = getActivity().findViewById(R.id.recycleLayanan2);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
 

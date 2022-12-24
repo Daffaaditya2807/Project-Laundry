@@ -55,6 +55,7 @@ dependencies {
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.synnapps:carouselview:0.1.4'
+    implementation 'com.airbnb.android:lottie:3.7.0'
 
 
 }

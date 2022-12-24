@@ -71,6 +71,7 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
                 android:text="Antar dan jemput mandiri"
+                android:textSize="14dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -80,6 +81,7 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="14dp"
                 android:text="Melayani setiap hari mulai 07:00 - 21:00"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inpowaktu" />
@@ -127,6 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:textSize="14dp"
                 android:gravity="center_vertical"
                 android:text="Gunakan jasa Kurir (Gratis)"
                 android:textColor="@color/black"
@@ -138,6 +141,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="14dp"
                 android:text="Melayani setiap hari mulai 07:00 - 15:00"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inpowaktu2" />
@@ -366,7 +370,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/alamatJemput"
                         android:layout_marginTop="15dp"
                         android:textSize="14dp"
-                        android:text="Puan Maharani"
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         />
@@ -379,7 +382,6 @@
                         android:layout_marginTop="10dp"
                         android:textSize="14dp"
                         android:textColor="@color/black"
-                        android:text="Jln. Suparjan Mangun Wijaya, Bujel Gg 3, RT02 RW03, Kota Kediri Jawa Timur"
                         />
                     <TextView
                         android:id="@+id/jarak_jemput"
@@ -447,7 +449,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/alamatPengiriman"
                         android:layout_marginTop="15dp"
                         android:textSize="14dp"
-                        android:text="Puan Maharani"
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         />
@@ -460,7 +461,7 @@
                         android:layout_marginTop="10dp"
                         android:textSize="14dp"
                         android:textColor="@color/black"
-                        android:text="Jln. Suparjan Mangun Wijaya, Bujel Gg 3, RT02 RW03, Kota Kediri Jawa Timur"
+
                         />
                     <TextView
                         android:id="@+id/jarak_kirim"
@@ -493,7 +494,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Buat Pesanan"
+        android:textAllCaps="false"
         android:visibility="invisible"
+        android:textSize="14dp"
+        android:fontFamily="@font/inter_bold"
         android:padding="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

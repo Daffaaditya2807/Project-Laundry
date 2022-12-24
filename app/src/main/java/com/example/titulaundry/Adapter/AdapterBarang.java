@@ -74,8 +74,22 @@ public class AdapterBarang extends RecyclerView.Adapter<AdapterBarang.HolderData
         int harga = db.getHarga();
         String turu = String.valueOf(convertRupiah(harga));
         System.out.println();
+
+        System.out.println(db.getDeskripsi().length());
+
+        if (db.getDeskripsi().length()>=41){
+
+            String ambilAwal = db.getDeskripsi().substring(0,39);
+            String fromDb = new String(ambilAwal);
+            StringBuilder builder = new StringBuilder(fromDb);
+            builder.append("...");
+            String NewBaru = builder.toString();
+            holder.descLayanan.setText(NewBaru);
+        } else {
+            holder.descLayanan.setText(String.valueOf(db.getDeskripsi()));
+        }
+
         holder.jenis_layanan.setText(String.valueOf(dataBarangList.get(position).getJenis_jasa()));
-        holder.descLayanan.setText(String.valueOf(db.getDeskripsi()));
         holder.waktuLayanan.setText(String.valueOf(db.getDurrasi()));
         holder.hargaLayanan.setText(String.valueOf(convertRupiah(db.getHarga())));
         holder.id_jasa.setText(String.valueOf(db.getId_jasa()));

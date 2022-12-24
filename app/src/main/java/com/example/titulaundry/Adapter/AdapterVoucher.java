@@ -83,6 +83,7 @@ public class AdapterVoucher extends RecyclerView.Adapter<AdapterVoucher.ViewHold
         holder.id_voucher.setText("#"+db.getIdVoucher());
         holder.potongan_harga.setText("Rp."+db.getPotonganHarga());
         holder.slot.setText("Slot : "+db.getSlotVoucher());
+        holder.namaVoucher.setText(db.getNamaVoucher());
     }
 
     @Override
@@ -91,7 +92,7 @@ public class AdapterVoucher extends RecyclerView.Adapter<AdapterVoucher.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView id_voucher , potongan_harga , slot;
+        TextView id_voucher , potongan_harga , slot,namaVoucher;
         CheckBox checkBox;
 
         public ViewHolder(@NonNull View itemView) {
@@ -100,6 +101,7 @@ public class AdapterVoucher extends RecyclerView.Adapter<AdapterVoucher.ViewHold
             potongan_harga = itemView.findViewById(R.id.potongan_harga);
             slot = itemView.findViewById(R.id.slot_voucher);
             checkBox = itemView.findViewById(R.id.checkVoucher);
+            namaVoucher = itemView.findViewById(R.id.headerVoucher);
         }
     }
 }
