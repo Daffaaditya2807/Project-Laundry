@@ -1,7 +1,9 @@
 package com.example.titulaundry.Dashboard;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,12 +64,14 @@ public class home_fragment extends Fragment {
     private ViewPager2 viewPager2;
     List<DataItemBanner> itemBanners = new ArrayList<>();
     ProgressDialog mProgressDialog;
-    RecyclerView recyclerView;
+    RecyclerView recyclerView,recyclerView2;
     //use DB MySQL
     RecyclerView.Adapter adData;
     private Handler slideHandler = new Handler();
     private List<DataBarang> dataBarangList = new ArrayList<>();
     private List<DataPesanan> pesananList = new ArrayList<>();
+
+    FrameLayout frameLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -144,26 +149,34 @@ public class home_fragment extends Fragment {
 
     private void RecycleMySQLPesanan() {
         String id_user = getActivity().getIntent().getStringExtra("id_user");
+        recyclerView = getView().findViewById(R.id.recyclePesanan);
+        frameLayout = (FrameLayout) getView().findViewById(R.id.frmPesananKosong);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+        id_user = sharedPreferences.getString("KEY_ID","");
         System.out.println("ID USER PADA HOME == "+id_user);
         ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
+
+
         Call<ResponsePesanan> responsePesananCall = apiInterface.getPesanan(id_user);
         responsePesananCall.enqueue(new Callback<ResponsePesanan>() {
             @Override
             public void onResponse(Call<ResponsePesanan> call, Response<ResponsePesanan> response) {
                 if (response.body().getKode()==1){
                     String dataAda = response.body().getPesan();
-                    System.out.println("Apakah Data ada ="+dataAda);
                     pesananList = response.body().getData();
 
                     adData = new AdapterPesanan(getContext(),pesananList,getActivity().getIntent());
-                    recyclerView = getView().findViewById(R.id.recyclePesanan);
+
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
                     recyclerView.setAdapter(adData);
                     adData.notifyDataSetChanged();
+                    frameLayout.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
                 } else {
-                    Toast.makeText(getActivity(), "pesananKosong", Toast.LENGTH_SHORT).show();
+                    frameLayout.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
                 }
             }
 
@@ -176,6 +189,8 @@ public class home_fragment extends Fragment {
 
     public void setGreeting(){
         String id_user = getActivity().getIntent().getStringExtra("id_user");
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+        id_user = sharedPreferences.getString("KEY_ID","");
         getGreeting = (TextView)getView().findViewById(R.id.greeting);
         alamatUser = (TextView) getView().findViewById(R.id.alamat);
         profilePic = (CircleImageView) getView().findViewById(R.id.profile_image);
@@ -186,19 +201,21 @@ public class home_fragment extends Fragment {
         System.out.println(hour);
 
         if (hour <= 6 || hour <= 11) {
-            waktu = " pagi ";
+            waktu = "Pagi";
         } else if (hour <= 17) {
-            waktu = " Siang  ";
+            waktu = "Siang";
         } else if (hour <= 24) {
-            waktu = " Malam " ;
+            waktu = "Malam" ;
         }
 
         ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
+        System.out.println("Tes id User apakah koson= "+id_user);
         Call<ResponseUser> dataUser = apiInterface.getDataUser(id_user);
         dataUser.enqueue(new Callback<ResponseUser>() {
             @Override
             public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
                 getGreeting.setText("Selamat "+waktu+" "+String.valueOf(response.body().getData().getNama()));
+
                 getGreeting.setSelected(true);
                 alamatUser.setText(String.valueOf(response.body().getData().getAlamat()));
                 Picasso.get().load(AppClient.profileIMG+response.body().getData().getProfile_img()).error(R.drawable.blank).into(profilePic);
@@ -226,13 +243,12 @@ public class home_fragment extends Fragment {
 
                 adData = new AdapterBarang(getContext(),dataBarangList,getActivity().getIntent());
 
-                recyclerView = getView().findViewById(R.id.recycleLayanan);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+                recyclerView2 = getView().findViewById(R.id.recycleLayanan);
+                recyclerView2.setHasFixedSize(true);
+                recyclerView2.setLayoutManager(new GridLayoutManager(getActivity(),2));
 
-                recyclerView.setAdapter(adData);
+                recyclerView2.setAdapter(adData);
                 adData.notifyDataSetChanged();
-
 
 
             }

@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -86,11 +87,13 @@ public class account_fragment extends Fragment {
     }
 
     public void gantiAlamat(){
-        String id_user = getActivity().getIntent().getStringExtra("id_user");
         changeAlamat = (CardView) getView().findViewById(R.id.ganti_alamat);
         changeAlamat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String id_user = getActivity().getIntent().getStringExtra("id_user");
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+                id_user = sharedPreferences.getString("KEY_ID","");
                 Intent i = new Intent(getContext(),RubahAlamat.class);
                 i.putExtra("id_user",id_user);
                 startActivity(i);
@@ -103,11 +106,15 @@ public class account_fragment extends Fragment {
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+                sharedPreferences.edit().clear().commit();
                 Intent loginscreen=new Intent(getContext(), Login.class);
                 loginscreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(loginscreen);
             }
         });
+
+
     }
     public void changePw(){
         setPassword = (CardView) getView().findViewById(R.id.ganti_password);
@@ -115,6 +122,8 @@ public class account_fragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String id_user = getActivity().getIntent().getStringExtra("id_user");
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+                id_user = sharedPreferences.getString("KEY_ID","");
                 Intent i = new Intent(getContext(),ubah_password.class);
                 i.putExtra("id_user",id_user);
                 startActivity(i);
@@ -124,6 +133,8 @@ public class account_fragment extends Fragment {
 
     public void setProfile(){
         String id_user = getActivity().getIntent().getStringExtra("id_user");
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+        id_user = sharedPreferences.getString("KEY_ID","");
         mail = (TextView) getView().findViewById(R.id.profile_email);
         name = (TextView) getView().findViewById(R.id.profile_name);
         circleImageView = (CircleImageView) getView().findViewById(R.id.profile_image);
@@ -158,6 +169,8 @@ public class account_fragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String id_user = getActivity().getIntent().getStringExtra("id_user");
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+                id_user = sharedPreferences.getString("KEY_ID","");
                 Intent i = new Intent(getContext(),change_image.class);
                 i.putExtra("id_user",id_user);
                 startActivity(i);

@@ -48,7 +48,6 @@ public class Register extends AppCompatActivity {
         RegistAccount();
         setCheckBox();
         kembaliKeLogin();
-
     }
 
     public void setCheckBox(){

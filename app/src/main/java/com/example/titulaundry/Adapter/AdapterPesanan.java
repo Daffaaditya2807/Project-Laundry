@@ -48,7 +48,13 @@ public class AdapterPesanan extends RecyclerView.Adapter<AdapterPesanan.ViewHold
         DataPesanan pesanan = pesananList.get(position);
 
         holder.jasa.setText(String.valueOf(pesanan.getJenisJasa()+" "+pesanan.getTotalBerat()+" Kg"));
-        holder.status.setText(String.valueOf(pesanan.getStatusPesanan()));
+
+        if (pesanan.getStatusPesanan().equals("Menunggu diproses")){
+            holder.status.setText("Sedang diproses");
+        } else {
+            holder.status.setText(String.valueOf(pesanan.getStatusPesanan()));
+        }
+
         holder.totalHarga.setText(String.valueOf(convertRupiah(pesanan.getTotalHarga())));
         holder.waktuEst.setText(String.valueOf(pesanan.getDurasi()));
         Picasso.get().load(AppClient.URL_IMG+pesananList.get(position).getImage()).error(R.drawable.meki).into(holder.imageView);

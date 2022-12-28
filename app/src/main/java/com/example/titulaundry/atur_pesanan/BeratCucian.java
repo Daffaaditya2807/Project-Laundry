@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
@@ -79,6 +81,8 @@ public class BeratCucian extends AppCompatActivity {
         harga = getIntent().getStringExtra("harga");
         gambar = getIntent().getStringExtra("imagee");
         id = getIntent().getStringExtra("id_user");
+        SharedPreferences sharedPreferences = getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+        id = sharedPreferences.getString("KEY_ID","");
         desc = getIntent().getStringExtra("deskripsi");
         id_jasa = getIntent().getStringExtra("id_jasa");
 

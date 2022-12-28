@@ -43,7 +43,7 @@ public class AdapterPesananSemua extends RecyclerView.Adapter<AdapterPesananSemu
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DataPesananSemua db = pesananSemuas.get(position);
-
+        holder.Status_pesanan.setText(String.valueOf(db.getStatusPesanan()));
         if (db.getStatusPesanan().equals("Sedang diproses")){
             holder.Status_pesanan.setBackground(ContextCompat.getDrawable(ctx,R.drawable.bunder_text_proses));
             holder.Status_pesanan.setTextColor(Color.rgb(246, 185, 131));
@@ -56,6 +56,10 @@ public class AdapterPesananSemua extends RecyclerView.Adapter<AdapterPesananSemu
         } else if (db.getStatusPesanan().equals("Pesanan dibatalkan")){
             holder.Status_pesanan.setBackground(ContextCompat.getDrawable(ctx,R.drawable.bunder_text_batal));
             holder.Status_pesanan.setTextColor(Color.rgb(235, 87, 87));
+        } else if (db.getStatusPesanan().equals("Menunggu diproses")){
+            holder.Status_pesanan.setBackground(ContextCompat.getDrawable(ctx,R.drawable.bunder_text_proses));
+            holder.Status_pesanan.setTextColor(Color.rgb(246, 185, 131));
+            holder.Status_pesanan.setText("Sedang diproses");
         }
 
         if (db.getWaktuAntar().equals("00:00:00")){
@@ -69,7 +73,7 @@ public class AdapterPesananSemua extends RecyclerView.Adapter<AdapterPesananSemu
 
 
         holder.jenis_layanan.setText(String.valueOf(db.getJenisJasa()+" "+db.getTotalBerat()+" Kg"));
-        holder.Status_pesanan.setText(String.valueOf(db.getStatusPesanan()));
+
         holder.harga.setText(String.valueOf(convertRupiah(Integer.parseInt(db.getTotalHarga()))));
         Picasso.get().load(AppClient.URL_IMG+db.getImage()).error(R.drawable.meki).into(holder.imageView);
     }

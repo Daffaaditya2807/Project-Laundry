@@ -5,8 +5,10 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
@@ -96,6 +98,8 @@ NetworkChangeListener networkChangeListener = new NetworkChangeListener();
                 alamatUserPick = getIntent().getStringExtra("alamatUserPick");
                 alamatUserSend = getIntent().getStringExtra("alamatUserSend");
                 idOrg = getIntent().getStringExtra("id_user");
+                SharedPreferences sharedPreferences = getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+                idOrg = sharedPreferences.getString("KEY_ID","");
                 IdJasa = getIntent().getStringExtra("id_jasa");
                 desc = getIntent().getStringExtra("deskripsi");
                 waktuKerja = getIntent().getStringExtra("waktu");
@@ -182,7 +186,10 @@ NetworkChangeListener networkChangeListener = new NetworkChangeListener();
         user = findViewById(R.id.NamaUser);
         userkirim = findViewById(R.id.NamaUserKirim);
         ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
-        Call<ResponseUser> userCall = apiInterface.getDataUser(getIntent().getStringExtra("id_user"));
+        String id_user = getIntent().getStringExtra("id_user");
+        SharedPreferences sharedPreferences = getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+        id_user = sharedPreferences.getString("KEY_ID","");
+        Call<ResponseUser> userCall = apiInterface.getDataUser(id_user);
         userCall.enqueue(new Callback<ResponseUser>() {
             @Override
             public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
@@ -347,9 +354,12 @@ NetworkChangeListener networkChangeListener = new NetworkChangeListener();
                     @Override
                     public void onResponse(Call<ResponseInsertPesanan> call, Response<ResponseInsertPesanan> response) {
                         int kode = response.body().getKode();
-                        System.out.println("APAKAH MASUK "+kode);
+                        String kode_pesanan = response.body().getData().getId_pesanan();
+
+                        System.out.println("Apakah Masuk =  "+kode +" Id Pesanan User = "+kode_pesanan);
                         Intent i = new Intent(getApplicationContext(),Pembayaran.class);
                         i.putExtra("id_user",idOrg);
+                        i.putExtra("pesananId",kode_pesanan);
                         i.putExtra("hargaCucian",totalHarga.getText().toString());
                         i.putExtra("layanan",jnslyn.getText().toString());
                         startActivity(i);

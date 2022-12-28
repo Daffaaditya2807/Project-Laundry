@@ -1,5 +1,7 @@
 package com.example.titulaundry.Dashboard;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -72,6 +74,9 @@ public class order_fragment extends Fragment {
 
     public void SemuaPesanan(){
         String id_user = getActivity().getIntent().getStringExtra("id_user");
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+        id_user = sharedPreferences.getString("KEY_ID","");
+        System.out.println(id_user);
         ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
         Call<SemuaPesanan> pesananCall = apiInterface.getPesananSemua(id_user);
         pesananCall.enqueue(new Callback<SemuaPesanan>() {
@@ -101,6 +106,9 @@ public class order_fragment extends Fragment {
 
     public void SemuaSaatIni(){
         String id_user = getActivity().getIntent().getStringExtra("id_user");
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+         id_user = sharedPreferences.getString("KEY_ID","");
         ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
         Call<SemuaPesanan> pesananCall = apiInterface.getPesananSaatIni(id_user);
         pesananCall.enqueue(new Callback<SemuaPesanan>() {
@@ -130,6 +138,8 @@ public class order_fragment extends Fragment {
 
     public void PesananSelesai(){
         String id_user = getActivity().getIntent().getStringExtra("id_user");
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+        id_user = sharedPreferences.getString("KEY_ID","");
         ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
         Call<SemuaPesanan> pesananCall = apiInterface.getPesananSelesai(id_user);
         pesananCall.enqueue(new Callback<SemuaPesanan>() {

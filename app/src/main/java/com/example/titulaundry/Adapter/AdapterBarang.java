@@ -3,6 +3,7 @@ package com.example.titulaundry.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,13 +101,15 @@ public class AdapterBarang extends RecyclerView.Adapter<AdapterBarang.HolderData
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences sharedPreferences = ctx.getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+                String id_user = sharedPreferences.getString("KEY_ID","");
                 Intent i = new Intent(ctx,pesanan.class);
                 i.putExtra("layanan",db.getJenis_jasa());
                 i.putExtra("deskripsi",db.getDeskripsi());
                 i.putExtra("waktu",db.getDurrasi());
                 i.putExtra("harga",String.valueOf(db.getHarga()));
                 i.putExtra("imagee",db.getImage());
-                i.putExtra("id_user",intent.getStringExtra("id_user"));
+                i.putExtra("id_user",id_user);
                 i.putExtra("id_jasa",String.valueOf(db.getId_jasa()));
                 System.out.println("ID JASA NYA DALAH"+db.getId_jasa());
                 ctx.startActivity(i);

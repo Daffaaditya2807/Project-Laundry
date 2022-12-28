@@ -57,8 +57,6 @@ public class change_image extends AppCompatActivity {
     ImageButton kembali;
     EditText email , nama , phone;
     CircleImageView imgg;
-    String part_image;
-    Cursor cursor;
     String path = "";
     ImageView circleImageView;
     ApiInterface apiInterface;
@@ -262,7 +260,7 @@ public class change_image extends AppCompatActivity {
                 } else {
                     ActivityCompat.requestPermissions(change_image.this,
                             new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-                    Toast.makeText(change_image.this, "Open BO", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(change_image.this, "gagal", Toast.LENGTH_SHORT).show();
                 }
 //                Intent intent = new Intent();
 //                intent.setType("image/*");

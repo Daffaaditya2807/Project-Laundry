@@ -8,8 +8,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -46,10 +48,15 @@ import com.example.titulaundry.layanan.Alert_App;
 
 import java.io.IOException;
 import java.text.DateFormatSymbols;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -113,7 +120,10 @@ public class set_waktu_alamat extends AppCompatActivity {
         namaUser = (TextView) findViewById(R.id.NamaUser);
         namaKirim = (TextView) findViewById(R.id.NamaUserKirim);
         apiInterface = AppClient.getClient().create(ApiInterface.class);
-        Call<ResponseUser> getData = apiInterface.getDataUser(getIntent().getStringExtra("id_user"));
+        String id_user = getIntent().getStringExtra("id_user");
+        SharedPreferences sharedPreferences = getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+        id_user = sharedPreferences.getString("KEY_ID","");
+        Call<ResponseUser> getData = apiInterface.getDataUser(id_user);
         getData.enqueue(new Callback<ResponseUser>() {
 
             @Override
@@ -241,8 +251,9 @@ public class set_waktu_alamat extends AppCompatActivity {
         desc = getIntent().getStringExtra("deskripsi");
         id_jasa = getIntent().getStringExtra("id_jasa");
 
-        Intent i = new Intent(getApplicationContext(),pesanan.class);
+
         if (rBtn1.isChecked()) {
+            Intent i = new Intent(getApplicationContext(),pesanan.class);
             i.putExtra("hariJemput","Antar Sendiri");
             i.putExtra("hariKembali","Antar Sendiri");
             i.putExtra("layanan",layanan);
@@ -254,26 +265,53 @@ public class set_waktu_alamat extends AppCompatActivity {
             i.putExtra("id_user",id);
             i.putExtra("deskripsi",desc);
             i.putExtra("id_jasa",id_jasa);
+            startActivity(i);
+            finish();
 
         }else {
-            i.putExtra("hariJemput",hariJemput);
-            i.putExtra("hariKembali",hariKembali);
-            i.putExtra("waktuJemput",waktuJemput);
-            i.putExtra("waktuKembali",waktuPengembalian);
-            i.putExtra("alamatUserPick",alamatDetailJemput.getText().toString());
-            i.putExtra("alamatUserSend",alamatDetailKirim.getText().toString());
-            i.putExtra("layanan",layanan);
-            i.putExtra("waktu",waktu);
-            i.putExtra("harga",harga);
-            i.putExtra("berat",berat);
-            i.putExtra("email",getIntent().getStringExtra("email"));
-            i.putExtra("imagee",gambar);
-            i.putExtra("id_user",id);
-            i.putExtra("deskripsi",desc);
-            i.putExtra("id_jasa",id_jasa);
+            System.out.println("Tes hari jemput = "+hariJemput);
+            System.out.println("Tes hari jemput2 = "+hariKembali);
+            System.out.println("Waktu Kerja Laundry"+waktu);
+
+            String hariKerja = waktu.replace(" hari","").trim();
+            long batasan = Long.parseLong(hariKerja);
+
+            //Membuat batasan input hari
+            SimpleDateFormat myFormat = new SimpleDateFormat("dd-MM-yyyy");
+            try {
+                Date date1 = myFormat.parse(hariJemput);
+                Date date2 = myFormat.parse(hariKembali);
+                long diff = date2.getTime() - date1.getTime();
+                long baru = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+                if (batasan<=baru){
+                    System.out.println("Boleh Transaksi");
+                    Intent i = new Intent(getApplicationContext(),pesanan.class);
+                    i.putExtra("hariJemput",hariJemput);
+                    i.putExtra("hariKembali",hariKembali);
+                    i.putExtra("waktuJemput",waktuJemput);
+                    i.putExtra("waktuKembali",waktuPengembalian);
+                    i.putExtra("alamatUserPick",alamatDetailJemput.getText().toString());
+                    i.putExtra("alamatUserSend",alamatDetailKirim.getText().toString());
+                    i.putExtra("layanan",layanan);
+                    i.putExtra("waktu",waktu);
+                    i.putExtra("harga",harga);
+                    i.putExtra("berat",berat);
+                    i.putExtra("email",getIntent().getStringExtra("email"));
+                    i.putExtra("imagee",gambar);
+                    i.putExtra("id_user",id);
+                    i.putExtra("deskripsi",desc);
+                    i.putExtra("id_jasa",id_jasa);
+                    startActivity(i);
+                    finish();
+                }else {
+                    Toast.makeText(this, "Gak Boleh Transaksi", Toast.LENGTH_SHORT).show();
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
-        startActivity(i);
+//        startActivity(i);
 
 //        System.out.println("jemput = "+hariJemput);
 //        System.out.println("kembali = "+hariKembali);
@@ -283,8 +321,6 @@ public class set_waktu_alamat extends AppCompatActivity {
 //        System.out.println("Alamat Send = "+alamatDetailKirim.getText().toString());
 
         //data dari class sebelumnya
-
-
     }
     private void showALertKirim() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -615,10 +651,11 @@ public class set_waktu_alamat extends AppCompatActivity {
 
                         double jrk2 = Double.parseDouble(k);
                         double jrk = Double.parseDouble(j);
+
                         if (jrk<20 && jrk2<20){
-                            Intent i = new Intent(getApplicationContext(),pesanan.class);
+//                          Intent i = new Intent(getApplicationContext(),pesanan.class);
                             IntentPesanan();
-                            finish();
+
                         } else {
 
 //                            Toast.makeText(set_waktu_alamat.this, "Terlalu Jauh Kasian Kurir", Toast.LENGTH_SHORT).show();
@@ -628,7 +665,7 @@ public class set_waktu_alamat extends AppCompatActivity {
                     }
                 } else {
                         //Antar Sendiri
-                        Intent i = new Intent(getApplicationContext(),pesanan.class);
+//                        Intent i = new Intent(getApplicationContext(),pesanan.class);
                         IntentPesanan();
                         finish();
                 }

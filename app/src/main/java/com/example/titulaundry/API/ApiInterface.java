@@ -4,6 +4,7 @@ import com.example.titulaundry.Model.CheckEmail;
 import com.example.titulaundry.Model.ResponeBarang;
 import com.example.titulaundry.Model.ResponseAlamat;
 import com.example.titulaundry.Model.ResponseBanner;
+import com.example.titulaundry.Model.ResponseCod;
 import com.example.titulaundry.Model.ResponseEditUser;
 import com.example.titulaundry.Model.ResponseEmail;
 import com.example.titulaundry.Model.ResponseHapusFoto;
@@ -160,6 +161,12 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("DataPesananUser.php")
     Call<ResponsePesananUser> getDataPesanan(
+            @Field("id_pesanan") String id_pesanan
+    );
+
+    @FormUrlEncoded
+    @POST("PesananCod.php")
+    Call<ResponseCod> getCod(
             @Field("id_pesanan") String id_pesanan
     );
 

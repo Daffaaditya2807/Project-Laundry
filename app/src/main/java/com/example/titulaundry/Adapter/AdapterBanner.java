@@ -61,7 +61,7 @@ public class AdapterBanner extends RecyclerView.Adapter<AdapterBanner.SliderView
             imageView = itemView.findViewById(R.id.imageSlide);
         }
         void setImage(DataItemBanner dataItemBanner){
-            Picasso.get().load(AppClient.Banner+dataItemBanner.getNamaBanner()).resize(200,120).into(imageView);
+            Picasso.get().load(AppClient.Banner+dataItemBanner.getNamaBanner()).resize(200,100).into(imageView);
 
         }
     }

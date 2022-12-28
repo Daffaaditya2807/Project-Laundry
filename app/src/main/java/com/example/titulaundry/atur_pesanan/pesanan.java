@@ -7,8 +7,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
@@ -188,6 +190,8 @@ public class pesanan extends AppCompatActivity {
         Imgg = getIntent().getStringExtra("imagee");
         desc = getIntent().getStringExtra("deskripsi");
         idWong = getIntent().getStringExtra("id_user");
+        SharedPreferences sharedPreferences = getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+        idWong = sharedPreferences.getString("KEY_ID","");
         id_jasa = getIntent().getStringExtra("id_jasa");
 
 

@@ -117,7 +117,7 @@ public class Detail_PesananUser extends AppCompatActivity {
             public void onResponse(Call<ResponsePesananUser> call, Response<ResponsePesananUser> response) {
                 Picasso.get().load(AppClient.URL_IMG+response.body().getData().getImage()).error(R.drawable.meki).into(gambarJasa);
                 jenis_jasa.setText(response.body().getData().getJenisJasa()+" "+response.body().getData().getTotalBerat()+" KG");
-
+                status.setText(response.body().getData().getStatusPesanan());
                 if (response.body().getData().getStatusPesanan().equals("Sedang diproses")){
                     status.setBackground(ContextCompat.getDrawable(Detail_PesananUser.this,R.drawable.bunder_text_proses));
                     status.setTextColor(Color.rgb(246, 185, 131));
@@ -130,9 +130,13 @@ public class Detail_PesananUser extends AppCompatActivity {
                 } else if (response.body().getData().getStatusPesanan().equals("Pesanan dibatalkan")){
                     status.setBackground(ContextCompat.getDrawable(Detail_PesananUser.this,R.drawable.bunder_text_batal));
                     status.setTextColor(Color.rgb(235, 87, 87));
+                } else if (response.body().getData().getStatusPesanan().equals("Menunggu diproses")){
+                    status.setBackground(ContextCompat.getDrawable(Detail_PesananUser.this,R.drawable.bunder_text_proses));
+                    status.setTextColor(Color.rgb(246, 185, 131));
+                    status.setText("Sedang diproses");
                 }
 
-                status.setText(response.body().getData().getStatusPesanan());
+
                 tgl.setText(response.body().getData().getTanggal());
 
                 if (response.body().getData().getWaktuAntar().equals("0000-00-00 00:00:00")) {

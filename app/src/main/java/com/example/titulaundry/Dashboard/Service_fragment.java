@@ -1,6 +1,7 @@
 package com.example.titulaundry.Dashboard;
 
-import android.database.Cursor;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
@@ -19,7 +20,6 @@ import com.example.titulaundry.Adapter.AdapterBarang;
 import com.example.titulaundry.Model.ResponeBarang;
 import com.example.titulaundry.ModelMySQL.DataBarang;
 import com.example.titulaundry.R;
-import com.example.titulaundry.layanan.Alert_App;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +35,7 @@ public class Service_fragment extends Fragment {
     AdapterBarang adapterBarang;
     private List<DataBarang> dataBarangList = new ArrayList<>();
     private SearchView searchView;
+    Button cht;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,7 +48,20 @@ public class Service_fragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         RecycleMySQL();
         cariLayanan();
+        toChat();
+    }
 
+    public void toChat(){
+        cht = getActivity().findViewById(R.id.chattt);
+        cht.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://api.whatsapp.com/send?phone=6285851065295";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
     }
 
     public void cariLayanan(){
@@ -79,7 +93,7 @@ public class Service_fragment extends Fragment {
 
         if (FilteredList.isEmpty()){
 //            Toast.makeText(getContext(), "No Data", Toast.LENGTH_SHORT).show();
-            Alert_App.alertBro(getContext(),"Data Tidak Tersedia");
+//            Alert_App.alertBro(getContext(),"Data Tidak Tersedia");
         } else {
 
             adapterBarang.setFilteredList(FilteredList);

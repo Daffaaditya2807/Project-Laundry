@@ -16,16 +16,25 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.titulaundry.API.ApiInterface;
+import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.API.NetworkChangeListener;
 import com.example.titulaundry.Dashboard.MainMenu;
+import com.example.titulaundry.Model.ResponseCod;
 import com.example.titulaundry.R;
+import com.example.titulaundry.layanan.Alert_App;
 import com.google.android.material.button.MaterialButton;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Pembayaran extends AppCompatActivity {
     TextView layanan , Harga;
     RadioButton cod , shoopePay , Bri;
     Button Chat;
     MaterialButton bckHome;
+    ApiInterface apiInterface;
     CardView nomerShopay , NomerBri;
     NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
@@ -70,10 +79,37 @@ public class Pembayaran extends AppCompatActivity {
         bckHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), MainMenu.class);
-                i.putExtra("id_user",getIntent().getStringExtra("id_user"));
-                startActivity(i);
-                finish();
+
+                if (!shoopePay.isChecked() && !Bri.isChecked() && !cod.isChecked()){
+                    Alert_App.alertBro(Pembayaran.this,"Harap Pilih Salah Satu Pembayaran");
+
+                } else {
+                    if (cod.isChecked()){
+                        apiInterface = AppClient.getClient().create(ApiInterface.class);
+                        Call<ResponseCod> call = apiInterface.getCod(getIntent().getStringExtra("pesananId"));
+                        call.enqueue(new Callback<ResponseCod>() {
+                            @Override
+                            public void onResponse(Call<ResponseCod> call, Response<ResponseCod> response) {
+                                Intent i = new Intent(getApplicationContext(), MainMenu.class);
+                                i.putExtra("id_user",getIntent().getStringExtra("id_user"));
+                                startActivity(i);
+                                finish();
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseCod> call, Throwable t) {
+
+                            }
+                        });
+
+                    } else {
+                        Intent i = new Intent(getApplicationContext(), MainMenu.class);
+                        i.putExtra("id_user",getIntent().getStringExtra("id_user"));
+                        startActivity(i);
+                        finish();
+                    }
+                }
+
             }
         });
     }

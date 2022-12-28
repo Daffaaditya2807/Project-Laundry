@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Html;
@@ -156,6 +157,10 @@ public class Login extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                                     intent.putExtra("email",userCheck);
                                     intent.putExtra("id_user",response.body().getData().getIdUser());
+                                    SharedPreferences sharedPreferences = getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+                                  SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("KEY_ID",String.valueOf(response.body().getData().getIdUser()));
+                                    editor.apply();
                                     System.out.println("ID User pada login ="+response.body().getData().getIdUser());
                                     startActivity(intent);
                                     finish();
