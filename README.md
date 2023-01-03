@@ -38,14 +38,8 @@ DOWNLOAD FILE PHP Disini :
 
 - **Languages**:
     
-    ![Java](https://img.shields.io/badge/C%20-%232370ED.svg?style=for-the-badge&logo=c&logoColor=white)
-    ![Php](https://img.shields.io/badge/C++%20-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white)
-
-
-- **Cloud Hosting**:
-
-    ![Github Pages](https://img.shields.io/badge/GitHub%20Pages-%23327FC7.svg?style=for-the-badge&logo=github&logoColor=white)
-    
+    - Java
+    - PHP
 <br>
 
 - **Softwares and Tools**:
