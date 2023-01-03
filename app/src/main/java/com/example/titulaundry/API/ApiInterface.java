@@ -167,7 +167,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("PesananCod.php")
     Call<ResponseCod> getCod(
-            @Field("id_pesanan") String id_pesanan
+            @Field("id_pesanan") String id_pesanan,
+            @Field("waktu_penjemputan") String waktu
     );
 
 

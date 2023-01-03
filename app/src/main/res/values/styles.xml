@@ -14,4 +14,8 @@
         <item name="android:textSize">12sp</item>
         <item name="textAllCaps">false</item>
     </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/niceBlue</item>
+    </style>
 </resources>

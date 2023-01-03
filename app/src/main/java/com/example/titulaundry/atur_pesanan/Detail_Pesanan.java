@@ -362,6 +362,8 @@ NetworkChangeListener networkChangeListener = new NetworkChangeListener();
                         i.putExtra("pesananId",kode_pesanan);
                         i.putExtra("hargaCucian",totalHarga.getText().toString());
                         i.putExtra("layanan",jnslyn.getText().toString());
+                        i.putExtra("waktuuu",hariJemput);
+                        System.out.println("Data Hari Jemput = "+ hariJemput);
                         startActivity(i);
                         finish();
                     }

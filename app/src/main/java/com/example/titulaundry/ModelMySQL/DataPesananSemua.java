@@ -22,6 +22,17 @@ public class DataPesananSemua {
 	@SerializedName("image")
 	private String image;
 
+	@SerializedName("waktu_penjemputan")
+	private String waktu_penjemputan;
+
+	public String getWaktu_penjemputan() {
+		return waktu_penjemputan;
+	}
+
+	public void setWaktu_penjemputan(String waktu_penjemputan) {
+		this.waktu_penjemputan = waktu_penjemputan;
+	}
+
 	public String getImage() {
 		return image;
 	}

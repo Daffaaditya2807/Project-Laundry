@@ -86,7 +86,7 @@ public class Pembayaran extends AppCompatActivity {
                 } else {
                     if (cod.isChecked()){
                         apiInterface = AppClient.getClient().create(ApiInterface.class);
-                        Call<ResponseCod> call = apiInterface.getCod(getIntent().getStringExtra("pesananId"));
+                        Call<ResponseCod> call = apiInterface.getCod(getIntent().getStringExtra("pesananId"),getIntent().getStringExtra("waktuuu"));
                         call.enqueue(new Callback<ResponseCod>() {
                             @Override
                             public void onResponse(Call<ResponseCod> call, Response<ResponseCod> response) {

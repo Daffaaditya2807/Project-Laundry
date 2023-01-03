@@ -34,7 +34,7 @@ import retrofit2.Response;
 public class ubah_password extends AppCompatActivity {
 
     EditText passwordLama , passwordBaru , confirmPassword;
-    TextView lupaPassword;
+
     Button submitPassword;
     ApiInterface apiInterface;
     ImageButton bck;
@@ -48,7 +48,6 @@ public class ubah_password extends AppCompatActivity {
         notif(ubah_password.this);
         rubahPassword();
         backMainMenu();
-        setLupaPassword();
     }
 
     private void backMainMenu() {
@@ -58,16 +57,6 @@ public class ubah_password extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),MainMenu.class);
                 i.putExtra("id_user",getIntent().getStringExtra("id_user"));
-                startActivity(i);
-            }
-        });
-    }
-    private void setLupaPassword(){
-        lupaPassword = (TextView) findViewById(R.id.lupa_password);
-        lupaPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), LupaPassword.class);
                 startActivity(i);
             }
         });

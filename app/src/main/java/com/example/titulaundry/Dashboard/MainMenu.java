@@ -22,6 +22,7 @@ import com.example.titulaundry.Adapter.AdapterBarang;
 import com.example.titulaundry.KonfirmasiSukses;
 import com.example.titulaundry.Login;
 import com.example.titulaundry.R;
+import com.example.titulaundry.layanan.Alert_App;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainMenu extends AppCompatActivity {
@@ -78,11 +79,12 @@ public class MainMenu extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(getApplicationContext(), Login.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
-
-        finish();
+//        Intent i = new Intent(getApplicationContext(), Login.class);
+//        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(i);
+//
+//        finish();
+        Alert_App.exitAlertBruh(this);
     }
 
     @Override

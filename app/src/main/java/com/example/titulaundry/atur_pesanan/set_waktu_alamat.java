@@ -304,7 +304,7 @@ public class set_waktu_alamat extends AppCompatActivity {
                     startActivity(i);
                     finish();
                 }else {
-                    Toast.makeText(this, "Gak Boleh Transaksi", Toast.LENGTH_SHORT).show();
+                    Alert_App.alertBro(this,"Pengerjaan Laundry minimal "+batasan+" hari");
                 }
             } catch (ParseException e) {
                 e.printStackTrace();

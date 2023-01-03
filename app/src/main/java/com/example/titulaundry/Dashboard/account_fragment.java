@@ -106,11 +106,12 @@ public class account_fragment extends Fragment {
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
-                sharedPreferences.edit().clear().commit();
-                Intent loginscreen=new Intent(getContext(), Login.class);
-                loginscreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(loginscreen);
+//                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+//                sharedPreferences.edit().clear().commit();
+//                Intent loginscreen=new Intent(getContext(), Login.class);
+//                loginscreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(loginscreen);
+                Alert_App.exitAlertBruh(getContext());
             }
         });
 

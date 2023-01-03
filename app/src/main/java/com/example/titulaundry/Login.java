@@ -158,7 +158,7 @@ public class Login extends AppCompatActivity {
                                     intent.putExtra("email",userCheck);
                                     intent.putExtra("id_user",response.body().getData().getIdUser());
                                     SharedPreferences sharedPreferences = getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
-                                  SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("KEY_ID",String.valueOf(response.body().getData().getIdUser()));
                                     editor.apply();
                                     System.out.println("ID User pada login ="+response.body().getData().getIdUser());

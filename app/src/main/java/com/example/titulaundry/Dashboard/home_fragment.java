@@ -99,37 +99,43 @@ public class home_fragment extends Fragment {
         bannerCall.enqueue(new Callback<ResponseBanner>() {
             @Override
             public void onResponse(Call<ResponseBanner> call, Response<ResponseBanner> response) {
+
                 System.out.println("Data Banner = "+response.body().getPesan());
-                itemBanners = response.body().getData();
-                viewPager2.setAdapter(new AdapterBanner(itemBanners,viewPager2,getContext()));
+                if (response.body().getKode() == 1 ){
+                    itemBanners = response.body().getData();
+                    viewPager2.setAdapter(new AdapterBanner(itemBanners,viewPager2,getContext()));
 //                HideProgressDialog();
-                Alert_App.HideLoadScreenData(getContext());
-                viewPager2.setClipToPadding(false);
-                viewPager2.setClipChildren(false);
-                viewPager2.setOffscreenPageLimit(3);
-                viewPager2.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+                    Alert_App.HideLoadScreenData(getContext());
+                    viewPager2.setClipToPadding(false);
+                    viewPager2.setClipChildren(false);
+                    viewPager2.setOffscreenPageLimit(3);
+                    viewPager2.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
 
-                CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
-                compositePageTransformer.addTransformer(new MarginPageTransformer(40));
-                compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
-                    @Override
-                    public void transformPage(@NonNull View page, float position) {
-                        float r = 1 - Math.abs(position);
-                        page.setScaleY(0.85f + r * 0.15f);
+                    CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+                    compositePageTransformer.addTransformer(new MarginPageTransformer(40));
+                    compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
+                        @Override
+                        public void transformPage(@NonNull View page, float position) {
+                            float r = 1 - Math.abs(position);
+                            page.setScaleY(0.85f + r * 0.15f);
 
-                    }
-                });
+                        }
+                    });
 
-                viewPager2.setPageTransformer(compositePageTransformer);
-                viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                    @Override
-                    public void onPageSelected(int position) {
-                        super.onPageSelected(position);
-                        slideHandler.removeCallbacks(slideRunnable);
-                        slideHandler.postDelayed(slideRunnable,3000);
+                    viewPager2.setPageTransformer(compositePageTransformer);
+                    viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                        @Override
+                        public void onPageSelected(int position) {
+                            super.onPageSelected(position);
+                            slideHandler.removeCallbacks(slideRunnable);
+                            slideHandler.postDelayed(slideRunnable,3000);
 
-                    }
-                });
+                        }
+                    });
+                } else {
+                    //Banner Kosong
+                }
+
             }
 
             @Override
@@ -202,9 +208,11 @@ public class home_fragment extends Fragment {
 
         if (hour <= 6 || hour <= 11) {
             waktu = "Pagi";
-        } else if (hour <= 17) {
+        } else if (hour <= 15) {
             waktu = "Siang";
-        } else if (hour <= 24) {
+        } else if (hour <= 17){
+            waktu = "Sore";
+        }else if (hour <= 24) {
             waktu = "Malam" ;
         }
 

@@ -118,6 +118,7 @@
                 android:id="@+id/editEmail"
                 android:textSize="14dp"
                 android:enabled="false"
+                android:textColor="@color/black"
                 android:layout_marginStart="-15dp"
                 android:layout_width="match_parent"
                 android:inputType="textEmailAddress"

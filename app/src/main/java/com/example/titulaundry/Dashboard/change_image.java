@@ -276,6 +276,7 @@ public class change_image extends AppCompatActivity {
                 Uri uri = data.getData();
                 Context context = change_image.this;
                 path = RealPathUtil.getRealPath(context, uri);
+
                 Bitmap bitmap = BitmapFactory.decodeFile(path);
                 imgg.setImageBitmap(bitmap);
                 System.out.println("Tes Pathhh");

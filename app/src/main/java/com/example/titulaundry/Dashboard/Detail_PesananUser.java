@@ -130,10 +130,12 @@ public class Detail_PesananUser extends AppCompatActivity {
                 } else if (response.body().getData().getStatusPesanan().equals("Pesanan dibatalkan")){
                     status.setBackground(ContextCompat.getDrawable(Detail_PesananUser.this,R.drawable.bunder_text_batal));
                     status.setTextColor(Color.rgb(235, 87, 87));
-                } else if (response.body().getData().getStatusPesanan().equals("Menunggu diproses")){
-                    status.setBackground(ContextCompat.getDrawable(Detail_PesananUser.this,R.drawable.bunder_text_proses));
-                    status.setTextColor(Color.rgb(246, 185, 131));
-                    status.setText("Sedang diproses");
+                } else if (response.body().getData().getStatusPesanan().equals("Menunggu diantar")){
+                    status.setBackground(ContextCompat.getDrawable(Detail_PesananUser.this,R.drawable.bunder_text_pink));
+                    status.setTextColor(Color.rgb(245, 111, 179));
+                } else if (response.body().getData().getStatusPesanan().equals("Sedang dijemput")){
+                    status.setBackground(ContextCompat.getDrawable(Detail_PesananUser.this,R.drawable.bunder_text_antar));
+                    status.setTextColor(Color.rgb(69, 141, 239));
                 }
 
 
