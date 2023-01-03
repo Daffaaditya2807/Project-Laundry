@@ -19,7 +19,7 @@
 - Project ini tentang Aplikasi Laundry
 - Dapat membuat pesanan dengan mudah
 - Menggunakan database MySql dengan retrofit
-- Terintegrasi dengan  website [link](titulaundry.me)
+- Terintegrasi dengan  website [link](http://titulaundry.me/)
 
 ##### Create From Tim Romu2a:
 
