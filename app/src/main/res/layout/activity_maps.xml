@@ -106,7 +106,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="Confirm Location"
+        android:text="Tetapkan Lokasi"
         android:textSize="14dp"
         android:textAllCaps="false"
         android:fontFamily="@font/inter_bold"

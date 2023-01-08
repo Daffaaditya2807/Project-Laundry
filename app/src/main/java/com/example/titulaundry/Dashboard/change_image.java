@@ -82,9 +82,11 @@ public class change_image extends AppCompatActivity {
         kembali.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),MainMenu.class);
-                i.putExtra("id_user",getIntent().getStringExtra("id_user"));
-                startActivity(i);
+//                Intent i = new Intent(getApplicationContext(),MainMenu.class);
+//                i.putExtra("id_user",getIntent().getStringExtra("id_user"));
+//                startActivity(i);
+
+                onBackPressed();
             }
         });
     }

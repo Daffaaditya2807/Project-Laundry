@@ -363,7 +363,7 @@
                     android:textSize="16dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:text="Logout"
+                    android:text="Keluar"
                     app:layout_constraintLeft_toRightOf="@+id/icon_logout"
                     android:gravity="center_vertical"
                     />

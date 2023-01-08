@@ -94,7 +94,7 @@ public class account_fragment extends Fragment {
                 String id_user = getActivity().getIntent().getStringExtra("id_user");
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
                 id_user = sharedPreferences.getString("KEY_ID","");
-                Intent i = new Intent(getContext(),RubahAlamat.class);
+                Intent i = new Intent(getContext(),Change_Address.class);
                 i.putExtra("id_user",id_user);
                 startActivity(i);
             }

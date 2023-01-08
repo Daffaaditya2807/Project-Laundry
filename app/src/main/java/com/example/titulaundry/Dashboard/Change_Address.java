@@ -1,4 +1,4 @@
-package com.example.titulaundry;
+package com.example.titulaundry.Dashboard;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -7,17 +7,14 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -29,8 +26,11 @@ import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
-import com.example.titulaundry.API.NetworkChangeListener;
+import com.example.titulaundry.MapsActivity;
 import com.example.titulaundry.Model.ResponseAlamat;
+import com.example.titulaundry.Model.ResponseUser;
+import com.example.titulaundry.R;
+import com.example.titulaundry.databinding.ActivityRubahAlamat2Binding;
 import com.example.titulaundry.layanan.Alert_App;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -38,7 +38,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.example.titulaundry.databinding.ActivityMapsBinding;
 
 import java.io.IOException;
 import java.util.List;
@@ -48,41 +47,44 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class Change_Address extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private ActivityMapsBinding binding;
+    private ActivityRubahAlamat2Binding binding;
     private boolean oke = false;
-    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
-    TextView alamat;
-    EditText inputAlamat;
-    ApiInterface apiInterface;
-    ImageButton searchAddress , kembali;
-    Button submit;
-    String id_user,alamatGet;
+    EditText Inputalamat,alamat;
+    TextView LocNow;
+    Button carii,simpan;
+    ImageButton bcktoSet;
     List<Address> addressList = null;
+    String id_user,alamatGet;
+    ApiInterface apiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMapsBinding.inflate(getLayoutInflater());
+        binding = ActivityRubahAlamat2Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Inputalamat = findViewById(R.id.cariAlamat);
+        carii = findViewById(R.id.cari);
         alamat = findViewById(R.id.setAlamat);
-        inputAlamat = findViewById(R.id.getAlamatUser);
-        searchAddress = findViewById(R.id.searchAddress);
-        kembali = findViewById(R.id.kembali);
-
-
+        LocNow = findViewById(R.id.alamatSekarang);
+        simpan = findViewById(R.id.simpan);
+        bcktoSet = findViewById(R.id.kembali);
+        bcktoSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+        notif(Change_Address.this);
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-
+        setUserAddress();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        notif(MapsActivity.this);
-        setKembali();
 
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
@@ -122,7 +124,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 String addressLine = addressList.get(0).getAddressLine(0);
                                 String p = "";
                                 if (addressLine.contains("+")){
-                                     p = addressLine.substring(9).trim();
+                                    p = addressLine.substring(9).trim();
                                     System.out.println("Hilangi =" + p);
                                 } else {
                                     p = addressLine;
@@ -145,17 +147,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     });
 
                 }
-                searchAddress.setOnClickListener(new View.OnClickListener() {
+                carii.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String location = inputAlamat.getText().toString();
+                        String location = Inputalamat.getText().toString();
                         if (location == null) {
-                            Toast.makeText(MapsActivity.this, "turu", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Change_Address.this, "turu", Toast.LENGTH_SHORT).show();
                         } else {
                             try {
                                 addressList = geocoder.getFromLocationName(location, 1);
                                 if (addressList.size()==0){
-                                    Toast.makeText(MapsActivity.this, "Alamat Tidak ada", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Change_Address.this, "Alamat Tidak ada", Toast.LENGTH_SHORT).show();
                                 } else {
                                     LatLng Posisi = new LatLng(addressList.get(0).getLatitude(), addressList.get(0).getLongitude());
                                     MarkerOptions markerOptions = new MarkerOptions();
@@ -179,81 +181,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                     }
                 });
-                confirmAlamat();
+
             }
 
         });
-        //kene
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        String idd = getIntent().getStringExtra("UserId");
-        Intent i = new Intent(getApplicationContext(),KonfirmasiSukses.class);
-        i.putExtra("UserId",idd);
-        startActivity(i);
-        finish();
-    }
-
-    public void setKembali(){
-        kembali.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String idd = getIntent().getStringExtra("UserId");
-                Intent i = new Intent(getApplicationContext(),KonfirmasiSukses.class);
-                i.putExtra("UserId",idd);
-                startActivity(i);
-                finish();
-            }
-        });
-    }
-
-    public void notif(Activity activity) {
-        //change color notif bar
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.white));
-        //set icons notifbar
-        View decor = activity.getWindow().getDecorView();
-        decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-    }
-
-    public void confirmAlamat(){
-        id_user = getIntent().getStringExtra("UserId");
-        String alamatUser = alamat.getText().toString();
-        submit = findViewById(R.id.confirmAddress);
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("alamatnya adalah = "+alamatUser);
-                System.out.println("ID NYA ADALAH = "+id_user);
-
-                apiInterface = AppClient.getClient().create(ApiInterface.class);
-                Call<ResponseAlamat> Alamat = apiInterface.setAlamat(id_user,alamatGet);
-                Alamat.enqueue(new Callback<ResponseAlamat>() {
-                    @Override
-                    public void onResponse(Call<ResponseAlamat> call, Response<ResponseAlamat> response) {
-                        int kode = response.body().getKode();
-                        if (kode == 1){
-                            Toast.makeText(MapsActivity.this, "Alamat Terupdate", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(getApplicationContext(),all_is_set.class);
-                            startActivity(i);
-                            finish();
-                        } else {
-//                            Toast.makeText(MapsActivity.this, "gagal Terupdate", Toast.LENGTH_SHORT).show();
-                            Alert_App.alertBro(MapsActivity.this,"Alamat gagal diupdate!");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseAlamat> call, Throwable t) {
-                        Toast.makeText(MapsActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
+        confrimAlamat();
     }
 
     /**
@@ -276,9 +208,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         float zoomLevel = 16.0f;
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel));
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -291,16 +220,65 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         mMap.setMyLocationEnabled(true);
     }
-    @Override
-    protected void onStart() {
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(networkChangeListener,filter);
-        super.onStart();
+
+    public void setUserAddress(){
+        id_user = getIntent().getStringExtra("id_user");
+        SharedPreferences sharedPreferences = getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+        id_user = sharedPreferences.getString("KEY_ID","");
+        apiInterface = AppClient.getClient().create(ApiInterface.class);
+        Call<ResponseUser> userCall = apiInterface.getDataUser(id_user);
+        userCall.enqueue(new Callback<ResponseUser>() {
+            @Override
+            public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
+                LocNow.setText(response.body().getData().getAlamat());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseUser> call, Throwable t) {
+
+            }
+        });
+    }
+    public void notif(Activity activity) {
+        //change color notif bar
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(this.getResources().getColor(R.color.white));
+        //set icons notifbar
+        View decor = activity.getWindow().getDecorView();
+        decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    }
+    public void confrimAlamat(){
+        simpan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!alamat.getText().toString().equals("")){
+                    apiInterface = AppClient.getClient().create(ApiInterface.class);
+                    Call<ResponseAlamat> alamatCall = apiInterface.setAlamat(id_user,alamat.getText().toString());
+                    alamatCall.enqueue(new Callback<ResponseAlamat>() {
+                        @Override
+                        public void onResponse(Call<ResponseAlamat> call, Response<ResponseAlamat> response) {
+                            if (response.body().getKode() == 1){
+//                            Toast.makeText(RubahAlamat.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                Alert_App.alertBro(Change_Address.this,response.body().getMessage());
+                                LocNow.setText(alamat.getText().toString());
+                                alamat.setText("");
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseAlamat> call, Throwable t) {
+
+                        }
+                    });
+
+                } else {
+                    Alert_App.alertBro(Change_Address.this,"Alamat yang dimasukkan kosong");
+                }
+            }
+        });
     }
 
-    @Override
-    protected void onStop() {
-        unregisterReceiver(networkChangeListener);
-        super.onStop();
-    }
 }

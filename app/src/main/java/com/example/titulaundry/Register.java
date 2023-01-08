@@ -129,7 +129,9 @@ public class Register extends AppCompatActivity {
                 } else if (!getEmail.matches(emailPattern)||!getEmail.contains("@gmail.com")){
 //                    Toast.makeText(Register.this,"Email tidak valid",Toast.LENGTH_LONG).show();
                     Alert_App.alertBro(Register.this,"Email tidak valid");
-                } else{
+                } else if( getTelp.length()<10){
+                    Alert_App.alertBro(Register.this,"Panjang Nomer telephone kurang");
+                }else{
                     apiInterface = AppClient.getClient().create(ApiInterface.class);
                     Call<ResponseRegister> simpan = apiInterface.registerResponse(getNama,getTelp,getEmail,getPw);
                     simpan.enqueue(new Callback<ResponseRegister>() {
