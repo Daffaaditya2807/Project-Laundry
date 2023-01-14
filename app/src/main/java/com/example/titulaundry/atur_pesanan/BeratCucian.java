@@ -10,10 +10,13 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -36,7 +39,8 @@ public class BeratCucian extends AppCompatActivity {
     int numberOrder = 1;
     int totalHarga = 0;
     CardView plsButton , minButton;
-    TextView orderCount,brtCucian,hrgCucian,hargaFix;
+    TextView brtCucian,hrgCucian,hargaFix;
+    EditText orderCount;
     Button brtPsn;
     ApiInterface apiInterface;
     NetworkChangeListener networkChangeListener = new NetworkChangeListener();
@@ -197,11 +201,8 @@ public class BeratCucian extends AppCompatActivity {
 
         brtCucian = (TextView) findViewById(R.id.totalBeratCucian);
         brtCucian.setText(String.valueOf(numberOrder));
-
-        orderCount = (TextView) findViewById(R.id.OrderCount);
-        orderCount.setText(String.valueOf(numberOrder));
-
         hrgCucian = (TextView) findViewById(R.id.totalHargaCucian);
+
         String hargaBarang = getIntent().getStringExtra("hargaLaundry");
         hargaBarang = hargaBarang.replaceAll("[^\\d.]", "");
         hargaBarang = hargaBarang.replace(".","");
@@ -215,6 +216,48 @@ public class BeratCucian extends AppCompatActivity {
 
         plsButton = (CardView) findViewById(R.id.plsBtn);
         minButton = (CardView) findViewById(R.id.minBtn);
+
+        orderCount = (EditText) findViewById(R.id.OrderCount);
+        orderCount.setText(String.valueOf(numberOrder));
+        orderCount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                String p = editable.toString();
+
+                if (p.equals("")){
+                    orderCount.setText("1");
+
+                } else if (p.equals("0")){
+
+                    orderCount.setText("1");
+                } else {
+                        int ya = Integer.parseInt(p);
+                        numberOrder = ya;
+                        brtCucian.setText(String.valueOf(numberOrder)+ " Kg");
+                        hrgCucian.setText("Rp. "+String.valueOf(totalHargabrg)+" X " + String.valueOf(numberOrder)+ " Kg");
+                        totalHarga = totalHargabrg * numberOrder;
+//                hargaFix.setText("Rp. "+ String.valueOf(totalHarga));
+                        hargaFix.setText(convertRupiah(totalHarga));
+
+
+
+                }
+
+            }
+        });
+
+
 
         plsButton.setOnClickListener(new View.OnClickListener() {
             @Override

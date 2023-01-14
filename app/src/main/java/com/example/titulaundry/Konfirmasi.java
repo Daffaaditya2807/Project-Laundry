@@ -57,7 +57,7 @@ public class Konfirmasi extends AppCompatActivity {
 
     public void sendEmailAgain(){
         sendCodeAgain = (TextView) findViewById(R.id.text1);
-        String text = "Belum menerima kode? <font color=#2f80ed><b>Kirim ulang</b></font>";
+        String text = "Belum menerima kode? <b><font color=#2f80ed>Kirim ulang</font></b>";
         sendCodeAgain.setText(Html.fromHtml(text));
         sendCodeAgain.setOnClickListener(new View.OnClickListener() {
             @Override

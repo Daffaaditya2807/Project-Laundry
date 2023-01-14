@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -54,6 +55,8 @@ public class lupaPassword2 extends AppCompatActivity {
     }
     public void sendKodeAgain(){
         sendAgain = (TextView) findViewById(R.id.text1);
+        String text = "Belum menerima kode? <b><font color=#2f80ed>Kirim ulang</font></b>";
+        sendAgain.setText(Html.fromHtml(text));
         sendAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

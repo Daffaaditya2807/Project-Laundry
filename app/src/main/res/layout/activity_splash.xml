@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Y O U R  P E R S O N A L  L A U N D Y  A P P"
+                android:text="A P L I K A S I   L A U N D R Y   P R I B A D I   A N D A"
                 android:textColor="@color/white"
                 app:layout_constraintTop_toBottomOf="@+id/turu"
                 android:textAlignment="center"

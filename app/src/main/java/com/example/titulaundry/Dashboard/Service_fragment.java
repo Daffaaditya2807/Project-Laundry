@@ -20,6 +20,7 @@ import com.example.titulaundry.Adapter.AdapterBarang;
 import com.example.titulaundry.Model.ResponeBarang;
 import com.example.titulaundry.ModelMySQL.DataBarang;
 import com.example.titulaundry.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,8 @@ public class Service_fragment extends Fragment {
     AdapterBarang adapterBarang;
     private List<DataBarang> dataBarangList = new ArrayList<>();
     private SearchView searchView;
-    Button cht;
+//    Button cht;
+    FloatingActionButton cht;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +54,7 @@ public class Service_fragment extends Fragment {
     }
 
     public void toChat(){
-        cht = getActivity().findViewById(R.id.chattt);
+        cht = getActivity().findViewById(R.id.flt);
         cht.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

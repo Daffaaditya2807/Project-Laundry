@@ -171,5 +171,26 @@ public interface ApiInterface {
             @Field("waktu_penjemputan") String waktu
     );
 
+    @FormUrlEncoded
+    @POST("PesananSemua_Cari.php")
+    Call<SemuaPesanan> getCariPesananSemua(
+            @Field("id_user") String id_user,
+            @Field("tanggal1") String tanggal_mulai,
+            @Field("tanggal2") String tanggal_akhir
+    );
 
+    @FormUrlEncoded
+    @POST("PesananSaatIni_Cari.php")
+    Call<SemuaPesanan> getCariPesananSaatIni(
+            @Field("id_user") String id_user,
+            @Field("tanggal1") String tanggal_mulai,
+            @Field("tanggal2") String tanggal_akhir
+    );
+    @FormUrlEncoded
+    @POST("PesananSelesai_Cari.php")
+    Call<SemuaPesanan> getCariPesananSelesai(
+            @Field("id_user") String id_user,
+            @Field("tanggal1") String tanggal_mulai,
+            @Field("tanggal2") String tanggal_akhir
+    );
 }

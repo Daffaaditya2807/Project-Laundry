@@ -116,7 +116,7 @@ public class Detail_PesananUser extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponsePesananUser> call, Response<ResponsePesananUser> response) {
                 Picasso.get().load(AppClient.URL_IMG+response.body().getData().getImage()).error(R.drawable.meki).into(gambarJasa);
-                jenis_jasa.setText(response.body().getData().getJenisJasa()+" "+response.body().getData().getTotalBerat()+" KG");
+                jenis_jasa.setText(response.body().getData().getJenisJasa()+" "+response.body().getData().getTotalBerat()+" Kg");
                 status.setText(response.body().getData().getStatusPesanan());
                 if (response.body().getData().getStatusPesanan().equals("Sedang diproses")){
                     status.setBackground(ContextCompat.getDrawable(Detail_PesananUser.this,R.drawable.bunder_text_proses));

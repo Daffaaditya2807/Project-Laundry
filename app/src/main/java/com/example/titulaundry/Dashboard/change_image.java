@@ -38,7 +38,9 @@ import com.example.titulaundry.Model.ResponseHapusFoto;
 import com.example.titulaundry.Model.ResponseImg;
 import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.R;
+import com.example.titulaundry.Register;
 import com.example.titulaundry.layanan.Alert_App;
+import com.github.drjacky.imagepicker.ImagePicker;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -189,23 +191,28 @@ public class change_image extends AppCompatActivity {
                         Alert_App.alertBro(change_image.this,"Data Tidak Boleh Kosong!");
 
                     } else {
-                        apiInterface = AppClient.getClient().create(ApiInterface.class);
-                        Call<ResponseEditUser> userCall = apiInterface.getUpdateDataUser(getIntent().getStringExtra("id_user"),nama.getText().toString(),email.getText().toString(),phone.getText().toString());
-                        userCall.enqueue(new Callback<ResponseEditUser>() {
-                            @Override
-                            public void onResponse(Call<ResponseEditUser> call, Response<ResponseEditUser> response) {
-                                if (response.body().getKode() == 1){
-                                    Toast.makeText(change_image.this, "DATA SAJA BERHASIL UPDATE", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    System.out.println(response.body().getKode());
+                        if (phone.getText().toString().length()<10){
+                            Alert_App.alertBro(change_image.this,"Panjang Nomer telephone kurang");
+                        } else {
+
+                            apiInterface = AppClient.getClient().create(ApiInterface.class);
+                            Call<ResponseEditUser> userCall = apiInterface.getUpdateDataUser(getIntent().getStringExtra("id_user"),nama.getText().toString(),email.getText().toString(),phone.getText().toString());
+                            userCall.enqueue(new Callback<ResponseEditUser>() {
+                                @Override
+                                public void onResponse(Call<ResponseEditUser> call, Response<ResponseEditUser> response) {
+                                    if (response.body().getKode() == 1){
+                                        Toast.makeText(change_image.this, "DATA SAJA BERHASIL UPDATE", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        System.out.println(response.body().getKode());
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<ResponseEditUser> call, Throwable t) {
+                                @Override
+                                public void onFailure(Call<ResponseEditUser> call, Throwable t) {
 
-                            }
-                        });
+                                }
+                            });
+                        }
                     }
 
                 } else {
@@ -220,24 +227,29 @@ public class change_image extends AppCompatActivity {
                         Alert_App.alertBro(change_image.this,"Data Tidak Boleh Kosong!");
 
                     } else {
-                        apiInterface = AppClient.getClient().create(ApiInterface.class);
-                        Call<ResponseImg> imgCall = apiInterface.uploadImage(body,cus_name,namaUSer,emailUser,telpUSer);
-                        imgCall.enqueue(new Callback<ResponseImg>() {
-                            @Override
-                            public void onResponse(Call<ResponseImg> call, Response<ResponseImg> response) {
-                                if (response.body().getKode() == 1){
-                                    Toast.makeText(change_image.this, "Berhasil Upload", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    System.out.println(response.body().getKode());
+                        if (phone.getText().toString().length()<10){
+                            Alert_App.alertBro(change_image.this,"Panjang Nomer telephone kurang");
+                        } else {
+                            apiInterface = AppClient.getClient().create(ApiInterface.class);
+                            Call<ResponseImg> imgCall = apiInterface.uploadImage(body,cus_name,namaUSer,emailUser,telpUSer);
+                            imgCall.enqueue(new Callback<ResponseImg>() {
+                                @Override
+                                public void onResponse(Call<ResponseImg> call, Response<ResponseImg> response) {
+                                    if (response.body().getKode() == 1){
+                                        Toast.makeText(change_image.this, "Berhasil Upload", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        System.out.println(response.body().getKode());
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<ResponseImg> call, Throwable t) {
-                                Toast.makeText(change_image.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                                System.out.println(t.getMessage());
-                            }
-                        });
+                                @Override
+                                public void onFailure(Call<ResponseImg> call, Throwable t) {
+                                    Toast.makeText(change_image.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    System.out.println(t.getMessage());
+                                }
+                            });
+                        }
+
                     }
 
                 }
@@ -252,22 +264,30 @@ public class change_image extends AppCompatActivity {
         OpenGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(getApplicationContext(),
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"Open Gallery"),REQUEST_GALLERY);
-                    Toast.makeText(change_image.this, "Open Galleerrtyy", Toast.LENGTH_SHORT).show();
-                } else {
-                    ActivityCompat.requestPermissions(change_image.this,
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-                    Toast.makeText(change_image.this, "gagal", Toast.LENGTH_SHORT).show();
-                }
+//                if (ContextCompat.checkSelfPermission(getApplicationContext(),
+//                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+//                    Intent intent = new Intent();
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent,"Open Gallery"),REQUEST_GALLERY);
+//                    Toast.makeText(change_image.this, "Open Galleerrtyy", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    ActivityCompat.requestPermissions(change_image.this,
+//                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+//                    Toast.makeText(change_image.this, "gagal", Toast.LENGTH_SHORT).show();
+//                }
 //                Intent intent = new Intent();
 //                intent.setType("image/*");
 //                intent.setAction(Intent.ACTION_GET_CONTENT);
 //                startActivityForResult(intent, 10);
+                ImagePicker.Companion.with(change_image.this)
+                        .galleryOnly()
+                        .crop()
+                        .cropOval()
+                        .compress(1024)
+                        .maxResultSize(1080 , 1080)
+                        .start(REQUEST_GALLERY);
+
             }
         });
     }

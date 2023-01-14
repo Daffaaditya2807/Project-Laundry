@@ -26,12 +26,25 @@ import java.util.Locale;
 public class AdapterPesananSemua extends RecyclerView.Adapter<AdapterPesananSemua.ViewHolder> {
     Context ctx;
     List<DataPesananSemua> pesananSemuas;
+    AdapterPesananSemua.PassData DataSemua;
+    int berat_cucian = 0;
+    int todHarga = 0;
 
-    public AdapterPesananSemua(Context ctx, List<DataPesananSemua> pesananSemuas) {
+    public AdapterPesananSemua(Context ctx, List<DataPesananSemua> pesananSemuas, PassData dataSemua) {
         this.ctx = ctx;
         this.pesananSemuas = pesananSemuas;
-    }
+        this.DataSemua = dataSemua;
 
+
+    }
+    public interface PassData {
+        void passData(int berat,int hargaa);
+    }
+    public void clear() {
+        int size = pesananSemuas.size();
+        pesananSemuas.clear();
+        notifyItemRangeRemoved(0, size);
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -58,7 +71,7 @@ public class AdapterPesananSemua extends RecyclerView.Adapter<AdapterPesananSemu
                 holder.estimasi.setText(Html.fromHtml(ya));
 
             } else {
-                holder.estimasi.setText("Estimasi Pengiriman : ");
+                holder.estimasi.setText("Pengiriman : ");
                 holder.waktu_antar.setText(String.valueOf(db.getWaktuAntar().substring(0,5)+" WIB"));
             }
         } else if (db.getStatusPesanan().equals("Menunggu pembayaran")){
@@ -77,7 +90,7 @@ public class AdapterPesananSemua extends RecyclerView.Adapter<AdapterPesananSemu
                 holder.estimasi.setText(Html.fromHtml(ya));
 
             } else {
-                holder.estimasi.setText("Estimasi Penjemputan : ");
+                holder.estimasi.setText("Penjemputan : ");
                 holder.waktu_antar.setText(String.valueOf(db.getWaktuAntar().substring(0,5)+" WIB"));
             }
         } else if (db.getStatusPesanan().equals("Menunggu diantar")){
@@ -89,12 +102,19 @@ public class AdapterPesananSemua extends RecyclerView.Adapter<AdapterPesananSemu
         holder.jenis_layanan.setText(String.valueOf(db.getJenisJasa()+" "+db.getTotalBerat()+" Kg"));
         holder.harga.setText(String.valueOf(convertRupiah(Integer.parseInt(db.getTotalHarga()))));
         Picasso.get().load(AppClient.URL_IMG+db.getImage()).error(R.drawable.meki).into(holder.imageView);
+
+        berat_cucian += Integer.parseInt(db.getTotalBerat());
+        todHarga += Integer.parseInt(db.getTotalHarga());
+        DataSemua.passData(berat_cucian,todHarga);
+        System.out.println("Tes Berat pada adapter "+ berat_cucian);
     }
 
     @Override
     public int getItemCount() {
         return pesananSemuas.size();
     }
+
+
     public static String convertRupiah(int price){
         Locale locale = new Locale("in","ID");
         NumberFormat format = NumberFormat.getCurrencyInstance(locale);

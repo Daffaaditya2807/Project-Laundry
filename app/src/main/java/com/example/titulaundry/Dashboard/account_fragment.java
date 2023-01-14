@@ -32,12 +32,14 @@ import android.widget.Toast;
 
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
+import com.example.titulaundry.AboutApp;
 import com.example.titulaundry.Adapter.RealPathUtil;
 import com.example.titulaundry.Login;
 import com.example.titulaundry.Model.ResponseImg;
 import com.example.titulaundry.Model.ResponseUser;
 import com.example.titulaundry.R;
 import com.example.titulaundry.layanan.Alert_App;
+import com.github.drjacky.imagepicker.ImagePicker;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import com.squareup.picasso.Picasso;
 
@@ -59,7 +61,7 @@ public class account_fragment extends Fragment {
     ApiInterface apiInterface;
     String part_image;
     String path;
-    CardView setAccount,setPassword,logOut,changeAlamat;
+    CardView setAccount,setPassword,logOut,changeAlamat,about_apps;
     public String URI_IMGG = "";
     Button savePic;
     TextView mail,name;
@@ -78,12 +80,13 @@ public class account_fragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
         setProfile();
+        getPreviewImg();
 //        UploadImage();
         toSetAccount();
         changePw();
         LogOut();
         gantiAlamat();
-
+        setAbout_apps();
     }
 
     public void gantiAlamat(){
@@ -97,6 +100,7 @@ public class account_fragment extends Fragment {
                 Intent i = new Intent(getContext(),Change_Address.class);
                 i.putExtra("id_user",id_user);
                 startActivity(i);
+
             }
         });
     }
@@ -116,6 +120,21 @@ public class account_fragment extends Fragment {
         });
 
 
+    }
+
+    public void setAbout_apps(){
+        about_apps = (CardView) getView().findViewById(R.id.pengaturan_lainnya);
+        about_apps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String id_user = getActivity().getIntent().getStringExtra("id_user");
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+                id_user = sharedPreferences.getString("KEY_ID","");
+                Intent i = new Intent(getContext(), AboutApp.class);
+                i.putExtra("id_user",id_user);
+                startActivity(i);
+            }
+        });
     }
     public void changePw(){
         setPassword = (CardView) getView().findViewById(R.id.ganti_password);
@@ -161,6 +180,15 @@ public class account_fragment extends Fragment {
             }
         });
 
+    }
+
+    public void getPreviewImg(){
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Alert_App.previewImage(getContext(),URI_IMGG);
+            }
+        });
     }
 
     public void toSetAccount(){

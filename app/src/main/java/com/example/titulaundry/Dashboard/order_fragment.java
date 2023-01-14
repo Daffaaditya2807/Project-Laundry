@@ -1,35 +1,23 @@
 package com.example.titulaundry.Dashboard;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.titulaundry.API.ApiInterface;
-import com.example.titulaundry.API.AppClient;
-import com.example.titulaundry.Adapter.AdapterBarang;
 import com.example.titulaundry.Adapter.AdapterPesananSemua;
-import com.example.titulaundry.Model.SemuaPesanan;
-import com.example.titulaundry.ModelMySQL.DataBarang;
 import com.example.titulaundry.ModelMySQL.DataPesananSemua;
 import com.example.titulaundry.R;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class order_fragment extends Fragment {
@@ -56,114 +44,126 @@ public class order_fragment extends Fragment {
             public void onItemSelected(int i) {
                 switch (i){
                     case R.id.semua:
-                        pesananSemuaList.clear();
-                        SemuaPesanan();
+//                        pesananSemuaList.clear();
+//                        SemuaPesanan();
+                        Frg_Semua home = new Frg_Semua();
+                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.frmee,home);
+                        fragmentTransaction.commit();
                         break;
                     case R.id.SaatIni:
-                        pesananSemuaList.clear();
-                        SemuaSaatIni();
+//                        pesananSemuaList.clear();
+//                        SemuaSaatIni();
+                        Frg_SaatIni home2 = new Frg_SaatIni();
+                        FragmentTransaction fragmentTransaction2 = getActivity().getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction2.replace(R.id.frmee,home2);
+                        fragmentTransaction2.commit();
                         break;
                     case R.id.Selesai:
-                        pesananSemuaList.clear();
-                        PesananSelesai();
+//                        pesananSemuaList.clear();
+//                        PesananSelesai();
+                        Frg_Selesai home3 = new Frg_Selesai();
+                        FragmentTransaction fragmentTransaction3 = getActivity().getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction3.replace(R.id.frmee,home3);
+                        fragmentTransaction3.commit();
                         break;
                 }
             }
         });
     }
 
-    public void SemuaPesanan(){
-        String id_user = getActivity().getIntent().getStringExtra("id_user");
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
-        id_user = sharedPreferences.getString("KEY_ID","");
-        System.out.println(id_user);
-        ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
-        Call<SemuaPesanan> pesananCall = apiInterface.getPesananSemua(id_user);
-        pesananCall.enqueue(new Callback<SemuaPesanan>() {
-            @Override
-            public void onResponse(Call<SemuaPesanan> call, Response<SemuaPesanan> response) {
-                if (response.body().getKode()==1){
-                    pesananSemuaList = response.body().getData();
-                    adapterPesanan1 = new AdapterPesananSemua(getContext(),pesananSemuaList);
-                    recyclerView = getView().findViewById(R.id.recycleSemua);
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//    public void SemuaPesanan(){
+//        String id_user = getActivity().getIntent().getStringExtra("id_user");
+//        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+//        id_user = sharedPreferences.getString("KEY_ID","");
+//        System.out.println(id_user);
+//        ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
+//        Call<SemuaPesanan> pesananCall = apiInterface.getPesananSemua(id_user);
+//        pesananCall.enqueue(new Callback<SemuaPesanan>() {
+//            @Override
+//            public void onResponse(Call<SemuaPesanan> call, Response<SemuaPesanan> response) {
+//                if (response.body().getKode()==1){
+//                    pesananSemuaList = response.body().getData();
+//                    adapterPesanan1 = new AdapterPesananSemua(getContext(),pesananSemuaList);
+//                    recyclerView = getView().findViewById(R.id.recycleSemua);
+//                    recyclerView.setHasFixedSize(true);
+//                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//
+//                    recyclerView.setAdapter(adapterPesanan1);
+//                    adapterPesanan1.notifyDataSetChanged();
+//                } else {
+//                    Toast.makeText(getContext(), "Kosong", Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<SemuaPesanan> call, Throwable t) {
+//
+//            }
+//        });
+//    }
 
-                    recyclerView.setAdapter(adapterPesanan1);
-                    adapterPesanan1.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(getContext(), "Kosong", Toast.LENGTH_SHORT).show();
-                }
+//    public void SemuaSaatIni(){
+//        String id_user = getActivity().getIntent().getStringExtra("id_user");
+//
+//        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+//         id_user = sharedPreferences.getString("KEY_ID","");
+//        ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
+//        Call<SemuaPesanan> pesananCall = apiInterface.getPesananSaatIni(id_user);
+//        pesananCall.enqueue(new Callback<SemuaPesanan>() {
+//            @Override
+//            public void onResponse(Call<SemuaPesanan> call, Response<SemuaPesanan> response) {
+//                if (response.body().getKode()==1){
+//                    pesananSemuaList = response.body().getData();
+//                    adapterPesanan1 = new AdapterPesananSemua(getContext(),pesananSemuaList);
+//                    recyclerView = getView().findViewById(R.id.recycleSemua);
+//                    recyclerView.setHasFixedSize(true);
+//                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//
+//                    recyclerView.setAdapter(adapterPesanan1);
+//                    adapterPesanan1.notifyDataSetChanged();
+//                } else {
+//                    Toast.makeText(getContext(), "Kosong", Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<SemuaPesanan> call, Throwable t) {
+//
+//            }
+//        });
+//    }
 
-            }
-
-            @Override
-            public void onFailure(Call<SemuaPesanan> call, Throwable t) {
-
-            }
-        });
-    }
-
-    public void SemuaSaatIni(){
-        String id_user = getActivity().getIntent().getStringExtra("id_user");
-
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
-         id_user = sharedPreferences.getString("KEY_ID","");
-        ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
-        Call<SemuaPesanan> pesananCall = apiInterface.getPesananSaatIni(id_user);
-        pesananCall.enqueue(new Callback<SemuaPesanan>() {
-            @Override
-            public void onResponse(Call<SemuaPesanan> call, Response<SemuaPesanan> response) {
-                if (response.body().getKode()==1){
-                    pesananSemuaList = response.body().getData();
-                    adapterPesanan1 = new AdapterPesananSemua(getContext(),pesananSemuaList);
-                    recyclerView = getView().findViewById(R.id.recycleSemua);
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-                    recyclerView.setAdapter(adapterPesanan1);
-                    adapterPesanan1.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(getContext(), "Kosong", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<SemuaPesanan> call, Throwable t) {
-
-            }
-        });
-    }
-
-    public void PesananSelesai(){
-        String id_user = getActivity().getIntent().getStringExtra("id_user");
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
-        id_user = sharedPreferences.getString("KEY_ID","");
-        ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
-        Call<SemuaPesanan> pesananCall = apiInterface.getPesananSelesai(id_user);
-        pesananCall.enqueue(new Callback<SemuaPesanan>() {
-            @Override
-            public void onResponse(Call<SemuaPesanan> call, Response<SemuaPesanan> response) {
-                if (response.body().getKode()==1){
-                    pesananSemuaList = response.body().getData();
-                    adapterPesanan1 = new AdapterPesananSemua(getContext(),pesananSemuaList);
-                    recyclerView = getView().findViewById(R.id.recycleSemua);
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-                    recyclerView.setAdapter(adapterPesanan1);
-                    adapterPesanan1.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(getContext(), "Kosong", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<SemuaPesanan> call, Throwable t) {
-
-            }
-        });
-    }
+//    public void PesananSelesai(){
+//        String id_user = getActivity().getIntent().getStringExtra("id_user");
+//        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+//        id_user = sharedPreferences.getString("KEY_ID","");
+//        ApiInterface apiInterface = AppClient.getClient().create(ApiInterface.class);
+//        Call<SemuaPesanan> pesananCall = apiInterface.getPesananSelesai(id_user);
+//        pesananCall.enqueue(new Callback<SemuaPesanan>() {
+//            @Override
+//            public void onResponse(Call<SemuaPesanan> call, Response<SemuaPesanan> response) {
+//                if (response.body().getKode()==1){
+//                    pesananSemuaList = response.body().getData();
+//                    adapterPesanan1 = new AdapterPesananSemua(getContext(),pesananSemuaList);
+//                    recyclerView = getView().findViewById(R.id.recycleSemua);
+//                    recyclerView.setHasFixedSize(true);
+//                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//
+//                    recyclerView.setAdapter(adapterPesanan1);
+//                    adapterPesanan1.notifyDataSetChanged();
+//                } else {
+//                    Toast.makeText(getContext(), "Kosong", Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<SemuaPesanan> call, Throwable t) {
+//
+//            }
+//        });
+//    }
 }

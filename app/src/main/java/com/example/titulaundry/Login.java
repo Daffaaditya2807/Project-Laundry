@@ -51,7 +51,7 @@ public class Login extends AppCompatActivity {
         notif(Login.this);
 
         takonAkun = (TextView) findViewById(R.id.takonAkun);
-        String text = "<font color=#333333>Belum Punya Akun?</font> <font color=#2f80ed> Sign Up</font>";
+        String text = "<font color=#333333>Belum Punya Akun?</font> <font color=#2f80ed> Daftar Akun</font>";
         takonAkun.setText(Html.fromHtml(text));
         signUp();
         LoginToConfirm();

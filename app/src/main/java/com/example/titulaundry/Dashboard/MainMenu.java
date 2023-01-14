@@ -63,10 +63,10 @@ public class MainMenu extends AppCompatActivity {
 
 
             fragmentSwitch swtch = new fragmentSwitch(getSupportFragmentManager(), 0);
-            swtch.addFragment(new home_fragment(),"Home");
-            swtch.addFragment(new Service_fragment(),"Service");
-            swtch.addFragment(new order_fragment(),"Order");
-            swtch.addFragment(new account_fragment(),"Account");
+            swtch.addFragment(new home_fragment(),"Beranda");
+            swtch.addFragment(new Service_fragment(),"Layanan");
+            swtch.addFragment(new order_fragment(),"Pemesanan");
+            swtch.addFragment(new account_fragment(),"Akun");
             viewPager.setAdapter(swtch);
 
             tabLayout.getTabAt(0).setIcon(R.drawable.home);

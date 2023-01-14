@@ -82,6 +82,7 @@ public class set_waktu_alamat extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_waktu_alamat);
+
         notif(set_waktu_alamat.this);
         PilihTanggal();
         setUser();
@@ -151,7 +152,23 @@ public class set_waktu_alamat extends AppCompatActivity {
                             double lokasi = distance(lat,lon);
                             double lokasi2 = distance(lat1,lon1);
 
+                            if (lokasi>20){
+                                jarak1.setBackground(ContextCompat.getDrawable(set_waktu_alamat.this,R.drawable.bunder_text_batal));
+                                jarak1.setTextColor(Color.rgb(235,87,87));
+                            } else {
+                                jarak1.setBackground(ContextCompat.getDrawable(set_waktu_alamat.this,R.drawable.bunder_text_hijau));
+                                jarak1.setTextColor(Color.rgb(33, 150, 83));
+                            }
                             jarak1.setText(String.valueOf(lokasi)+" Km");
+
+                            if (lokasi2>20){
+                                jarak2.setBackground(ContextCompat.getDrawable(set_waktu_alamat.this,R.drawable.bunder_text_batal));
+                                jarak2.setTextColor(Color.rgb(235,87,87));
+                            } else {
+                                jarak2.setBackground(ContextCompat.getDrawable(set_waktu_alamat.this,R.drawable.bunder_text_hijau));
+                                jarak2.setTextColor(Color.rgb(33, 150, 83));
+                            }
+
                             jarak2.setText(String.valueOf(lokasi2)+" Km");
                         }
                     } else {
@@ -327,6 +344,10 @@ public class set_waktu_alamat extends AppCompatActivity {
         View view = getLayoutInflater().inflate(R.layout.alert_edit_alamat,null);
         EditText alamat;
         ImageView clsBtn;
+        TextView locNotFound , LocEth;
+        locNotFound = (TextView) view.findViewById(R.id.alertggl);
+        LocEth = (TextView) view.findViewById(R.id.contoh);
+
         clsBtn = (ImageView) view.findViewById(R.id.closeButton);
         clsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -346,22 +367,30 @@ public class set_waktu_alamat extends AppCompatActivity {
                     addresses = geocoder.getFromLocationName(alamat.getText().toString(),1);
 
                     if (addresses != null){
-                        double lat = addresses.get(0).getLatitude();
-                        double lon = addresses.get(0).getLongitude();
-
-                        System.out.println("Latitude : "+lat);
-                        System.out.println("Langotitue : "+lon);
-                        alamatDetailKirim.setText(alamat.getText().toString());
-                        double lokasi = distance(lat,lon);
-                        if (lokasi>20){
-                            jarak2.setBackground(ContextCompat.getDrawable(set_waktu_alamat.this,R.drawable.bunder_text_batal));
-                            jarak2.setTextColor(Color.rgb(235,87,87));
+                        if (addresses.size() == 0){
+                            locNotFound.setVisibility(view.VISIBLE);
+                            LocEth.setVisibility(view.VISIBLE);
                         } else {
-                            jarak2.setBackground(ContextCompat.getDrawable(set_waktu_alamat.this,R.drawable.bunder_text_hijau));
-                            jarak2.setTextColor(Color.rgb(33, 150, 83));
+                            locNotFound.setVisibility(view.GONE);
+                            LocEth.setVisibility(view.GONE);
+                            double lat = addresses.get(0).getLatitude();
+                            double lon = addresses.get(0).getLongitude();
+
+                            System.out.println("Latitude : "+lat);
+                            System.out.println("Langotitue : "+lon);
+                            alamatDetailKirim.setText(alamat.getText().toString());
+                            double lokasi = distance(lat,lon);
+                            if (lokasi>20){
+                                jarak2.setBackground(ContextCompat.getDrawable(set_waktu_alamat.this,R.drawable.bunder_text_batal));
+                                jarak2.setTextColor(Color.rgb(235,87,87));
+                            } else {
+                                jarak2.setBackground(ContextCompat.getDrawable(set_waktu_alamat.this,R.drawable.bunder_text_hijau));
+                                jarak2.setTextColor(Color.rgb(33, 150, 83));
+                            }
+                            jarak2.setText(String.valueOf(lokasi)+" Km");
+                            dialog.dismiss();
                         }
-                        jarak2.setText(String.valueOf(lokasi)+" Km");
-                        dialog.dismiss();
+
                     } else {
                         Toast.makeText(set_waktu_alamat.this, "Lokasi Tidak Terdeteksi", Toast.LENGTH_SHORT).show();
                     }
@@ -380,6 +409,10 @@ public class set_waktu_alamat extends AppCompatActivity {
         View view = getLayoutInflater().inflate(R.layout.alert_edit_alamat,null);
         EditText alamat;
         ImageView clsBtn;
+        TextView locNotFound , LocEth;
+        locNotFound = (TextView) view.findViewById(R.id.alertggl);
+        LocEth = (TextView) view.findViewById(R.id.contoh);
+
         clsBtn = (ImageView) view.findViewById(R.id.closeButton);
         clsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -397,24 +430,32 @@ public class set_waktu_alamat extends AppCompatActivity {
                 try {
                     addresses = geocoder.getFromLocationName(alamat.getText().toString(),1);
 
-                    if (addresses != null){
-                        double lat = addresses.get(0).getLatitude();
-                        double lon = addresses.get(0).getLongitude();
-
-                        System.out.println("Latitude : "+lat);
-                        System.out.println("Langotitue : "+lon);
-                        alamatDetailJemput.setText(alamat.getText().toString());
-                        double lokasi = distance(lat,lon);
-
-                        if (lokasi>20){
-                            jarak1.setBackground(ContextCompat.getDrawable(set_waktu_alamat.this,R.drawable.bunder_text_batal));
-                            jarak1.setTextColor(Color.rgb(235,87,87));
+                    if (addresses != null ){
+                        if (addresses.size() == 0){
+                            locNotFound.setVisibility(view.VISIBLE);
+                            LocEth.setVisibility(view.VISIBLE);
                         } else {
-                            jarak1.setBackground(ContextCompat.getDrawable(set_waktu_alamat.this,R.drawable.bunder_text_hijau));
-                            jarak1.setTextColor(Color.rgb(33, 150, 83));
+                            locNotFound.setVisibility(view.GONE);
+                            LocEth.setVisibility(view.GONE);
+                            double lat = addresses.get(0).getLatitude();
+                            double lon = addresses.get(0).getLongitude();
+
+                            System.out.println("Latitude : "+lat);
+                            System.out.println("Langotitue : "+lon);
+                            alamatDetailJemput.setText(alamat.getText().toString());
+                            double lokasi = distance(lat,lon);
+
+                            if (lokasi>20){
+                                jarak1.setBackground(ContextCompat.getDrawable(set_waktu_alamat.this,R.drawable.bunder_text_batal));
+                                jarak1.setTextColor(Color.rgb(235,87,87));
+                            } else {
+                                jarak1.setBackground(ContextCompat.getDrawable(set_waktu_alamat.this,R.drawable.bunder_text_hijau));
+                                jarak1.setTextColor(Color.rgb(33, 150, 83));
+                            }
+                            jarak1.setText(String.valueOf(lokasi)+" Km");
+                            dialog.dismiss();
                         }
-                        jarak1.setText(String.valueOf(lokasi)+" Km");
-                        dialog.dismiss();
+
                     } else {
                         Toast.makeText(set_waktu_alamat.this, "Lokasi Tidak Terdeteksi", Toast.LENGTH_SHORT).show();
                     }
@@ -464,14 +505,23 @@ public class set_waktu_alamat extends AppCompatActivity {
         tgl2 = (TextView) findViewById(R.id.TanggalJemput2);
 
         final Calendar cldr = Calendar.getInstance();
+        final Calendar cldr2 = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy");
         SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("dd-M-yyyy");
+
 
         tgl1.setText(simpleDateFormat.format(cldr.getTime()));
         hariJemput = simpleDateFormat2.format(cldr.getTime());
 
-        tgl2.setText(simpleDateFormat.format(cldr.getTime()));
-        hariKembali= simpleDateFormat2.format(cldr.getTime());
+        //get durasi
+        String waktu = getIntent().getStringExtra("waktu");
+        String hariKerja = waktu.replace(" hari","").trim();
+        int batasan = Integer.parseInt(hariKerja);
+
+        cldr2.add(Calendar.DATE,batasan);
+
+        tgl2.setText(simpleDateFormat.format(cldr2.getTime()));
+        hariKembali= simpleDateFormat2.format(cldr2.getTime());
         int day = cldr.get(Calendar.DAY_OF_MONTH);
         int month = cldr.get(Calendar.MONTH);
         int year = cldr.get(Calendar.YEAR);
@@ -481,15 +531,33 @@ public class set_waktu_alamat extends AppCompatActivity {
                 picker = new DatePickerDialog(set_waktu_alamat.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month ,int day) {
+                        String hariIni = simpleDateFormat2.format(cldr.getTime());
+                        String pilihan = String.valueOf(day+"-"+(month+1)+"-"+year);
 
+                        try {
+                            Date date1 = simpleDateFormat2.parse(hariIni);
+                            Date date2 = simpleDateFormat2.parse(pilihan);
 
-                        tgl1.setText(String.valueOf(day) + " " + getMonth((month+1)) + " " + String.valueOf(year));
-                        hariJemput = String.valueOf(day+"-"+(month+1)+"-"+year);
+                            if (date2.after(date1)){
+
+                                tgl1.setText(String.valueOf(day) + " " + getMonth((month+1)) + " " + String.valueOf(year));
+                                hariJemput = pilihan;
+
+                            } else {
+                                Alert_App.alertBro(set_waktu_alamat.this,"Pilih tanggal hari ini / setelahnya");
+                            }
+                        } catch (Exception e){
+                            throw new RuntimeException(e);
+                        }
+
                     }
                 },year,month,day);
                 picker.show();
             }
         });
+        int day2 = cldr2.get(Calendar.DAY_OF_MONTH);
+        int month2 = cldr2.get(Calendar.MONTH);
+        int year2 = cldr2.get(Calendar.YEAR);
         tgl2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -501,7 +569,7 @@ public class set_waktu_alamat extends AppCompatActivity {
                         tgl2.setText(String.valueOf(day) + " " + getMonth((month+1)) + " " + String.valueOf(year));
                         hariKembali = String.valueOf(day+"-"+(month+1)+"-"+year);
                     }
-                },year,month,day);
+                },year2,month2,day2);
                 picker.show();
             }
         });

@@ -96,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Metode Pembayaran"
+            android:text="Pembayaran"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="16dp"
@@ -366,7 +366,7 @@
             app:strokeColor="@color/niceBlue"
             app:strokeWidth="2dp"
             android:backgroundTint="@color/white"
-            android:text="Kembali Ke Home"
+            android:text="Kembali Ke Beranda"
             android:textColor="@color/niceBlue"
             app:layout_constraintTop_toBottomOf="@+id/SubmitBayar"/>
     </androidx.constraintlayout.widget.ConstraintLayout>

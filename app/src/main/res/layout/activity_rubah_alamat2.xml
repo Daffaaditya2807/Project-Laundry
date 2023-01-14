@@ -27,7 +27,7 @@
            android:id="@+id/header"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="Rubah Alamat"
+           android:text="Ubah Alamat"
            android:padding="2dp"
            android:fontFamily="@font/inter_bold"
            android:textSize="18dp"

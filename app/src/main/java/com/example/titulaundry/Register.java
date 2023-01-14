@@ -52,11 +52,14 @@ public class Register extends AppCompatActivity {
 
     public void setCheckBox(){
         syrt = (CheckBox) findViewById(R.id.syarat);
+        String text = "Dengan mendaftar, kamu menyetujui <b><font color=#2f80ed>Syarat dan Ketentuan</font></b> dan <b><font color=#2f80ed>Kebijakan Privasi</font></b> kami";
+        syrt.setText(Html.fromHtml(text));
         syrt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (syrt.isChecked()){
                     syrt.setBackgroundTintList(getResources().getColorStateList(R.color.niceBlue));
+
                 }
             }
         });
@@ -67,7 +70,7 @@ public class Register extends AppCompatActivity {
 
     public void setTectxtColour(){
         takonAkun = (TextView) findViewById(R.id.takonAkun);
-        String text = "<font color=#333333>Sudah Punya Akun?</font> <font color=#2f80ed> Sign In</font>";
+        String text = "<font color=#333333>Sudah Punya Akun?</font> <font color=#2f80ed> Masuk</font>";
         takonAkun.setText(Html.fromHtml(text));
     }
 

@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,8 +15,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.Login;
 import com.example.titulaundry.R;
+import com.google.android.material.button.MaterialButton;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Alert_App {
 
@@ -35,6 +42,7 @@ public static void alertBro(Context context,String pesan){
     dialog.show();
     dialog.setCancelable(false);
     dialog.getWindow().setGravity(Gravity.CENTER);
+    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
     mengerti.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -54,6 +62,27 @@ public static void alertBro(Context context,String pesan){
 
     }, 4*1000);
 
+}
+
+public static void previewImage(Context context,String img){
+    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    View view = LayoutInflater.from(context).inflate(R.layout.preview_profile,null);
+    builder.setView(view);
+
+    MaterialButton materialButton = view.findViewById(R.id.dismissa);
+    CircleImageView circleImageView = view.findViewById(R.id.prewImage);
+    Picasso.get().load(AppClient.profileIMG+img).error(R.drawable.blank).into(circleImageView);
+    AlertDialog dialog = builder.create();
+    dialog.show();;
+    dialog.getWindow().setGravity(Gravity.CENTER);
+    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+    materialButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            dialog.dismiss();
+        }
+    });
 }
 
 public static void exitAlertBruh (Context context){
