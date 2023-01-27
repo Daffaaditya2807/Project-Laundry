@@ -3,6 +3,7 @@ package com.example.titulaundry.API;
 import com.example.titulaundry.Model.CheckEmail;
 import com.example.titulaundry.Model.ResponeBarang;
 import com.example.titulaundry.Model.ResponseAlamat;
+import com.example.titulaundry.Model.ResponseAlamatLain;
 import com.example.titulaundry.Model.ResponseBanner;
 import com.example.titulaundry.Model.ResponseCod;
 import com.example.titulaundry.Model.ResponseEditUser;
@@ -73,6 +74,23 @@ public interface ApiInterface {
     Call<ResponseAlamat> setAlamat(
             @Field("id_user") String user,
             @Field("alamat") String alamat
+    );
+    @FormUrlEncoded
+    @POST("AddAlamatLain.php")
+    Call<ResponseAlamat> TambahAlamat(
+            @Field("id_user") String user,
+            @Field("alamat") String alamat
+    );
+    @FormUrlEncoded
+    @POST("EditAlamatUtama.php")
+    Call<ResponseAlamat> EditAlamatUtama(
+            @Field("id_alamat") String id_alamat,
+            @Field("alamat") String alamat
+    );
+    @FormUrlEncoded
+    @POST("DeleteAddress.php")
+    Call<ResponseAlamat> DeleteAlamat(
+            @Field("id_alamat") String id_alamat
     );
     @GET("GetMenu.php")
     Call<ResponeBarang> getRetrive();
@@ -193,4 +211,12 @@ public interface ApiInterface {
             @Field("tanggal1") String tanggal_mulai,
             @Field("tanggal2") String tanggal_akhir
     );
+
+    @FormUrlEncoded
+    @POST("Pilih_alamat.php")
+    Call<ResponseAlamatLain> getAlamatKirim(
+            @Field("id_user") String id_user
+    );
+
+
 }

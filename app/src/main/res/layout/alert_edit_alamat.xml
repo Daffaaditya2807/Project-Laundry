@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/AlertKemren"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="15dp"
-        android:layout_margin="10dp"
-        app:cardElevation="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/AlertKemren"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="15dp"
+    android:layout_margin="10dp"
+    app:cardElevation="10dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,6 +89,48 @@
                 app:layout_constraintTop_toBottomOf="@+id/alertggl"
                 app:layout_constraintStart_toStartOf="parent"
                 />
+            <TextView
+                android:id="@+id/alamatLain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="14dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/contoh"
+                android:text="Alamat Lainnya"
+                />
+            <ImageButton
+                android:id="@+id/showAlamat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/down"
+                app:layout_constraintTop_toBottomOf="@+id/contoh"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@color/white"
+                android:layout_marginTop="10dp"
+
+                />
+            <TextView
+                android:id="@+id/alertnull"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/alamatLain"
+                android:text="Daftar alamat lain kosong!"
+                android:textSize="14dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/submitAlamat"
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleAlamat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/alamatLain"
+                app:layout_constraintStart_toStartOf="parent"
+                />
             <Button
                 android:id="@+id/submitAlamat"
                 android:textAllCaps="false"
@@ -97,9 +139,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="Tetapkan"
                 android:textSize="14dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:fontFamily="@font/inter_bold"
-                app:layout_constraintTop_toBottomOf="@+id/contoh"
+                app:layout_constraintTop_toBottomOf="@+id/recycleAlamat"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

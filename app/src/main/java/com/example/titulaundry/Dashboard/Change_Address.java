@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -53,7 +54,7 @@ public class Change_Address extends FragmentActivity implements OnMapReadyCallba
     private ActivityRubahAlamat2Binding binding;
     private boolean oke = false;
     EditText Inputalamat,alamat;
-    TextView LocNow;
+    TextView LocNow,Head,HeadNow,HeadBaruw;
     Button carii,simpan;
     ImageButton bcktoSet;
     List<Address> addressList = null;
@@ -71,16 +72,21 @@ public class Change_Address extends FragmentActivity implements OnMapReadyCallba
         alamat = findViewById(R.id.setAlamat);
         LocNow = findViewById(R.id.alamatSekarang);
         simpan = findViewById(R.id.simpan);
+        Head = findViewById(R.id.header);
+        HeadBaruw = findViewById(R.id.HeadAlamatBaru);
+        HeadNow = findViewById(R.id.HeaderAlamatSaatIni);
+
         bcktoSet = findViewById(R.id.kembali);
         bcktoSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                Intent i = new Intent(getApplicationContext(),Tampung_Alamat.class);
+                startActivity(i);
+                finish();
             }
         });
         notif(Change_Address.this);
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        setUserAddress();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -185,7 +191,8 @@ public class Change_Address extends FragmentActivity implements OnMapReadyCallba
             }
 
         });
-        confrimAlamat();
+//        confrimAlamat();
+        UbahAlamat();
     }
 
     /**
@@ -281,4 +288,94 @@ public class Change_Address extends FragmentActivity implements OnMapReadyCallba
         });
     }
 
+    public void UbahAlamat(){
+        String aksi = getIntent().getStringExtra("aksi");
+        switch (aksi){
+            case "editAlamat":
+                System.out.println("Mengedit alamat utama");
+                String almtSaiki = getIntent().getStringExtra("alamatTerbawah");
+                LocNow.setText(almtSaiki);
+                String id_alamatt = getIntent().getStringExtra("idAlamat");
+
+                simpan.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (!alamat.getText().toString().equals("")){
+                            apiInterface = AppClient.getClient().create(ApiInterface.class);
+                            Call<ResponseAlamat> alamatCall = apiInterface.EditAlamatUtama(id_alamatt,alamat.getText().toString());
+                            alamatCall.enqueue(new Callback<ResponseAlamat>() {
+                                @Override
+                                public void onResponse(Call<ResponseAlamat> call, Response<ResponseAlamat> response) {
+                                    if (response.body().getKode() == 1){
+//                            Toast.makeText(RubahAlamat.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        Alert_App.alertBro(Change_Address.this,response.body().getMessage());
+                                        LocNow.setText(alamat.getText().toString());
+                                        alamat.setText("");
+                                    }
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseAlamat> call, Throwable t) {
+
+                                }
+                            });
+
+                        } else {
+                            Alert_App.alertBro(Change_Address.this,"Alamat yang dimasukkan kosong");
+                        }
+                    }
+                });
+                break;
+
+            case "tambahAlamat":
+                System.out.println("Menambahkan alamat");
+                //setup Layout
+                LocNow.setVisibility(View.GONE);
+                Head.setText("Tambah Alamat");
+                HeadNow.setVisibility(View.GONE);
+                HeadBaruw.setText("Alamat dipilih");
+                simpan.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (!alamat.getText().toString().equals("")){
+
+                            SharedPreferences sharedPreferences = getSharedPreferences("SHARED_PREF_ACCOUNT", Context.MODE_PRIVATE);
+                            String id_user = sharedPreferences.getString("KEY_ID","");
+                            apiInterface = AppClient.getClient().create(ApiInterface.class);
+                            Call<ResponseAlamat> call = apiInterface.TambahAlamat(id_user,alamat.getText().toString());
+                            call.enqueue(new Callback<ResponseAlamat>() {
+                                @Override
+                                public void onResponse(Call<ResponseAlamat> call, Response<ResponseAlamat> response) {
+                                    System.out.println(response.body().getMessage());
+                                    Intent i = new Intent(getApplicationContext() , Tampung_Alamat.class);
+                                    startActivity(i);
+                                    finish();
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseAlamat> call, Throwable t) {
+
+                                }
+                            });
+                        } else {
+                            Alert_App.alertBro(Change_Address.this,"Alamat yang dimasukkan kosong");
+                        }
+                    }
+                });
+                break;
+        }
+    }
+    @Override
+    public void onBackPressed() {
+//        Intent i = new Intent(getApplicationContext(), Login.class);
+//        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(i);
+//
+//        finish();
+        Intent i = new Intent(getApplicationContext(), Tampung_Alamat.class);
+        startActivity(i);
+        finish();
+    }
 }

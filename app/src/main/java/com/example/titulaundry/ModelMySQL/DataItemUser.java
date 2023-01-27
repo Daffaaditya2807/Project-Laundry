@@ -22,6 +22,17 @@ public class DataItemUser {
 	@SerializedName("profile_img")
 	private String profile_img;
 
+	@SerializedName("id_alamat")
+	private String id_alamat;
+
+	public String getId_alamat() {
+		return id_alamat;
+	}
+
+	public void setId_alamat(String id_alamat) {
+		this.id_alamat = id_alamat;
+	}
+
 	public String getProfile_img() {
 		return profile_img;
 	}

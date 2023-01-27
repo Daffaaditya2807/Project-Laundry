@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,11 +41,11 @@ public class Frg_SaatIni extends Fragment {
     //use DB MySQL
     AdapterPesananSemua adapterPesanan1;
     private List<DataPesananSemua> pesananSemuaList = new ArrayList<>();
-    TextView beratCuci,pesanan;
+    TextView beratCuci,pesanan,psn1,psn2;
     ImageButton searchPesanan,refreshPesanan,pilih_mulai , pilih_akhir;
     EditText getTglMulai , getTglAkhir;
     DatePickerDialog pickerDialog;
-
+    LinearLayout alertNull;
 
 
     @Override
@@ -64,6 +65,9 @@ public class Frg_SaatIni extends Fragment {
     public void PesananSaatIni(){
         beratCuci = getView().findViewById(R.id.todbrt);
         pesanan = getView().findViewById(R.id.todPes);
+        recyclerView = getView().findViewById(R.id.recycleSemuaIni);
+        alertNull = getView().findViewById(R.id.kosongHatiku);
+
         AdapterPesananSemua.PassData passData = new AdapterPesananSemua.PassData() {
             @Override
             public void passData(int berat ,int hargaa){
@@ -81,9 +85,10 @@ public class Frg_SaatIni extends Fragment {
             @Override
             public void onResponse(Call<SemuaPesanan> call, Response<SemuaPesanan> response) {
                 if (response.body().getKode()==1){
+                    recyclerView.setVisibility(View.VISIBLE);
+                    alertNull.setVisibility(View.GONE);
                     pesananSemuaList = response.body().getData();
                     adapterPesanan1 = new AdapterPesananSemua(getContext(),pesananSemuaList,passData);
-                    recyclerView = getView().findViewById(R.id.recycleSemuaIni);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                     recyclerView.setAdapter(adapterPesanan1);
@@ -91,7 +96,10 @@ public class Frg_SaatIni extends Fragment {
                     pesanan.setText(String.valueOf(p));
                     adapterPesanan1.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(getContext(), "Kosong", Toast.LENGTH_SHORT).show();
+                    recyclerView.setVisibility(View.GONE);
+                    alertNull.setVisibility(View.VISIBLE);
+                    beratCuci.setText("0 Kg");
+                    pesanan.setText("0");
                 }
 
             }
@@ -114,11 +122,16 @@ public class Frg_SaatIni extends Fragment {
         });
     }
     public void cariPesananSaatIni(){
+        recyclerView = getView().findViewById(R.id.recycleSemuaIni);
         searchPesanan = (ImageButton) getView().findViewById(R.id.cariPesanan);
         pilih_mulai = (ImageButton) getView().findViewById(R.id.pilih_mulai);
         pilih_akhir = (ImageButton) getView().findViewById(R.id.pilih_akhir);
         getTglMulai = (EditText) getView().findViewById(R.id.tgl_mulai);
         getTglAkhir = (EditText) getView().findViewById(R.id.tgl_akhir);
+        psn1 = getView().findViewById(R.id.pesn1);
+        psn2 = getView().findViewById(R.id.pesn2);
+        alertNull = getView().findViewById(R.id.kosongHatiku);
+
         final Calendar cldr = Calendar.getInstance();
         int day = cldr.get(Calendar.DAY_OF_MONTH);
         int month = cldr.get(Calendar.MONTH);
@@ -170,9 +183,10 @@ public class Frg_SaatIni extends Fragment {
                     @Override
                     public void onResponse(Call<SemuaPesanan> call, Response<SemuaPesanan> response) {
                         if (response.body().getKode()==1){
+                            recyclerView.setVisibility(View.VISIBLE);
+                            alertNull.setVisibility(View.GONE);
                             pesananSemuaList = response.body().getData();
                             adapterPesanan1 = new AdapterPesananSemua(getContext(),pesananSemuaList,passData);
-                            recyclerView = getView().findViewById(R.id.recycleSemuaIni);
                             recyclerView.setHasFixedSize(true);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                             recyclerView.setAdapter(adapterPesanan1);
@@ -180,10 +194,16 @@ public class Frg_SaatIni extends Fragment {
                             pesanan.setText(String.valueOf(p));
                             adapterPesanan1.notifyDataSetChanged();
                         } else {
-                            Toast.makeText(getContext(), "Kosong", Toast.LENGTH_SHORT).show();
-                            adapterPesanan1.clear();
+
+                            if (pesananSemuaList.size() != 0){
+                                adapterPesanan1.clear();
+                            }
+                            recyclerView.setVisibility(View.GONE);
+                            alertNull.setVisibility(View.VISIBLE);
                             beratCuci.setText("0 Kg");
                             pesanan.setText("0");
+                            psn1.setText("Data yang anda cari tidak tersedia!");
+                            psn2.setText("Silakan cari data lain atau muat ulang data");
                         }
 
                     }

@@ -1,8 +1,12 @@
 package com.example.titulaundry.atur_pesanan;
 
+import static android.view.View.GONE;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -40,8 +44,12 @@ import android.widget.Toast;
 import com.example.titulaundry.API.ApiInterface;
 import com.example.titulaundry.API.AppClient;
 import com.example.titulaundry.API.NetworkChangeListener;
+import com.example.titulaundry.Adapter.AdapterAlamat;
 import com.example.titulaundry.Login;
+import com.example.titulaundry.Model.DataItemBanner;
+import com.example.titulaundry.Model.ResponseAlamatLain;
 import com.example.titulaundry.Model.ResponseUser;
+import com.example.titulaundry.ModelMySQL.DataItemAlamatLain;
 import com.example.titulaundry.R;
 import com.example.titulaundry.layanan.Alert_App;
 //import com.example.titulaundry.db_help.Database_Tb_user;
@@ -51,6 +59,7 @@ import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -77,6 +86,11 @@ public class set_waktu_alamat extends AppCompatActivity {
     NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
     String waktuJemput , waktuPengembalian,hariJemput,hariKembali;
+
+    //alamat
+    RecyclerView recyclerView;
+    AdapterAlamat adapterAlamat;
+    List<DataItemAlamatLain> alamatLainList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -344,9 +358,65 @@ public class set_waktu_alamat extends AppCompatActivity {
         View view = getLayoutInflater().inflate(R.layout.alert_edit_alamat,null);
         EditText alamat;
         ImageView clsBtn;
-        TextView locNotFound , LocEth;
+        TextView locNotFound , LocEth , alertNul;
+        ImageButton showAlam;
         locNotFound = (TextView) view.findViewById(R.id.alertggl);
         LocEth = (TextView) view.findViewById(R.id.contoh);
+        alamat = (EditText) view.findViewById(R.id.inputAlamat);
+        showAlam = (ImageButton) view.findViewById(R.id.showAlamat);
+        alertNul = (TextView) view.findViewById(R.id.alertnull);
+
+        recyclerView = view.findViewById(R.id.recycleAlamat);
+        AdapterAlamat.getAlamat alamat1 = new AdapterAlamat.getAlamat() {
+            @Override
+            public void alamatDipilih(String alamatUsernya) {
+                alamat.setText(alamatUsernya);
+            }
+        };
+
+        apiInterface = AppClient.getClient().create(ApiInterface.class);
+        Call<ResponseAlamatLain> alamatLainCall = apiInterface.getAlamatKirim("6");
+        alamatLainCall.enqueue(new Callback<ResponseAlamatLain>() {
+            @Override
+            public void onResponse(Call<ResponseAlamatLain> call, Response<ResponseAlamatLain> response) {
+                if (response.body().getKode() == 1){
+                    alamatLainList = response.body().getData();
+                    adapterAlamat = new AdapterAlamat(alamatLainList,getApplicationContext(),alamat1);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    recyclerView.setAdapter(adapterAlamat);
+                    adapterAlamat.notifyDataSetChanged();
+                } else {
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseAlamatLain> call, Throwable t) {
+
+            }
+        });
+        showAlam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (recyclerView.getVisibility() == GONE){
+                    recyclerView.setVisibility(View.VISIBLE);
+
+                    if (alamatLainList.size() == 0){
+                        alertNul.setVisibility(View.VISIBLE);
+                    } else {
+                        alertNul.setVisibility(GONE);
+                    }
+
+                    showAlam.setImageDrawable(getResources().getDrawable(R.drawable.up));
+                } else {
+                    recyclerView.setVisibility(GONE);
+                    alertNul.setVisibility(GONE);
+                    showAlam.setImageDrawable(getResources().getDrawable(R.drawable.down));
+                }
+            }
+        });
+
 
         clsBtn = (ImageView) view.findViewById(R.id.closeButton);
         clsBtn.setOnClickListener(new View.OnClickListener() {
@@ -356,7 +426,6 @@ public class set_waktu_alamat extends AppCompatActivity {
             }
         });
 
-        alamat = (EditText) view.findViewById(R.id.inputAlamat);
         submit = (Button) view.findViewById(R.id.submitAlamat);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -371,8 +440,8 @@ public class set_waktu_alamat extends AppCompatActivity {
                             locNotFound.setVisibility(view.VISIBLE);
                             LocEth.setVisibility(view.VISIBLE);
                         } else {
-                            locNotFound.setVisibility(view.GONE);
-                            LocEth.setVisibility(view.GONE);
+                            locNotFound.setVisibility(GONE);
+                            LocEth.setVisibility(GONE);
                             double lat = addresses.get(0).getLatitude();
                             double lon = addresses.get(0).getLongitude();
 
@@ -409,10 +478,64 @@ public class set_waktu_alamat extends AppCompatActivity {
         View view = getLayoutInflater().inflate(R.layout.alert_edit_alamat,null);
         EditText alamat;
         ImageView clsBtn;
-        TextView locNotFound , LocEth;
+        TextView locNotFound , LocEth, alertNul;
+        ImageButton showAlam;
         locNotFound = (TextView) view.findViewById(R.id.alertggl);
         LocEth = (TextView) view.findViewById(R.id.contoh);
+        alamat = (EditText) view.findViewById(R.id.inputAlamat);
+        showAlam = (ImageButton) view.findViewById(R.id.showAlamat);
+        alertNul = (TextView) view.findViewById(R.id.alertnull);
+        recyclerView = view.findViewById(R.id.recycleAlamat);
 
+
+        AdapterAlamat.getAlamat alamat1 = new AdapterAlamat.getAlamat() {
+            @Override
+            public void alamatDipilih(String alamatUsernya) {
+                alamat.setText(alamatUsernya);
+            }
+        };
+
+        apiInterface = AppClient.getClient().create(ApiInterface.class);
+        Call<ResponseAlamatLain> alamatLainCall = apiInterface.getAlamatKirim("6");
+        alamatLainCall.enqueue(new Callback<ResponseAlamatLain>() {
+            @Override
+            public void onResponse(Call<ResponseAlamatLain> call, Response<ResponseAlamatLain> response) {
+                if (response.body().getKode() == 1){
+                    alamatLainList = response.body().getData();
+                    adapterAlamat = new AdapterAlamat(alamatLainList,getApplicationContext(),alamat1);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    recyclerView.setAdapter(adapterAlamat);
+                    adapterAlamat.notifyDataSetChanged();
+                } else {
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseAlamatLain> call, Throwable t) {
+
+            }
+        });
+        showAlam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (recyclerView.getVisibility() == GONE){
+                    recyclerView.setVisibility(View.VISIBLE);
+
+                    if (alamatLainList.size() == 0){
+                        alertNul.setVisibility(View.VISIBLE);
+                    } else {
+                        alertNul.setVisibility(GONE);
+                    }
+                    showAlam.setImageDrawable(getResources().getDrawable(R.drawable.up));
+                } else {
+                    recyclerView.setVisibility(GONE);
+                    alertNul.setVisibility(GONE);
+                    showAlam.setImageDrawable(getResources().getDrawable(R.drawable.down));
+                }
+            }
+        });
         clsBtn = (ImageView) view.findViewById(R.id.closeButton);
         clsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -420,7 +543,7 @@ public class set_waktu_alamat extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-        alamat = (EditText) view.findViewById(R.id.inputAlamat);
+
         submit = (Button) view.findViewById(R.id.submitAlamat);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -435,8 +558,8 @@ public class set_waktu_alamat extends AppCompatActivity {
                             locNotFound.setVisibility(view.VISIBLE);
                             LocEth.setVisibility(view.VISIBLE);
                         } else {
-                            locNotFound.setVisibility(view.GONE);
-                            LocEth.setVisibility(view.GONE);
+                            locNotFound.setVisibility(GONE);
+                            LocEth.setVisibility(GONE);
                             double lat = addresses.get(0).getLatitude();
                             double lon = addresses.get(0).getLongitude();
 
@@ -538,7 +661,7 @@ public class set_waktu_alamat extends AppCompatActivity {
                             Date date1 = simpleDateFormat2.parse(hariIni);
                             Date date2 = simpleDateFormat2.parse(pilihan);
 
-                            if (date2.after(date1)){
+                            if (date2.after(date1) || date2.equals(date1)){
 
                                 tgl1.setText(String.valueOf(day) + " " + getMonth((month+1)) + " " + String.valueOf(year));
                                 hariJemput = pilihan;

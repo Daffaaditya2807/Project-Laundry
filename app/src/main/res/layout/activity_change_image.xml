@@ -95,6 +95,7 @@
             <EditText
                 android:id="@+id/editNama"
                 android:inputType="text"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                 android:layout_marginStart="-15dp"
                 android:textSize="14dp"
                 android:layout_width="match_parent"

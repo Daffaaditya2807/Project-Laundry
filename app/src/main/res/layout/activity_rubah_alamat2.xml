@@ -38,13 +38,14 @@
            />
    </androidx.constraintlayout.widget.ConstraintLayout>
     <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="20dp"
-    android:textStyle="bold"
-    android:text="Alamat saat ini : "
-    android:textColor="@color/black"
-    android:layout_marginTop="20dp"
+        android:id="@+id/HeaderAlamatSaatIni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:textStyle="bold"
+        android:text="Alamat saat ini : "
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
     />
     <TextView
         android:id="@+id/alamatSekarang"
@@ -94,6 +95,7 @@
             />
     </LinearLayout>
     <TextView
+        android:id="@+id/HeadAlamatBaru"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Alamat baru"
